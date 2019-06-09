@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1 th:text="'Hello ' + ${user.nickName} + '! How are you today?'"></h1>
+<p sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></p>
+<div sec:authorize="hasRole('ROLE_ADMIN')">This content is only shown to administrators.</div>
+<div>
+    User: <span sec:authentication="name">NOT FOUND</span>
+    Spring Roles: <span sec:authentication="principal.authorities">NOT FOUND</span>
+</div>
+<P><a th:href="@{/user}">User Profile</a></P>
+</body>
+</html>

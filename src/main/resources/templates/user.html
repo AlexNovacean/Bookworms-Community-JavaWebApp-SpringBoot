@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<h1 th:text="${user.nickName} + '\'s profile.'"></h1>
+<div th:text="'First Name: ' + ${user.firstName}"></div>
+<div th:text="'Last Name: ' + ${user.lastName}"></div>
+<div th:text="'E-mail: ' + ${user.email}"></div>
+<div th:text="'Location: ' + ${user.location}"></div>
+
+<br>
+<br>
+
+<a th:href="@{/}">Back to index.</a>
+</body>
+</html>
