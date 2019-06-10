@@ -21,7 +21,8 @@ public class UserController {
     public String userProfile(Model model, Principal principal) {
         String email = principal.getName();
         User user = userService.findByEmail(email);
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "user";
     }
 }
+

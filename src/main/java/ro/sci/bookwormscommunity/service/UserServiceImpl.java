@@ -38,15 +38,18 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void save(UserRegistrationDto registration) {
+    public void save(UserRegistrationDto userDto) throws Exception {
+
+
         User user = new User();
-        user.setFirstName(registration.getFirstName());
-        user.setLastName(registration.getLastName());
-        user.setNickName(registration.getNickName());
-        user.setLocation(registration.getLocation());
-        user.setEmail(registration.getEmail());
-        user.setPassword(passwordEncoder.encode(registration.getPassword()));
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setNickName(userDto.getNickName());
+        user.setLocation(userDto.getLocation());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRoles(Arrays.asList(createRoleIfNotFound("ROLE_USER")));
+        user.setPhoto(userDto.getImage().getBytes());
         userRepository.save(user);
     }
 

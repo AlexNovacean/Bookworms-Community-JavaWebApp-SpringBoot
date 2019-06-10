@@ -1,10 +1,12 @@
 package ro.sci.bookwormscommunity.web.dto;
 
+import org.springframework.web.multipart.MultipartFile;
 import ro.sci.bookwormscommunity.validators.FieldMatch;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.File;
 
 
 @FieldMatch.List({
@@ -41,6 +43,16 @@ public class UserRegistrationDto {
     @Email
     @NotEmpty
     private String confirmEmail;
+
+    private MultipartFile image;
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
 
     public String getFirstName() {
         return firstName;
