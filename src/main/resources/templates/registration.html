@@ -19,7 +19,7 @@
 <body>
 <h1 style="max-width: 200px; margin: auto">Registration</h1>
 <p style="color: green; max-width: 500px; margin: auto" th:if="${param.success}">Registration Successful.</p>
-<form th:action="@{/registration}" th:object="${user}" method="post">
+<form th:action="@{/registration}" th:object="${user}" method="post" enctype="multipart/form-data">
     <table style="max-width: 500px; margin: auto">
         <tr>
             <td class="contentR" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation Error</td>
@@ -79,6 +79,9 @@
         </tr>
         <tr>
             <td class="contentR" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Confirm Password Error</td>
+        </tr>
+        <tr>
+            <td><input type="file" th:field="*{image}"></td>
         </tr>
         <tr>
             <td><button type="submit">Register</button></td>

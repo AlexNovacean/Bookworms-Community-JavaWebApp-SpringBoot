@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.UserService;
+import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/registration")
 public class UserRegistrationController {
+
 
     @Autowired
     private UserService userService;
@@ -43,7 +44,11 @@ public class UserRegistrationController {
         if (result.hasErrors()) {
             return "registration";
         }
-        userService.save(userDto);
+        try {
+            userService.save(userDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:/registration?success";
     }
 }

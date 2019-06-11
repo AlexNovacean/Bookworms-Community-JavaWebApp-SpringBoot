@@ -1,6 +1,7 @@
 package ro.sci.bookwormscommunity.model;
 
 import javax.persistence.*;
+import java.util.Base64;
 import java.util.Collection;
 
 @Entity
@@ -17,6 +18,10 @@ public class User {
     private String password;
     private String nickName;
     private String location;
+
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -38,15 +43,28 @@ public class User {
         this.email = email;
     }
 
-    public User(String firstName, String lastName, String email, String password, String nickName, String location, Collection<Role> roles) {
+    public User(String firstName, String lastName, String email, String nickName, String location, String password, byte[] photo, Collection<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
         this.nickName = nickName;
         this.location = location;
+        this.password = password;
+        this.photo = photo;
         this.roles = roles;
 
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public String getImageAsString() {
+        return Base64.getEncoder().encodeToString(this.photo);
     }
 
     public Long getId() {
@@ -113,17 +131,4 @@ public class User {
         this.location = location;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", location='" + location + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
 }
