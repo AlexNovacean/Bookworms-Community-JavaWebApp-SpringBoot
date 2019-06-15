@@ -1,5 +1,6 @@
 package ro.sci.bookwormscommunity.web.dto;
 
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sci.bookwormscommunity.validators.FieldMatch;
 
@@ -7,6 +8,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 @FieldMatch.List({
@@ -46,12 +49,19 @@ public class UserRegistrationDto {
 
     private MultipartFile image;
 
-    public MultipartFile getImage() {
+    public MultipartFile getImage(){
         return image;
     }
 
     public void setImage(MultipartFile image) {
         this.image = image;
+    }
+
+    public MultipartFile returnImage()throws Exception{
+        if(image.isEmpty()){
+            return new MockMultipartFile("default-picture.png",new FileInputStream(new File("src/main/resources/static/images/default-picture.png")));
+        }
+        return  image;
     }
 
     public String getFirstName() {
