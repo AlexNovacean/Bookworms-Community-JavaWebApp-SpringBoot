@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    RoleService roleService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
 
     public void save(UserRegistrationDto userDto) throws Exception {
 
-
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -48,18 +47,9 @@ public class UserServiceImpl implements UserService {
         user.setLocation(userDto.getLocation());
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRoles(Arrays.asList(createRoleIfNotFound("ROLE_USER")));
+        user.setRoles(Arrays.asList(roleService.createRoleIfNotFound("ROLE_USER")));
         user.setPhoto(userDto.getImage().getBytes());
         userRepository.save(user);
-    }
-
-    private Role createRoleIfNotFound(String name) {
-        Role role = roleRepository.findByName(name);
-        if (role == null) {
-            role = new Role(name);
-            roleRepository.save(role);
-        }
-        return role;
     }
 
     @Override

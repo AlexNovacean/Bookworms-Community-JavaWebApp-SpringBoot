@@ -1,5 +1,7 @@
 package ro.sci.bookwormscommunity.web.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 @RequestMapping("/registration")
 public class UserRegistrationController {
 
+    Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
 
     @Autowired
     private UserService userService;
@@ -47,7 +50,7 @@ public class UserRegistrationController {
         try {
             userService.save(userDto);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn("An error occurred while saving the profile picture: ",e);
         }
         return "redirect:/registration?success";
     }
