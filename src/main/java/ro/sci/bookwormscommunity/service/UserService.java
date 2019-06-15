@@ -1,7 +1,6 @@
 package ro.sci.bookwormscommunity.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.multipart.MultipartFile;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 

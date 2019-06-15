@@ -7,9 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ro.sci.bookwormscommunity.model.Role;
 import ro.sci.bookwormscommunity.model.User;
-import ro.sci.bookwormscommunity.repositories.RoleRepository;
 import ro.sci.bookwormscommunity.repositories.UserRepository;
 import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 
@@ -20,11 +18,9 @@ import java.util.Collection;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     RoleService roleService;
-
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 

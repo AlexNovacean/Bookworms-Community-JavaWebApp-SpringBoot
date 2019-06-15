@@ -13,7 +13,7 @@ import java.security.Principal;
 public class MainController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("")
     public String root(Model model, Principal principal) {
@@ -24,7 +24,7 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login() {
         return "login";
     }
 }

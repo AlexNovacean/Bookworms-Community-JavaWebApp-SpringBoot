@@ -9,7 +9,7 @@ import ro.sci.bookwormscommunity.repositories.RoleRepository;
 public class RoleService {
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     public Role createRoleIfNotFound(String roleName){
         Role role = roleRepository.findByName(roleName);

@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @RequestMapping("/registration")
 public class UserRegistrationController {
 
-    Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
+    private Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
 
     @Autowired
     private UserService userService;

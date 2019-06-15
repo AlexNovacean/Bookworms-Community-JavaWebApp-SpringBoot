@@ -84,6 +84,9 @@
             <td><input type="file" th:field="*{image}"></td>
         </tr>
         <tr>
+            <td class="contentR" th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image Error</td>
+        </tr>
+        <tr>
             <td><button type="submit">Register</button></td>
             <td class="contentB">Already registered? <a href="/" th:href="@{/login}">Login here</a></td>
         </tr>
