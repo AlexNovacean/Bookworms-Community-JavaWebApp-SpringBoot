@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Book to the Community</title>
+</head>
+<body>
+
+<h2>Make the Community richer with a new book</h2>
+<br>
+<p th:if="${param.success}">Book has been added!</p>
+<form method="post" th:action="@{/addBook}" th:object="${book}">
+
+    <table>
+        <tr>
+            <td>Book Name:</td>
+            <td><input th:field="*{bookName}" type="text"></td>
+        <tr>
+            <td th:errors="*{bookName}" th:if="${#fields.hasErrors('bookName')}">Book Name Error</td>
+        </tr>
+        </tr> <tr>
+            <td>Author Name:</td>
+            <td><input th:field="*{authorName}" type="text"></td>
+        <tr>
+            <td th:errors="*{authorName}" th:if="${#fields.hasErrors('authorName')}">Author Name Error</td>
+        </tr>
+        </tr> <tr>
+            <td>Number of Pages:</td>
+            <td><input th:field="*{numberOfPages}" type="text"></td>
+        <tr>
+            <td th:errors="*{numberOfPages}" th:if="${#fields.hasErrors('numberOfPages')}">Book number of pages Error</td>
+        </tr>
+        </tr> <tr>
+            <td>Type:</td>
+            <td><input th:field="*{type}" type="text"></td>
+        <tr>
+            <td th:errors="*{type}" th:if="${#fields.hasErrors('type')}">Book type Error</td>
+        </tr>
+        </tr> <tr>
+            <td>Language:</td>
+            <td><input th:field="*{language}" type="text"></td>
+        <tr>
+            <td th:errors="*{language}" th:if="${#fields.hasErrors('language')}">Book language Error</td>
+        </tr>
+        </tr><td>
+        <select th:field="*{condition}">
+            <option
+                    th:each="condition: ${conditions}"
+                    th:value="${condition}"
+                    th:text=${condition.getCondition()} >Condition
+            </option>
+        </select>
+        </td>
+        </tr>
+        <tr>
+            <td>Borrow price:</td>
+            <td><input th:field="*{rentPrice}" type="text"></td>
+        <tr>
+            <td th:errors="*{rentPrice}" th:if="${#fields.hasErrors('rentPrice')}">Price Error</td>
+        </tr>
+        </tr>
+        <tr>
+            <td>Sell price:</td>
+            <td><input th:field="*{sellPrice}" type="text"></td>
+        <tr>
+            <td th:errors="*{sellPrice}" th:if="${#fields.hasErrors('sellPrice')}">Price Error</td>
+        </tr>
+        </tr>
+        <tr>
+          <td>  <div>
+                <label th:for="bookRent" th:text="'Is book for RENT?'"></label>
+                <input type="checkbox" th:field="*{bookRent}" />
+          </div></td>
+        </tr><tr>
+          <td><div>
+                <label th:for="bookSale" th:text="'Is book for SALE?'"></label>
+                <input type="checkbox" th:field="*{bookSale}" />
+          </div></td>
+        </tr>
+        <tr>
+            <td>  <textarea rows="3" placeholder="Write something here..." th:field="*{description}"/></textarea></td>
+        </tr>
+        <tr>
+            <td th:errors="*{description}" th:if="${#fields.hasErrors('description')}">Description Error</td>
+        </tr>
+        <tr>
+           <td><button type="submit">Add Book</button></td>
+        </tr>
+
+    </table>
+</form>
+</body>
+</html>
