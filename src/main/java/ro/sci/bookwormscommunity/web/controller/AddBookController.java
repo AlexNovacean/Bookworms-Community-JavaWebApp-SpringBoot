@@ -1,29 +1,39 @@
 package ro.sci.bookwormscommunity.web.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ro.sci.bookwormscommunity.web.model.Book;
-import ro.sci.bookwormscommunity.web.model.BookCondition;
-import ro.sci.bookwormscommunity.web.repository.BookRepository;
-import ro.sci.bookwormscommunity.web.service.BookService;
+import ro.sci.bookwormscommunity.model.Book;
+import ro.sci.bookwormscommunity.model.BookCondition;
+import ro.sci.bookwormscommunity.model.User;
+import ro.sci.bookwormscommunity.repositories.BookRepository;
+import ro.sci.bookwormscommunity.service.BookService;
+import ro.sci.bookwormscommunity.service.UserService;
+import ro.sci.bookwormscommunity.web.dto.BookDto;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/addBook")
 public class AddBookController {
+    private Logger logger = LoggerFactory.getLogger(AddBookController.class);
 
     @Autowired
     BookService bookService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     BookRepository bookRepository;
 
     @ModelAttribute("book")
-    public Book book(){return new Book();}
+    public BookDto book(){return new BookDto();}
 
 
     @GetMapping
@@ -34,45 +44,21 @@ public class AddBookController {
 
 
     @PostMapping
-    public String addBook (@ModelAttribute("book") @Valid Book book, BindingResult result){
+    public String addBook (@ModelAttribute("book") @Valid BookDto bookdto, BindingResult result, Principal principal){
 
+        User user = userService.findByEmail(principal.getName());
 
+        bookdto.setUser(user);
         if(result.hasErrors()){
             return "addBook";
         }
-        bookService.save(book);
+        try {
+            bookService.save(bookdto);
+        } catch (Exception e) {
+            logger.error("Error when saving the book: ",e);
+        }
 
         return "redirect:/addBook?success";
 
-    }
-
-    @GetMapping("/updateBook/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
-        Book book = bookService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
-
-        model.addAttribute("book", book);
-        return "updateBook";
-    }
-    @PostMapping("/updateBook/{id}")
-    public String updateBook(@PathVariable("id") Long id, @Valid Book book,
-                             BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            book.setId(id);
-            return "updateBook";
-        }
-
-        bookService.save(book);
-        model.addAttribute("books", bookService.findAll());
-        return "addBook";
-    }
-
-    @GetMapping("/deleteBook/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model) {
-        Book book = bookService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
-        bookRepository.delete(book);
-        model.addAttribute("books", bookRepository.findAll());
-        return "/index";
     }
 }

@@ -1,12 +1,10 @@
-package ro.sci.bookwormscommunity.web.model;
+package ro.sci.bookwormscommunity.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.Base64;
 
 /**
  * <h1>Book</h1>
@@ -19,12 +17,8 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Size(min=2, max=15)
     private String bookName;
-    @Size(min=2, max=15)
     private String authorName;
-    @Max(1000)
-    @Min(5)
     private int numberOfPages;
     private String type;
     private String language;
@@ -34,24 +28,27 @@ public class Book {
     private boolean bookSale;
     private double sellPrice;
     private double rentPrice;
+    @Lob
+    private byte[] image;
+    @ManyToOne
+    @JoinTable(name ="book_user",joinColumns = @JoinColumn(name = "book_id",referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name="user_id",referencedColumnName = "id"))
+    private User user;
 
-
-    public Book() {
+    public User getUser() {
+        return user;
     }
 
-    public Book(String bookName, String authorName, int numberOfPages, String type, String language, byte[] imageData, String imageFileName, String description, String condition, boolean bookRent, boolean bookSale, double rating, double sellPrice, double rentPrice) {
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-        this.bookName = bookName;
-        this.authorName = authorName;
-        this.numberOfPages = numberOfPages;
-        this.type = type;
-        this.language = language;
-        this.description = description;
-        this.condition = condition;
-        this.bookRent = bookRent;
-        this.bookSale = bookSale;
-        this.sellPrice = sellPrice;
-        this.rentPrice = rentPrice;
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Long getId() {
@@ -151,21 +148,7 @@ public class Book {
         this.rentPrice = rentPrice;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", bookName='" + bookName + '\'' +
-                ", authorName='" + authorName + '\'' +
-                ", numberOfPages=" + numberOfPages +
-                ", type='" + type + '\'' +
-                ", language='" + language + '\'' +
-                ", description='" + description + '\'' +
-                ", condition='" + condition + '\'' +
-                ", bookRent=" + bookRent +
-                ", bookSale=" + bookSale +
-                ", sellPrice=" + sellPrice +
-                ", rentPrice=" + rentPrice +
-                '}';
+    public String getImageAsString() {
+        return Base64.getEncoder().encodeToString(this.image);
     }
 }

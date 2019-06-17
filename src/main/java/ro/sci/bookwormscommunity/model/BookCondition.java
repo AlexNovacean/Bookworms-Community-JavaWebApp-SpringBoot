@@ -1,8 +1,4 @@
-package ro.sci.bookwormscommunity.web.model;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+package ro.sci.bookwormscommunity.model;
 
 public enum BookCondition {
     AS_NEW("As new"), //the book is in the state that it should have been in when it was left by the publisher

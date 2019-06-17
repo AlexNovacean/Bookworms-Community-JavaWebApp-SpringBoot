@@ -9,7 +9,7 @@
 <h2>Make the Community richer with a new book</h2>
 <br>
 <p th:if="${param.success}">Book has been added!</p>
-<form method="post" th:action="@{/addBook}" th:object="${book}">
+<form method="post" th:action="@{/addBook}" th:object="${book}" enctype="multipart/form-data">
 
     <table>
         <tr>
@@ -68,12 +68,12 @@
         </tr>
         <tr>
           <td>  <div>
-                <label th:for="bookRent" th:text="'Is book for RENT?'"></label>
+                <label th:for="bookRent" th:text="'Is book for rent?'"></label>
                 <input type="checkbox" th:field="*{bookRent}" />
           </div></td>
         </tr><tr>
           <td><div>
-                <label th:for="bookSale" th:text="'Is book for SALE?'"></label>
+                <label th:for="bookSale" th:text="'Is book for sell?'"></label>
                 <input type="checkbox" th:field="*{bookSale}" />
           </div></td>
         </tr>
@@ -84,7 +84,13 @@
             <td th:errors="*{description}" th:if="${#fields.hasErrors('description')}">Description Error</td>
         </tr>
         <tr>
-           <td><button type="submit">Add Book</button></td>
+            <td><input type="file" th:field="*{photo}"></td>
+        </tr>
+        <tr>
+            <td th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}">Image Error</td>
+        </tr>
+        <tr>
+        <td><button type="submit">Add Book</button></td>
         </tr>
 
     </table>
