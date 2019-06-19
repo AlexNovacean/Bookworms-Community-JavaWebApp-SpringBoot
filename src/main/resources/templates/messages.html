@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>From</th>
+        <th>Message</th>
+        <th>Respond</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${messages.isEmpty()}">
+        <td colspan="2">No Messages</td>
+    </tr>
+    <tr th:each="message : ${messages}">
+        <td><span th:text="${#dates.format(message.sentDate, 'dd-MM-yyy HH:mm')}"></span> </td>
+        <td><span th:text="${message.getFromUser().nickname}"> From User Id </span></td>
+        <td><span th:text="${message.content}"> First Name </span></td>
+        <td><span><a th:href="@{/user/{id}(id=${message.getFromUser().getId()})}">Respond</a> </span></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<br>
+<p><a th:href="@{/}">Back to index.</a></p>
+</body>
+</html>

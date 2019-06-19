@@ -5,7 +5,7 @@
     <title>Profile</title>
 </head>
 <body>
-<h1 th:text="${user.nickName} + '\'s profile.'"></h1>
+<h1 th:text="${user.nickname} + '\'s profile.'"></h1>
 <div th:text="'First Name: ' + ${user.firstName}"></div>
 <div th:text="'Last Name: ' + ${user.lastName}"></div>
 <div th:text="'E-mail: ' + ${user.email}"></div>
@@ -16,7 +16,19 @@
 
 <div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}"></div>
 
+<br>
 
-<a th:href="@{/}">Back to index.</a>
+<h1 th:text="'Send Message to: ' + ${user.nickname}"></h1>
+<form method="post" th:action="@{/user/send/{id}(id=${user.id})}">
+    <textarea cols="50" name="content" rows="5"></textarea>
+    <br>
+    <input type="submit" value="Send" />
+</form>
+
+<br>
+<p style="color: green; max-width: 500px; margin: auto" th:if="${param.sent}">Message Sent!</p>
+
+<br>
+<p><a th:href="@{/}">Back to index.</a></p>
 </body>
 </html>
