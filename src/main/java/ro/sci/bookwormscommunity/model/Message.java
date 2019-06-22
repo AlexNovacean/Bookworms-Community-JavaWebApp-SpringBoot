@@ -27,9 +27,20 @@ public class Message {
     @JoinColumn(name = "fromUserId", referencedColumnName = "id")
     private User fromUser;
 
-    public Message() {
-        this.sentDate=new Date();
+    @OneToOne
+    @JoinTable(name = "messages_conversation", joinColumns = @JoinColumn(name = "message_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "conversation_id", referencedColumnName = "id"))
+    private Conversation conversation;
+
+    public Conversation getConversation() {
+        return conversation;
     }
+
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
+    }
+
+    public Message() {}
 
     public Message(String content, User toUser, User fromUser) {
         this.content = content;

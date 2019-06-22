@@ -8,10 +8,8 @@
 <table>
     <thead>
     <tr>
-        <th>Date</th>
-        <th>From</th>
-        <th>Message</th>
-        <th>Respond</th>
+        <th>Between</th>
+        <th>See messages</th>
     </tr>
     </thead>
     <tbody>
@@ -19,10 +17,8 @@
         <td colspan="2">No Messages</td>
     </tr>
     <tr th:each="message : ${messages}">
-        <td><span th:text="${#dates.format(message.sentDate, 'dd-MM-yyy HH:mm')}"></span> </td>
-        <td><span th:text="${message.getFromUser().nickname}"> From User Id </span></td>
-        <td><span th:text="${message.content}"> First Name </span></td>
-        <td><span><a th:href="@{/user/{id}(id=${message.getFromUser().getId()})}">Respond</a> </span></td>
+        <td><span th:text="${message.getFromUser().nickname} + ' , ' + ${message.getToUser().nickname}"> Between </span></td>
+        <td><span><a th:href="@{/messages/{id}(id=${message.id})}">Open Conversation</a> </span></td>
     </tr>
     </tbody>
 </table>

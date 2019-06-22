@@ -6,31 +6,32 @@
 </head>
 <body>
 <h1 th:text="${user.nickname} + '\'s profile.'"></h1>
+
+<h2 style="color: green" th:if="${param.trimis}">Mesajul tau a fost trimis</h2>
+
 <div th:text="'First Name: ' + ${user.firstName}"></div>
 <div th:text="'Last Name: ' + ${user.lastName}"></div>
 <div th:text="'E-mail: ' + ${user.email}"></div>
 <div th:text="'Location: ' + ${user.location}"></div>
-
-<br>
-<br>
-
 <div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}"></div>
 
+<br>
+<br>
+
 <a th:href="@{/addBook}">Add Book</a>
+
 <br>
 <br>
 
-<h1 th:text="'Send Message to: ' + ${user.nickname}"></h1>
-<form method="post" th:action="@{/user/send/{id}(id=${user.id})}">
-    <textarea cols="50" name="content" rows="5"></textarea>
-    <br>
-    <input type="submit" value="Send" />
-</form>
+<button th:onclick="|window.location.href='/user/msg/${user.id}'|">Trimite mesaj</button>
 
 <br>
+
 <p style="color: green; max-width: 500px; margin: auto" th:if="${param.sent}">Message Sent!</p>
 
 <br>
+
 <p><a th:href="@{/}">Back to index.</a></p>
+
 </body>
 </html>

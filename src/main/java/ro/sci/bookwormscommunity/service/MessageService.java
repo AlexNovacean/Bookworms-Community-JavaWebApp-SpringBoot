@@ -13,13 +13,8 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-
-    public List<Message> getMessages(long toUserId, long fromUserId) {
-        return messageRepository.getExistingMessages(fromUserId, toUserId);
-    }
-
-    public List<Message> getUserMessages(long userId) {
-        return messageRepository.getUserMessages(userId);
+    public List<Message> getUserMessages(long convId) {
+        return messageRepository.getUserMessages(convId);
     }
 
     public void saveMessage(Message message){

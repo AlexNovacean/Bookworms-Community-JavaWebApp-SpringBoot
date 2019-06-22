@@ -10,25 +10,13 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    @Query("SELECT m" +
-            " FROM " +
-            "Message m " +
-            "WHERE " +
-            "m.fromUser.id IN (:userIdOne, :userIdTwo) " +
-            "AND " +
-            "m.toUser.id in (:userIdOne, :userIdTwo) " +
-            "ORDER BY " +
-            "m.sentDate " +
-            "DESC")
-    List<Message> getExistingMessages(
-            @Param("userIdOne") long userIdOne, @Param("userIdTwo") long userIdTwo);
-
     @Transactional
-    @Query("SELECT m " +
-            "FROM " +
-            "Message AS m " +
+    @Query(value = "SELECT * FROM " +
+            "messages AS m, conversation AS c, messages_conversation AS mc " +
             "WHERE " +
-            "m.toUser.id = :userId")
-    List<Message> getUserMessages(@Param("userId")long userId);
+            "m.id=mc.message_id AND " +
+            "c.id=mc.conversation_id AND " +
+            "c.id= :convId", nativeQuery = true)
+    List<Message> getUserMessages(@Param("convId") long convId);
 
 }
