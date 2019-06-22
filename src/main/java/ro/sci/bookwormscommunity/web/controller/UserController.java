@@ -32,13 +32,15 @@ public class UserController {
         String email = principal.getName();
         User user = userService.findByEmail(email);
         model.addAttribute("user", user);
+        model.addAttribute("principal", principal);
         return "user";
     }
 
     @GetMapping("/user/{id}")
-    public String seeUserProfile(@PathVariable("id") long id, Model model) {
+    public String seeUserProfile(@PathVariable("id") long id, Model model, Principal principal) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
+        model.addAttribute("principal", principal);
         return "user";
     }
 

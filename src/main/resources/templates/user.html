@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -23,11 +25,9 @@
 <br>
 <br>
 
-<button th:onclick="|window.location.href='/user/msg/${user.id}'|">Trimite mesaj</button>
-
-<br>
-
-<p style="color: green; max-width: 500px; margin: auto" th:if="${param.sent}">Message Sent!</p>
+<div>
+<button th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/user/msg/${user.id}'|">Trimite mesaj</button>
+</div>
 
 <br>
 
