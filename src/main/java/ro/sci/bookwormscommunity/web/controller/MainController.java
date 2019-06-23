@@ -8,6 +8,7 @@ import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -26,5 +27,12 @@ public class MainController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @GetMapping("/showUsers")
+    public String showUsers(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "showUsers";
     }
 }

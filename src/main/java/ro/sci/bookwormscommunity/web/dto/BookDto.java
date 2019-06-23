@@ -14,10 +14,10 @@ import java.io.FileInputStream;
 
 public class BookDto {
     @NotEmpty
-    @Size(min=2, max=100)
+    @Size(min = 2, max = 100)
     private String bookName;
     @NotEmpty
-    @Size(min=2, max=100)
+    @Size(min = 2, max = 100)
     private String authorName;
     @Min(value = 20)
     @Max(value = 9999)
@@ -37,10 +37,6 @@ public class BookDto {
     private MultipartFile photo;
 
     private User user;
-
-    public void setPhoto(MultipartFile photo) {
-        this.photo = photo;
-    }
 
     public User getUser() {
         return user;
@@ -140,6 +136,10 @@ public class BookDto {
 
     public MultipartFile getPhoto() {
         return photo;
+    }
+
+    public void setPhoto(MultipartFile photo) {
+        this.photo = photo;
     }
 
     public MultipartFile returnPhoto() throws Exception {

@@ -11,7 +11,7 @@ public class RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public Role createRoleIfNotFound(String roleName){
+    public Role createRoleIfNotFound(String roleName) {
         Role role = roleRepository.findByName(roleName);
         if (role == null) {
             role = new Role(roleName);

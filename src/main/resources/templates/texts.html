@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Texts</title>
+</head>
+<body>
+<p><a th:href="@{/}">Back to index.</a></p>
+<br>
+<h3 th:text="'Conversation between ' + ${conv.getFromUser().nickname} + ' and ' + ${conv.getToUser().nickname}">
+    Conversation</h3>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Sender</th>
+        <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${texts.isEmpty()}">
+        <td colspan="2">No Messages</td>
+    </tr>
+    <tr th:each="text : ${texts}">
+        <td><span th:text="${#dates.format(text.sentDate, 'dd-MMM HH:mm')}"> Date </span></td>
+        <td><span th:text="${text.getFromUser().nickname}"> Sender </span></td>
+        <td><span th:text="${text.content}"> Content </span></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<p style="color: green" th:if="${param.trimis}">Message Sent!</p>
+<br>
+<form method="post" th:action="@{/messages/{id}(id=${conv.id})}">
+    <textarea cols="50" name="content" rows="5"></textarea>
+    <br>
+    <input type="submit" value="Send"/>
+</form>
+</body>
+</html>

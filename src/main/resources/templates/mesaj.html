@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mesaj</title>
+</head>
+<body>
+<h1 th:text="'Mesajul tau catre: ' + ${toUser.nickname}"></h1>
+<form method="post" th:action="@{/user/msg/{id}(id=${toUser.id})}">
+    <textarea cols="50" name="content" rows="5"></textarea>
+    <br>
+    <input type="submit" value="Send"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ALL USERS</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Photo</th>
+        <th>Nickname</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Location</th>
+        <th>User Profile</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${users.isEmpty()}">
+        <td colspan="2">No Users Registered</td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td><span><img style="max-width: 200px; max-height: 100px"
+                       th:src="'data:image/*;base64,' + ${user.getImageAsString()}"></span></td>
+        <td><span th:text="${user.nickname}"> Nickname </span></td>
+        <td><span th:text="${user.firstName}"> First Name </span></td>
+        <td><span th:text="${user.lastName}"> Last Name </span></td>
+        <td><span th:text="${user.location}"> Location </span></td>
+        <td><span><a th:href="@{/user/{id}(id=${user.id})}">Profile</a> </span></td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<p><a th:href="@{/}">Back to index.</a></p>
+</body>
+</html>

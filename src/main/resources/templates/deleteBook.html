@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete Book</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>DELETE THIS BOOK</h2>
+
+<form th:action="@{/deleteBook/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">>
+    <p>Book Name: <span th:text="*{bookName}"/></p>
+    <p>Author Name: <span th:text="*{authorName}"/></p>
+    <p>Number Of Pages: <span th:text="*{numberOfPages}"/></p>
+    <p>Language: <span th:text="*{numberOfPages}"/></p>
+    <p>Type:<span th:text="*{type}"/></p>
+    <p>Condition:<span th:text="*{condition}"/></p>
+    <p>For Rent:<span th:text="*{bookRent}"/></p>
+    <p>For Sale:<span th:text="*{bookSale}"/></p>
+    <p>Rent Price:<span th:text="*{rentPrice}"/></p>
+    <p>Sell Price:<span th:text="*{sellPrice}"/></p>
+    <p>Description:<span th:text="*{description}"/></p>
+    <p>Description:<span th:text="*{image}"/></p>
+    <p><button type="submit">Delete Book</button></p>
+    <p th:href="@{/user}">Back to user</p>
+</form>
+</body>
+</html>
