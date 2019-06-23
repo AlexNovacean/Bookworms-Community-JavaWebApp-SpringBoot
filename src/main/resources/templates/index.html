@@ -7,7 +7,7 @@
     <title>Home</title>
 </head>
 <body>
-<h1 th:text="'Hello ' + ${user.nickName} + '! How are you today?'"></h1>
+<h1 th:text="'Hello ' + ${user.nickname} + '! How are you today?'"></h1>
 <p sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></p>
 <div sec:authorize="hasRole('ROLE_ADMIN')">This content is only shown to administrators.</div>
 <div><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/home}">Admin Home</a></div>
@@ -16,5 +16,9 @@
     Spring Roles: <span sec:authentication="principal.authorities">NOT FOUND</span>
 </div>
 <P><a th:href="@{/user}">User Profile</a></P>
+<br>
+<p><a th:href="@{/showUsers}">See all users</a> </p>
+<br>
+<p><a th:href="@{/messages}">Messages</a></p>
 </body>
 </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Between</th>
+        <th>See messages</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${messages.isEmpty()}">
+        <td colspan="2">No Messages</td>
+    </tr>
+    <tr th:each="message : ${messages}">
+        <td><span th:text="${message.getFromUser().nickname} + ' , ' + ${message.getToUser().nickname}"> Between </span></td>
+        <td><span><a th:href="@{/messages/{id}(id=${message.id})}">Open Conversation</a> </span></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<br>
+<p><a th:href="@{/}">Back to index.</a></p>
+</body>
+</html>

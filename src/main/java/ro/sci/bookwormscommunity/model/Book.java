@@ -1,9 +1,6 @@
 package ro.sci.bookwormscommunity.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 import java.util.Base64;
 
 /**
@@ -31,8 +28,8 @@ public class Book {
     @Lob
     private byte[] image;
     @ManyToOne
-    @JoinTable(name ="book_user",joinColumns = @JoinColumn(name = "book_id",referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name="user_id",referencedColumnName = "id"))
+    @JoinTable(name = "book_user", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private User user;
 
     public User getUser() {

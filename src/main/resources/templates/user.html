@@ -1,24 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
 <body>
-<h1 th:text="${user.nickName} + '\'s profile.'"></h1>
+<h1 th:text="${user.nickname} + '\'s profile.'"></h1>
+
+<h2 style="color: green" th:if="${param.trimis}">Mesajul tau a fost trimis</h2>
+
 <div th:text="'First Name: ' + ${user.firstName}"></div>
 <div th:text="'Last Name: ' + ${user.lastName}"></div>
 <div th:text="'E-mail: ' + ${user.email}"></div>
 <div th:text="'Location: ' + ${user.location}"></div>
-
-<br>
-<br>
-
 <div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}"></div>
 
-<a th:href="@{/addBook}">Add Book</a>
+<br>
 <br>
 
-<a th:href="@{/}">Back to index.</a>
+<a th:href="@{/addBook}">Add Book</a>
+
+<br>
+<br>
+
+<div>
+<button th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/user/msg/${user.id}'|">Trimite mesaj</button>
+</div>
+
+<br>
+
+<p><a th:href="@{/}">Back to index.</a></p>
+
 </body>
 </html>

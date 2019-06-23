@@ -13,6 +13,7 @@ import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,24 +31,6 @@ public class UserServiceImpl implements UserService {
         return authorities;
     }
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public void save(UserRegistrationDto userDto) throws Exception {
-
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setNickName(userDto.getNickName());
-        user.setLocation(userDto.getLocation());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRoles(Arrays.asList(roleService.createRoleIfNotFound("ROLE_USER")));
-        user.setPhoto(userDto.returnImage().getBytes());
-        userRepository.save(user);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -57,5 +40,29 @@ public class UserServiceImpl implements UserService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(),
                 getAuthorities(user));
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public User findById(Long id){return userRepository.findById(id).get();}
+
+    public void save(UserRegistrationDto userDto) throws Exception {
+
+        User user = new User();
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setNickname(userDto.getNickName());
+        user.setLocation(userDto.getLocation());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setRoles(Arrays.asList(roleService.createRoleIfNotFound("ROLE_USER")));
+        user.setPhoto(userDto.returnImage().getBytes());
+        userRepository.save(user);
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 }
