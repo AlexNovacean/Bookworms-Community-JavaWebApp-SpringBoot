@@ -19,8 +19,8 @@ public class BookDto {
     @NotEmpty
     @Size(min=2, max=100)
     private String authorName;
-    @Min(20)
-    @Max(9999)
+    @Min(value = 20)
+    @Max(value = 9999)
     private int numberOfPages;
     @NotEmpty
     private String type;

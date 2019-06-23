@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
@@ -17,6 +18,9 @@
 <div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}"></div>
 
 <a th:href="@{/addBook}">Add Book</a>
+<a th:href="@{/updateBook}">Update Book</a>
+<a th:href="@{/deleteBook}">Delete Book</a>
+
 <br>
 
 <a th:href="@{/}">Back to index.</a>
