@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import ro.sci.bookwormscommunity.model.Book;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ro.sci.bookwormscommunity.model.BookCondition;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.BookRepository;
@@ -21,41 +23,41 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/addBook")
 public class AddBookController {
-    private Logger logger = LoggerFactory.getLogger(AddBookController.class);
-
     @Autowired
     BookService bookService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     BookRepository bookRepository;
+    private Logger logger = LoggerFactory.getLogger(AddBookController.class);
 
     @ModelAttribute("book")
-    public BookDto book(){return new BookDto();}
+    public BookDto book() {
+        return new BookDto();
+    }
 
 
     @GetMapping
-    public String showSaveBookForm(Model model){
+    public String showSaveBookForm(Model model) {
 
-       model.addAttribute("conditions", BookCondition.values());
-        return "addBook";}
+        model.addAttribute("conditions", BookCondition.values());
+        return "addBook";
+    }
 
 
     @PostMapping
-    public String addBook (@ModelAttribute("book") @Valid BookDto bookdto, BindingResult result, Principal principal){
+    public String addBook(@ModelAttribute("book") @Valid BookDto bookdto, BindingResult result, Principal principal) {
 
         User user = userService.findByEmail(principal.getName());
 
         bookdto.setUser(user);
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             return "addBook";
         }
         try {
             bookService.save(bookdto);
         } catch (Exception e) {
-            logger.error("Error when saving the book: ",e);
+            logger.error("Error when saving the book: ", e);
         }
 
         return "redirect:/addBook?success";

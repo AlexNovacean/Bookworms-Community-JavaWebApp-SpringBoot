@@ -30,9 +30,9 @@ public class MainController {
     }
 
     @GetMapping("/showUsers")
-    public String showUsers(Model model){
+    public String showUsers(Model model) {
         List<User> users = userService.getAllUsers();
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
         return "showUsers";
     }
 }

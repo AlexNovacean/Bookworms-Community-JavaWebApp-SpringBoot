@@ -15,15 +15,15 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
-    public List<Book> findAll(){
+    public List<Book> findAll() {
         return bookRepository.findAll();
     }
 
-    public Optional<Book> findById(Long id){
+    public Optional<Book> findById(Long id) {
         return bookRepository.findById(id);
     }
 
-    public void save(BookDto bookdto) throws Exception{
+    public void save(BookDto bookdto) throws Exception {
         Book book = new Book();
         book.setBookName(bookdto.getBookName());
         book.setAuthorName(bookdto.getAuthorName());

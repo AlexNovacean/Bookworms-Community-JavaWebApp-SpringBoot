@@ -5,6 +5,11 @@
     <title>Texts</title>
 </head>
 <body>
+<p><a th:href="@{/}">Back to index.</a></p>
+<br>
+<h3 th:text="'Conversation between ' + ${conv.getFromUser().nickname} + ' and ' + ${conv.getToUser().nickname}">
+    Conversation</h3>
+<br>
 <table>
     <thead>
     <tr>
@@ -24,10 +29,13 @@
     </tr>
     </tbody>
 </table>
-
 <br>
-
-<p><a th:href="@{/}">Back to index.</a></p>
-
+<p style="color: green" th:if="${param.trimis}">Message Sent!</p>
+<br>
+<form method="post" th:action="@{/messages/{id}(id=${conv.id})}">
+    <textarea cols="50" name="content" rows="5"></textarea>
+    <br>
+    <input type="submit" value="Send"/>
+</form>
 </body>
 </html>

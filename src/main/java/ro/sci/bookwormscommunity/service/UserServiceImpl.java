@@ -20,8 +20,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RoleService roleService;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -42,12 +44,17 @@ public class UserServiceImpl implements UserService {
                 getAuthorities(user));
     }
 
+    @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public User findById(Long id){return userRepository.findById(id).get();}
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
+    }
 
+    @Override
     public void save(UserRegistrationDto userDto) throws Exception {
 
         User user = new User();
@@ -62,7 +69,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public List<User> getAllUsers(){
+    @Override
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 }

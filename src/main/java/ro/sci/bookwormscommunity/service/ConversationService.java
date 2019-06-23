@@ -17,20 +17,24 @@ public class ConversationService {
     @Autowired
     private UserService userService;
 
-    public Conversation startConversation(long toUserId, long fromUserId){
-        Conversation conversation = conversationRepository.getConversation(toUserId,fromUserId);
+    public Conversation startConversation(long toUserId, long fromUserId) {
+        Conversation conversation = conversationRepository.getConversation(toUserId, fromUserId);
 
-        if(conversation == null){
+        if (conversation == null) {
             User toUser = userService.findById(toUserId);
             User fromUser = userService.findById(fromUserId);
-            conversation = new Conversation(toUser,fromUser);
+            conversation = new Conversation(toUser, fromUser);
             conversationRepository.save(conversation);
         }
 
         return conversation;
     }
 
-    public List<Conversation> getUserConversations(long id){
+    public List<Conversation> getUserConversations(long id) {
         return conversationRepository.getConversations(id);
+    }
+
+    public Conversation findById(long id) {
+        return conversationRepository.findById(id).get();
     }
 }

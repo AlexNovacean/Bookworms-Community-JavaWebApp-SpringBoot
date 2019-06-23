@@ -50,7 +50,6 @@ public class UserController {
         return "mesaj";
     }
 
-    //TODO make sure you cannot send messages to yourself
 
     @PostMapping("user/msg/{id}")
     public String saveMsg(@PathVariable("id") long id, Model model, Principal principal, @ModelAttribute("msg") MessageDto dto) {

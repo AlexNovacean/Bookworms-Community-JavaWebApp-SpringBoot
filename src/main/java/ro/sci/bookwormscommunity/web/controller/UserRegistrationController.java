@@ -50,7 +50,7 @@ public class UserRegistrationController {
         try {
             userService.save(userDto);
         } catch (Exception e) {
-            logger.warn("An error occurred while saving the profile picture: ",e);
+            logger.warn("An error occurred while saving the profile picture: ", e);
         }
         return "redirect:/registration?success";
     }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
@@ -15,7 +15,8 @@
 <div th:text="'Last Name: ' + ${user.lastName}"></div>
 <div th:text="'E-mail: ' + ${user.email}"></div>
 <div th:text="'Location: ' + ${user.location}"></div>
-<div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}"></div>
+<div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}">
+</div>
 
 <br>
 <br>
@@ -26,7 +27,9 @@
 <br>
 
 <div>
-<button th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/user/msg/${user.id}'|">Trimite mesaj</button>
+    <button th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/user/msg/${user.id}'|">
+        Trimite mesaj
+    </button>
 </div>
 
 <br>

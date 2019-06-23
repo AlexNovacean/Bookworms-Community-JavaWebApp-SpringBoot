@@ -6,22 +6,22 @@
 </head>
 <body>
 <h1 style="max-width: 500px; margin: auto">Login page</h1>
-<form style="max-width: 500px; margin: auto" th:action="@{/login}" method="post">
+<form method="post" style="max-width: 500px; margin: auto" th:action="@{/login}">
     <p style="color: green" th:if="${param.logout}">You have been logged out.</p>
     <div style="color: red" th:if="${param.error}">Invalid username or password.</div>
     <div>
         <label for="username">Username</label>:
-        <input type="text" id="username" name="username" autofocus="autofocus" placeholder="Username" />
+        <input autofocus="autofocus" id="username" name="username" placeholder="Username" type="text"/>
     </div>
     <div>
         <label for="password">Password</label>:
-        <input type="password" id="password" name="password" />
+        <input id="password" name="password" type="password"/>
     </div>
     <div>
         <input type="submit" value="Log in"/>
     </div>
     <div>
-      New user? <a href="/" th:href="@{/registration}">Register here</a>
+        New user? <a href="/" th:href="@{/registration}">Register here</a>
     </div>
 </form>
 </body>

@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        .contentR{
+        .contentR {
             max-width: 500px;
             margin: auto;
             color: red;
         }
-        .contentB{
+
+        .contentB {
             max-width: 500px;
             margin: auto;
             color: blue;
@@ -19,75 +20,84 @@
 <body>
 <h1 style="max-width: 200px; margin: auto">Registration</h1>
 <p style="color: green; max-width: 500px; margin: auto" th:if="${param.success}">Registration Successful.</p>
-<form th:action="@{/registration}" th:object="${user}" method="post" enctype="multipart/form-data">
+<form enctype="multipart/form-data" method="post" th:action="@{/registration}" th:object="${user}">
     <table style="max-width: 500px; margin: auto">
         <tr>
-            <td class="contentR" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation Error</td>
+            <td class="contentR" th:each="error : ${#fields.errors('global')}" th:if="${#fields.hasGlobalErrors()}"
+                th:text="${error}">Validation Error
+            </td>
         </tr>
         <tr>
             <td>First Name:</td>
-            <td><input type="text" th:field="*{firstName}"/></td>
+            <td><input th:field="*{firstName}" type="text"/></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</td>
+            <td class="contentR" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}">First Name Error
+            </td>
         </tr>
         <tr>
             <td>Last Name:</td>
-            <td><input type="text" th:field="*{lastName}"/></td>
+            <td><input th:field="*{lastName}" type="text"/></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</td>
+            <td class="contentR" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}">Last Name Error</td>
         </tr>
         <tr>
             <td>Nick Name:</td>
-            <td><input type="text" th:field="*{nickName}"/></td>
+            <td><input th:field="*{nickName}" type="text"/></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('nickName')}" th:errors="*{nickName}">Nick Name Error</td>
+            <td class="contentR" th:errors="*{nickName}" th:if="${#fields.hasErrors('nickName')}">Nick Name Error</td>
         </tr>
         <tr>
             <td>Location(City):</td>
-            <td><input type="text" th:field="*{location}"/></td>
+            <td><input th:field="*{location}" type="text"/></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('location')}" th:errors="*{location}">Location Error</td>
+            <td class="contentR" th:errors="*{location}" th:if="${#fields.hasErrors('location')}">Location Error</td>
         </tr>
         <tr>
             <td>E-mail :</td>
-            <td><input type="text" th:field="*{email}"/></td>
+            <td><input th:field="*{email}" type="text"/></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">E-mail Error</td>
+            <td class="contentR" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">E-mail Error</td>
         </tr>
         <tr>
             <td>Confirm e-mail :</td>
-            <td><input type="text" th:field="*{confirmEmail}"/></td>
+            <td><input th:field="*{confirmEmail}" type="text"/></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('confirmEmail')}" th:errors="*{confirmEmail}">Confirm E-mail Error</td>
+            <td class="contentR" th:errors="*{confirmEmail}" th:if="${#fields.hasErrors('confirmEmail')}">Confirm E-mail
+                Error
+            </td>
         </tr>
         <tr>
             <td>Password:</td>
-            <td><input type="password" th:field="*{password}"/></td>
+            <td><input th:field="*{password}" type="password"/></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+            <td class="contentR" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Password Error</td>
         </tr>
         <tr>
             <td>Confirm password:</td>
-            <td><input type="password" th:field="*{confirmPassword}"/></td>
+            <td><input th:field="*{confirmPassword}" type="password"/></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Confirm Password Error</td>
+            <td class="contentR" th:errors="*{confirmPassword}" th:if="${#fields.hasErrors('confirmPassword')}">Confirm
+                Password Error
+            </td>
         </tr>
         <tr>
-            <td><input type="file" th:field="*{image}"></td>
+            <td><input th:field="*{image}" type="file"></td>
         </tr>
         <tr>
-            <td class="contentR" th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image Error</td>
+            <td class="contentR" th:errors="*{image}" th:if="${#fields.hasErrors('image')}">Image Error</td>
         </tr>
         <tr>
-            <td><button type="submit">Register</button></td>
+            <td>
+                <button type="submit">Register</button>
+            </td>
             <td class="contentB">Already registered? <a href="/" th:href="@{/login}">Login here</a></td>
         </tr>
     </table>

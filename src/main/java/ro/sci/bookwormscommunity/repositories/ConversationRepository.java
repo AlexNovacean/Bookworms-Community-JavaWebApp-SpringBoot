@@ -27,4 +27,5 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
             "OR " +
             "c.fromUser.id = :userId")
     List<Conversation> getConversations(@Param("userId") long userId);
+
 }
