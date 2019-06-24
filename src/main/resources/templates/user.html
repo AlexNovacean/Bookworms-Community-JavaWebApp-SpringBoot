@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>User Profile</title>
 </head>
 <body>
 <h1 th:text="${user.nickname} + '\'s profile.'"></h1>
@@ -16,31 +13,27 @@
 <div th:text="'Last Name: ' + ${user.lastName}"></div>
 <div th:text="'E-mail: ' + ${user.email}"></div>
 <div th:text="'Location: ' + ${user.location}"></div>
-<div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}">
-</div>
-
-<br>
-<br>
-
 <div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}"></div>
 
-<a th:href="@{/addBook}">Add Book</a>
-<a th:href="@{/updateBook}">Update Book</a>
-<a th:href="@{/deleteBook}">Delete Book</a>
+<br>
+<br>
 
+<p><a th:href="@{/addBook}">Add Book</a></p>
+<p><a th:href="@{/updateBook}">Update Book</a></p>
+<p><a th:href="@{/deleteBook}">Delete Book</a></p>
 
 <br>
 <br>
 
 <div>
-    <button th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/user/msg/${user.id}'|">
+    <button th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">
         Trimite mesaj
     </button>
 </div>
 
 <br>
+<br>
 
 <p><a th:href="@{/}">Back to index.</a></p>
-
 </body>
 </html>

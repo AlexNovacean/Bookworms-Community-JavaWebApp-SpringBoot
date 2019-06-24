@@ -11,12 +11,10 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Transactional
-    @Query(value = "SELECT * FROM " +
-            "messages AS m, conversation AS c, messages_conversation AS mc " +
+    @Query("SELECT m FROM " +
+            "Message AS m " +
             "WHERE " +
-            "m.id=mc.message_id AND " +
-            "c.id=mc.conversation_id AND " +
-            "c.id= :convId", nativeQuery = true)
+            "m.conversation.id = :convId")
     List<Message> getUserMessages(@Param("convId") long convId);
 
 }
