@@ -40,6 +40,8 @@ public class UserController {
     @GetMapping("/user/{id}")
     public String seeUserProfile(@PathVariable("id") long id, Model model, Principal principal) {
         User user = userService.findById(id);
+        List<Book> books = bookService.getUserBooks(user.getId());
+        model.addAttribute("books",books);
         model.addAttribute("user", user);
         model.addAttribute("principal", principal);
         return "user";

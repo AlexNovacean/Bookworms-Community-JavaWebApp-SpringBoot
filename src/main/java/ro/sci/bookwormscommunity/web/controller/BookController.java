@@ -95,6 +95,9 @@ public class BookController {
         return "redirect:/communityBooks";
     }
 
+
+    //TODO fix it; a new book is added; it does not update the book
+
     //update a book
     @GetMapping("/updateBook/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
