@@ -36,7 +36,7 @@
                     </h6>
                 </div>
                 <p style="color: green" th:if="${param.sent}">You message has been sent!</p>
-                <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/user/msg/${user.id}'|">Send message</button>
+                <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">Send message</button>
             </div>
         </div>
                 <table class="table">

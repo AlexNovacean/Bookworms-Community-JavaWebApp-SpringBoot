@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookServiceImpl {
+public class BookServiceImpl implements BookService{
 
     @Autowired
     BookRepository bookRepository;

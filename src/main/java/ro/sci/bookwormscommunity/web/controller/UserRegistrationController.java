@@ -22,8 +22,12 @@ public class UserRegistrationController {
 
     private Logger logger = LoggerFactory.getLogger(UserRegistrationController.class);
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserRegistrationController(UserService userService){
+        this.userService = userService;
+    }
 
     @ModelAttribute("user")
     public UserRegistrationDto userRegistrationDto() {
