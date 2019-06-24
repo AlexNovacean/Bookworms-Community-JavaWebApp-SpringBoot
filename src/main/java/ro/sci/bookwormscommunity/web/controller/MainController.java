@@ -21,7 +21,7 @@ public class MainController {
         String email = principal.getName();
         User user = userService.findByEmail(email);
         model.addAttribute(user);
-        return "index";
+        return "Home";
     }
 
     @GetMapping("/login")

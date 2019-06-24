@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileInputStream;
 
 public class BookDto {
+
+    private Long id;
     @NotEmpty
     @Size(min = 2, max = 100)
     private String bookName;
@@ -27,6 +29,7 @@ public class BookDto {
     @NotEmpty
     private String language;
     @NotEmpty
+    @Size(max = 3000, message = "Description must not exceed 3000 characters!")
     private String description;
     private String condition;
     private boolean bookRent;
@@ -37,6 +40,14 @@ public class BookDto {
     private MultipartFile photo;
 
     private User user;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public User getUser() {
         return user;

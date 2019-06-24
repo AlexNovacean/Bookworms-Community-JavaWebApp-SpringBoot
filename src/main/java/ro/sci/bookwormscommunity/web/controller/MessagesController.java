@@ -47,7 +47,7 @@ public class MessagesController {
     public String sendMessage(@PathVariable("id") long id, Model model, @ModelAttribute("msg") MessageDto messageDto, Principal principal) {
         List<Message> texts = messageService.saveAndRetrieve(id, messageDto, principal);
         model.addAttribute("texts", texts);
-        return "redirect:/messages/" + id + "?trimis";
+        return "redirect:/messages/" + id + "?sent";
     }
 
 }

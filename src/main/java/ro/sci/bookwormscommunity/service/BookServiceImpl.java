@@ -62,6 +62,10 @@ public class BookServiceImpl {
         book.setUser(bookdto.getUser());
         bookRepository.save(book);
     }
+
+    public List<Book> getUserBooks(long id){
+        return bookRepository.getUserBooks(id);
+    }
 }
 
 

@@ -25,7 +25,7 @@
     <tr th:each="text : ${texts}">
         <td><span th:text="${#dates.format(text.sentDate, 'dd-MMM HH:mm')}"> Date </span></td>
         <td><span th:text="${text.getFromUser().nickname}"> Sender </span></td>
-        <td><span th:text="${text.content}"> Content </span></td>
+        <td><span data-th-utext="${#strings.replace(#strings.escapeXml(text.content),'&#10;','&lt;br&gt;')}"> Content </span></td>
     </tr>
     </tbody>
 </table>

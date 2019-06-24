@@ -1,0 +1,415 @@
+<!doctypeHTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head>	
+	<title>Bookworms Comunity</title><!-- Page title -->
+		<link href="static/css/style.css" media="all" rel="stylesheet" th:href="@{../css/style.css}" type="text/css">
+		<link href="static/css/rating.css" media="all" rel="stylesheet" th:href="@{../css/rating.css}" type="text/css">
+		<meta name="viewport" content-type="width=device-width initial-scale=1">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		  <div class="card img-fluid" style="width:1600px">
+			  <img class="card-img-top" src="static/images/headerv4.jpg" style="max-width:100%" th:src="@{../images/headerv4.jpg}">
+   			 <div class="card-img-overlay">
+   			 	<div class="Header">
+      			<h1>Bookworms Community</h1><!-- Heather title -->
+      				<h6><p>The place were bookworms meet and wormnomnom!</p></h6>
+				</div>
+				</div>
+			</div>
+		<div id="header">
+			<ul id="navigation"><!--Navigation bar -->
+				<script>
+				$(document).ready(function(){
+  				$('[data-toggle="tooltip"]').tooltip();   
+				});
+				</script>
+				<li><a class="#" href="topRated.html" data-toggle="tooltip" data-placement="bottom" title="Top Rated Books for Bookworms">Top Rated Books</a></li>
+				<li><a class="#" href="latestBooks.html" data-toggle="tooltip" data-placement="bottom" title="Latest Books added to our collection">Latest Books</a></li>
+				<li><a class="#" href="buyABook.html" data-toggle="tooltip" data-placement="bottom" title="Buy a book from a bookworm">Buy a book</a></li>
+				<li><a class="#" href="rentABook.html" data-toggle="tooltip" data-placement="bottom" title="Rent a book from a bookworm">Rent a book</a></li>
+				<li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks}" title="A list of all the books">Community Books</a></li>
+				<li style="float:right">
+				<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+				  <form class="form-inline" action="search.html">
+				    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+				    <button class="btn btn-success" type="submit">Search</button>
+				  </form>
+				</nav>
+				</li>
+				<!--User bar -->
+				<li sec:authorize="isAnonymous()" style="float:right"><a class="Log In" th:href="@{/login}" data-toggle="tooltip" data-placement="bottom" title="Log In"><i class="fa fa-sign-in"></i></a></li>
+				<li sec:authorize="isAuthenticated()" style="float:right"><a class="Log Out" th:href="@{/logout}" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="fa fa-sign-out"></i></a></li>
+				<li sec:authorize="isAuthenticated()" style="float:right"><a class="User profile" th:href="@{/user/{id}(id=${user.id})}" data-toggle="tooltip" data-placement="bottom" title="My profile" ><i class="fa fa-user"></i></a></li>
+				<li sec:authorize="isAuthenticated()" style="float:right"><a class="Messages" th:href="@{/messages}" data-toggle="tooltip" data-placement="bottom" title="My messages" ><i class="fa fa-envelope"></i></a></li>
+			</ul>
+		</div>
+		<!--End of navigation bar -->
+		<div class="container">
+		  <div class="row">
+		    <div class="col-sm-4">
+		      <h3>Top Rated Books</h3>
+		        <table class="table">
+				    <thead>
+				      <tr>
+				        <th>Book</th>
+				        <th>Author</th>
+				        <th>Rating</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>Default</td>
+				        <td>Defaultson</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							</div>
+						</td>
+				      </tr>      
+				      <tr class="table-primary">
+				        <td>Primary</td>
+				        <td>Joe</td>
+						<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-success">
+				        <td>Success</td>
+				        <td>Doe</td>
+				        	<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-danger">
+				        <td>Danger</td>
+				        <td>Moe</td>
+				        	<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-info">
+				        <td>Info</td>
+				        <td>Dooley</td>
+				        	<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-warning">
+				        <td>Warning</td>
+				        <td>Refs</td>
+				        	<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-active">
+				        <td>Active</td>
+				        <td>Activeson</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-secondary">
+				        <td>Secondary</td>
+				        <td>Secondson</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-light">
+				        <td>Light</td>
+				        <td>Angie</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-dark text-dark">
+				        <td>Dark</td>
+				        <td>Bo</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				    </tbody>
+				  </table>
+		    </div>
+		    <div class="col-sm-4">
+		      <h3>Latest Books Added</h3>
+		      <table class="table">
+				    <thead>
+				      <tr>
+				        <th>Book</th>
+				        <th>Author</th>
+				        <th>User</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr>
+				        <td>Default</td>
+				        <td>Defaultson</td>
+				        <td>nickname</td>
+				      </tr>      
+				      <tr class="table-primary">
+				        <td>Primary</td>
+				        <td>Joe</td>
+				        <td>nickname</td>
+				      </tr>
+				      <tr class="table-success">
+				        <td>Success</td>
+				        <td>Doe</td>
+				        <td>nickname</td>
+				      </tr>
+				      <tr class="table-danger">
+				        <td>Danger</td>
+				        <td>Moe</td>
+				        <td>nickname</td>
+				      </tr>
+				      <tr class="table-info">
+				        <td>Info</td>
+				        <td>Dooley</td>
+				        <td>nickname</td>
+				      </tr>
+				      <tr class="table-warning">
+				        <td>Warning</td>
+				        <td>Refs</td>
+				        <td>nickname</td>
+				      </tr>
+				      <tr class="table-active">
+				        <td>Active</td>
+				        <td>Activeson</td>
+				        <td>nickname</td>
+				      </tr>
+				      <tr class="table-secondary">
+				        <td>Secondary</td>
+				        <td>Secondson</td>
+				        <td>nickname</td>
+				      </tr>
+				      <tr class="table-light">
+				        <td>Light</td>
+				        <td>Angie</td>
+				        <td>nickname</td>
+				      </tr>
+				      <tr class="table-dark text-dark">
+				        <td>Dark</td>
+				        <td>Bo</td>
+				        <td>nickname</td>
+				      </tr>
+				    </tbody>
+				  </table>
+		    </div>
+		    <div class="col-sm-4">
+		      <h3>Top Rated Bookworms</h3>        
+				  <table class="table">
+				    <thead>
+				      <tr>
+				        <th>Nickname</th>
+				        <th>Rating</th>
+				      </tr>
+				    </thead>
+				    				    <tbody>
+				      <tr>
+				        <td>Default</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							</div>
+						</td>
+				      </tr>      
+				      <tr class="table-primary">
+				        <td>Primary</td>
+						<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-success">
+				        <td>Success</td>
+				        	<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-danger">
+				        <td>Danger</td>
+				        	<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-info">
+				        <td>Info</td>
+				        	<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-warning">
+				        <td>Warning</td>
+				        	<td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-active">
+				        <td>Active</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-secondary">
+				        <td>Secondary</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-light">
+				        <td>Light</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				      <tr class="table-dark text-dark">
+				        <td>Dark</td>
+				        <td>		      
+				        	<div class="rating">
+					        <span class="fa fa-star checked"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							<span class="fa fa-star"></span>
+							</div>
+						</td>
+				      </tr>
+				    </tbody>
+				  </table>
+		    </div>
+		  </div>
+		</div>
+		  <!--Footer -->
+		  <div id="footer">
+			  <div class="card img-fluid" style="width:1600px">
+				  <img class="card-img-top" src="static/images/Footerv2.jpg" style="width:100%"
+					   th:src="@{../images/Footerv2.jpg}">
+				  <div class="card-img-overlay">
+					  <div class="text-right" style="margin-bottom:0">
+						  <h6>Bookworms Community</h6>
+						  <p>&copy; Copyright AIRS 2019 All Rights Reserved.</p>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+	</body>
+</html>

@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ro.sci.bookwormscommunity.mapper.BookMapper;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.BookCondition;
 import ro.sci.bookwormscommunity.model.User;
-import ro.sci.bookwormscommunity.repositories.BookRepository;
 import ro.sci.bookwormscommunity.service.BookServiceImpl;
 import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
@@ -88,7 +88,8 @@ public class BookController {
     @GetMapping("/updateBook/{id}")
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         Optional<Book> book = bookServiceImpl.getBookById(id);
-        model.addAttribute("book", book.get());
+        BookDto bookDto = BookMapper.mapBookToBookDto(book.get());
+        model.addAttribute("book", bookDto);
         model.addAttribute("conditions", BookCondition.values());
         return "updateBook";
     }

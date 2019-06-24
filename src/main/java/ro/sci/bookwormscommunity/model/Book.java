@@ -19,6 +19,7 @@ public class Book {
     private int numberOfPages;
     private String type;
     private String language;
+    @Column(length = 3000)
     private String description;
     private String condition;
     private boolean bookRent;
@@ -27,9 +28,8 @@ public class Book {
     private double rentPrice;
     @Lob
     private byte[] image;
+
     @ManyToOne
-    @JoinTable(name = "book_user", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private User user;
 
     public User getUser() {

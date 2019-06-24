@@ -10,4 +10,5 @@ public interface BookService {
     public abstract void saveBook(Book book);
     public abstract void updateBook(Book book);
     public abstract void deleteBook(Book book);
+    List<Book> getUserBooks(long id);
 }
