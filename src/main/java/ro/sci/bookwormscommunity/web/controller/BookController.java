@@ -2,7 +2,6 @@ package ro.sci.bookwormscommunity.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,13 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.*;
 import ro.sci.bookwormscommunity.mapper.BookMapper;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.BookCondition;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.BookService;
-import ro.sci.bookwormscommunity.service.BookServiceImpl;
 import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
@@ -40,7 +37,9 @@ public class BookController {
 
 
     @ModelAttribute("book")
-    public BookDto book(){return new BookDto();}
+    public BookDto book() {
+        return new BookDto();
+    }
 
     //list all books
     @GetMapping("/communityBooks")
@@ -101,7 +100,6 @@ public class BookController {
     public String showUpdateForm(@PathVariable("id") Long id, Model model) {
         Optional<Book> book = bookService.getBookById(id);
         model.addAttribute("book", book.get());
-        Optional<Book> book = bookService.getBookById(id);
         BookDto bookDto = BookMapper.mapBookToBookDto(book.get());
         model.addAttribute("book", bookDto);
         model.addAttribute("conditions", BookCondition.values());

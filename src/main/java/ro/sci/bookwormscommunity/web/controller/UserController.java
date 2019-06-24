@@ -6,14 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.*;
 import ro.sci.bookwormscommunity.model.Book;
-import ro.sci.bookwormscommunity.model.Conversation;
-import ro.sci.bookwormscommunity.model.Message;
 import ro.sci.bookwormscommunity.model.User;
-import ro.sci.bookwormscommunity.service.BookServiceImpl;
-import ro.sci.bookwormscommunity.service.ConversationService;
-import ro.sci.bookwormscommunity.service.MessageService;
+import ro.sci.bookwormscommunity.service.BookService;
 import ro.sci.bookwormscommunity.service.UserService;
 
 import java.security.Principal;
@@ -24,20 +19,19 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private BookService bookService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService, BookService bookService) {
         this.userService = userService;
+        this.bookService = bookService;
     }
-
-    @Autowired
-    private BookServiceImpl bookServiceImpl;
 
     @GetMapping
     public String userProfile(Model model, Principal principal) {
         User user = userService.findByEmail(principal.getName());
-        List<Book> books = bookServiceImpl.getUserBooks(user.getId());
-        model.addAttribute("books",books);
+        List<Book> books = bookService.getUserBooks(user.getId());
+        model.addAttribute("books", books);
         model.addAttribute("user", user);
         model.addAttribute("principal", principal);
         return "user";
