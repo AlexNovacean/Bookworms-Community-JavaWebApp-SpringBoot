@@ -16,7 +16,7 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private String nickName;
+    private String nickname;
     private String location;
 
     @Lob
@@ -35,19 +35,23 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String nickName, String location) {
-        this.nickName = nickName;
+    public User(Long id) {
+        this.id = id;
+    }
+
+    public User(String firstName, String lastName, String email, String nickname, String location) {
+        this.nickname = nickname;
         this.location = location;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public User(String firstName, String lastName, String email, String nickName, String location, String password, byte[] photo, Collection<Role> roles) {
+    public User(String firstName, String lastName, String email, String nickname, String location, String password, byte[] photo, Collection<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.location = location;
         this.password = password;
         this.photo = photo;
@@ -115,12 +119,12 @@ public class User {
         this.roles = roles;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getLocation() {

@@ -7,25 +7,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import ro.sci.bookwormscommunity.model.Role;
 import ro.sci.bookwormscommunity.model.User;
-import ro.sci.bookwormscommunity.repositories.RoleRepository;
 import ro.sci.bookwormscommunity.repositories.UserRepository;
 import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    RoleService roleService;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -34,34 +31,6 @@ public class UserServiceImpl implements UserService {
         String[] userRoles = user.getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
         return authorities;
-    }
-
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public void save(UserRegistrationDto userDto) throws Exception {
-
-
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setNickName(userDto.getNickName());
-        user.setLocation(userDto.getLocation());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRoles(Arrays.asList(createRoleIfNotFound("ROLE_USER")));
-        user.setPhoto(userDto.getImage().getBytes());
-        userRepository.save(user);
-    }
-
-    private Role createRoleIfNotFound(String name) {
-        Role role = roleRepository.findByName(name);
-        if (role == null) {
-            role = new Role(name);
-            roleRepository.save(role);
-        }
-        return role;
     }
 
     @Override
@@ -73,5 +42,35 @@ public class UserServiceImpl implements UserService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(),
                 getAuthorities(user));
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
+    }
+
+    @Override
+    public void save(UserRegistrationDto userDto) throws Exception {
+
+        User user = new User();
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setNickname(userDto.getNickName());
+        user.setLocation(userDto.getLocation());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setRoles(Arrays.asList(roleService.createRoleIfNotFound("ROLE_USER")));
+        user.setPhoto(userDto.returnImage().getBytes());
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

@@ -1,12 +1,15 @@
 package ro.sci.bookwormscommunity.web.dto;
 
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sci.bookwormscommunity.validators.FieldMatch;
+import ro.sci.bookwormscommunity.validators.ValidPhoto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.File;
+import java.io.FileInputStream;
 
 
 @FieldMatch.List({
@@ -15,35 +18,34 @@ import java.io.File;
 })
 public class UserRegistrationDto {
 
-    @NotEmpty
+    @NotEmpty(message = "Plese provice your First Name")
     private String firstName;
 
-    @NotEmpty
+    @NotEmpty(message = "Please provide your Last Name")
     private String lastName;
 
-    @NotEmpty
-    @Size(min = 4, max = 32)
+    @NotEmpty(message = "Please provide a Nickname")
+    @Size(min = 4, max = 32, message = "Nickname size must be between 4 and 32")
     private String nickName;
 
-    @NotEmpty
+    @NotEmpty(message = "Please provided the name of the city you live in")
     private String location;
 
-    @NotEmpty
-    @Size(min = 6, max = 16)
+    @NotEmpty(message = "Please provide a password")
+    @Size(min = 6, max = 16, message = "Password must be between 6 and 16 characters")
     private String password;
 
-    @NotEmpty
-    @Size(min = 6, max = 16)
+    @NotEmpty(message = "Please confirm your password")
     private String confirmPassword;
 
-    @Email
-    @NotEmpty
+    @Email(message = "Please provide a valid email address")
+    @NotEmpty(message = "Please provide an email address")
     private String email;
 
-    @Email
-    @NotEmpty
+    @Email(message = "Please confirm you email")
     private String confirmEmail;
 
+    @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB.")
     private MultipartFile image;
 
     public MultipartFile getImage() {
@@ -52,6 +54,13 @@ public class UserRegistrationDto {
 
     public void setImage(MultipartFile image) {
         this.image = image;
+    }
+
+    public MultipartFile returnImage() throws Exception {
+        if (image.isEmpty()) {
+            return new MockMultipartFile("default-picture.png", new FileInputStream(new File("src/main/resources/static/images/default-picture.png")));
+        }
+        return image;
     }
 
     public String getFirstName() {
