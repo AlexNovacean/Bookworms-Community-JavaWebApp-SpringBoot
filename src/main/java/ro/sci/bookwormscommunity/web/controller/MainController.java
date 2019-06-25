@@ -23,9 +23,10 @@ public class MainController {
 
     @GetMapping("")
     public String root(Model model, Principal principal) {
-        String email = principal.getName();
-        User user = userService.findByEmail(email);
-        model.addAttribute(user);
+        if (principal != null) {
+            User user = userService.findByEmail(principal.getName());
+            model.addAttribute("user", user);
+        }
         return "Home";
     }
 
