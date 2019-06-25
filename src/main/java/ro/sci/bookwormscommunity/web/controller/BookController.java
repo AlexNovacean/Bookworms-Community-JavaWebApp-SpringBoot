@@ -2,6 +2,7 @@ package ro.sci.bookwormscommunity.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -26,15 +28,11 @@ public class BookController {
 
     private Logger logger = LoggerFactory.getLogger(BookController.class);
 
+    @Autowired
     private BookService bookService;
+
+    @Autowired
     private UserService userService;
-
-
-    public BookController(BookService bookService, UserService userService) {
-        this.bookService = bookService;
-        this.userService = userService;
-    }
-
 
     @ModelAttribute("book")
     public BookDto book() {
@@ -95,34 +93,28 @@ public class BookController {
         return "redirect:/communityBooks";
     }
 
-
-    //TODO fix it; a new book is added; it does not update the book
-
     //update a book
     @GetMapping("/updateBook/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") Long id, Model model, @ModelAttribute("book") BookDto bookDto) throws IOException {
         Optional<Book> book = bookService.getBookById(id);
-        model.addAttribute("book", book.get());
-        BookDto bookDto = BookMapper.mapBookToBookDto(book.get());
-        model.addAttribute("book", bookDto);
+        model.addAttribute("book", BookMapper.mapBookToBookDto(book.get(), bookDto));
         model.addAttribute("conditions", BookCondition.values());
         return "updateBook";
     }
 
-    @PostMapping("/updateBook/{id}")
-    public String updateBook(@PathVariable("id") Long id, @Valid BookDto bookdto, BindingResult result, Principal principal) {
+    @PostMapping("/edit/{id}")
+    public String updateBook(@PathVariable("id") Long id, @ModelAttribute("book") @Valid BookDto bookdto, BindingResult result, Principal principal) {
         User user = userService.findByEmail(principal.getName());
         bookdto.setUser(user);
         if (result.hasErrors()) {
             return "updateBook";
         }
         try {
-            bookService.saveBook(bookdto);
+            bookService.updateBook(id, bookdto);
         } catch (Exception e) {
             logger.error("Error when saving the book: ", e);
         }
         return "redirect:/communityBooks";
 
     }
-
 }

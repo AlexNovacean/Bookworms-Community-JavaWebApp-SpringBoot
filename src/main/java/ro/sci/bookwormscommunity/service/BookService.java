@@ -1,5 +1,6 @@
 package ro.sci.bookwormscommunity.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
@@ -13,7 +14,8 @@ public interface BookService {
 
     void saveBook(BookDto bookDto) throws Exception;
 
-    void updateBook(BookDto bookDto) throws Exception;
+    @Transactional
+    void updateBook(long id, BookDto bookDto) throws Exception;
 
     void deleteBook(Book book);
 

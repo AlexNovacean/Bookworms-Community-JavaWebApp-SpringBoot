@@ -1,6 +1,5 @@
 package ro.sci.bookwormscommunity.web.dto;
 
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sci.bookwormscommunity.validators.FieldMatch;
 import ro.sci.bookwormscommunity.validators.ValidPhoto;
@@ -8,15 +7,15 @@ import ro.sci.bookwormscommunity.validators.ValidPhoto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.io.File;
-import java.io.FileInputStream;
-
+import java.io.IOException;
+import java.util.Base64;
 
 @FieldMatch.List({
         @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
-        @FieldMatch(first = "email", second = "confirmEmail", message = "The email fields must match")
 })
-public class UserRegistrationDto {
+public class UserDto {
+
+    private long id;
 
     @NotEmpty(message = "Please provide your First Name")
     private String firstName;
@@ -26,41 +25,28 @@ public class UserRegistrationDto {
 
     @NotEmpty(message = "Please provide a Nickname")
     @Size(min = 4, max = 32, message = "Nickname size must be between 4 and 32")
-    private String nickName;
+    private String nickname;
 
-    @NotEmpty(message = "Please provided the name of the city you live in")
-    private String location;
-
-    @NotEmpty(message = "Please provide a password")
-    @Size(min = 6, max = 16, message = "Password must be between 6 and 16 characters")
     private String password;
 
-    @NotEmpty(message = "Please confirm your password")
     private String confirmPassword;
 
     @Email(message = "Please provide a valid email address")
     @NotEmpty(message = "Please provide an email address")
     private String email;
 
-    @Email(message = "Please confirm you email")
-    private String confirmEmail;
+    @NotEmpty(message = "Please provided the name of the city you live in")
+    private String location;
 
     @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB.")
-    private MultipartFile image;
+    private MultipartFile photo;
 
-    public MultipartFile getImage() {
-        return image;
+    public long getId() {
+        return id;
     }
 
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
-
-    public MultipartFile returnImage() throws Exception {
-        if (image.isEmpty()) {
-            return new MockMultipartFile("default-picture.png", new FileInputStream(new File("src/main/resources/static/images/default-picture.png")));
-        }
-        return image;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -79,20 +65,12 @@ public class UserRegistrationDto {
         this.lastName = lastName;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPassword() {
@@ -119,11 +97,30 @@ public class UserRegistrationDto {
         this.email = email;
     }
 
-    public String getConfirmEmail() {
-        return confirmEmail;
+    public String getLocation() {
+        return location;
     }
 
-    public void setConfirmEmail(String confirmEmail) {
-        this.confirmEmail = confirmEmail;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public MultipartFile getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(MultipartFile photo) {
+        this.photo = photo;
+    }
+
+    public byte[] returnUpdatePhoto(byte[] image) throws IOException {
+        if (!photo.isEmpty()) {
+            return photo.getBytes();
+        }
+        return image;
+    }
+
+    public String returnPhotoAsString() throws IOException {
+        return Base64.getEncoder().encodeToString(photo.getBytes());
     }
 }

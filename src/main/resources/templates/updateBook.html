@@ -1,223 +1,71 @@
-<!doctypeHTML>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Update a community book</title> <!-- Page title -->
-    <link href="static/css/style.css" media="all" rel="stylesheet" th:href="@{../css/style.css}" type="text/css">
-    <link href="static/css/rating.css" media="all" rel="stylesheet" th:href="@{../css/rating.css}" type="text/css">
-    <meta content-type="width=device-width initial-scale=1" name="viewport">
-    <meta charset="utf-8">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Book Edit</title>
 </head>
 <body>
-<div class="card img-fluid" style="width:1600px">
-    <img class="card-img-top" src="static/images/headerv4.jpg" style="max-width:100%" th:src="@{../images/headerv4.jpg}">
-    <div class="card-img-overlay">
-        <div class="Header">
-            <h1>Bookworms Community</h1><!-- Heather title -->
-            <h6><p>The place were bookworms meet and wormnomnom!</p></h6>
-        </div>
-    </div>
-</div>
-<div id="header">
-    <ul id="navigation"><!--Navigation bar -->
-        <script>
-			    	$(document).ready(function(){
-	  				$('[data-toggle="tooltip"]').tooltip();
-					});
-        </script>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="topRated.html"
-               title="Top Rated Books for Bookworms">Top Rated Books</a></li>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="latestBooks.html"
-               title="Latest Books added to our collection">Latest Books</a></li>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="buyABook.html"
-               title="Buy a book from a bookworm">Buy a book</a></li>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="rentABook.html"
-               title="Rent a book from a bookworm">Rent a book</a></li>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks}"
-               title="A list of all the books">Community Books</a></li>
-        <li style="float:right">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <form action="search.html" class="form-inline">
-                <input class="form-control mr-sm-2" placeholder="Search" type="text">
-                <button class="btn btn-success" type="submit">Search</button>
-            </form>
-        </nav>
-        </li>
-        <!--User bar -->
-        <li sec:authorize="isAnonymous()" style="float:right"><a class="Log In" th:href="@{/login}" data-toggle="tooltip" data-placement="bottom" title="Log In"><i class="fa fa-sign-in"></i></a></li>
-        <li sec:authorize="isAuthenticated()" style="float:right"><a class="Log Out" th:href="@{/logout}" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="fa fa-sign-out"></i></a></li>
-        <li style="float:right"><a class="User profile" th:href="@{/user}" data-toggle="tooltip" data-placement="bottom" title="My profile" ><i class="fa fa-user"></i></a></li>
-        <li sec:authorize="isAuthenticated()" style="float:right"><a class="Messages" th:href="@{/messages}" data-toggle="tooltip" data-placement="bottom" title="My messages" ><i class="fa fa-envelope"></i></a></li>
-    </ul>
-</div>
-<!--End of navigation bar -->
-<br>
-
-<div class="container">
-    <h2>Make the Community richer with a new book</h2>
-    <br>
-    <form method="post" th:action="@{/updateBook/{id}(id=${book.id})}" th:object="${book}" enctype="multipart/form-data">
-        <p class="alert alert-success text-center" th:if="${param.success}">Book has been added!</p>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Book's Name</span>
-            </div>
-            <input class="form-control" placeholder="Enter the book's name" th:field="*{bookName}" type="text"/>
-        </div>
-        <p class="contentR" th:errors="*{bookName}" th:if="${#fields.hasErrors('bookName')}">Book Name Error</p>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Author's Name</span>
-            </div>
-            <input class="form-control" placeholder="Enter the author's name" th:field="*{authorName}" type="text"/>
-        </div>
-        <p class="contentR" th:errors="*{authorName}" th:if="${#fields.hasErrors('authorName')}">Author Name Error</p>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Type</span>
-            </div>
-            <input class="form-control" placeholder="Enter the book's type" th:field="*{type}" type="text"/>
-        </div>
-        <p class="contentR" th:errors="*{type}" th:if="${#fields.hasErrors('type')}">Book type Error</p>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Language</span>
-            </div>
-            <input class="form-control" placeholder="Enter the book's language" th:field="*{language}" type="text"/>
-        </div>
-        <p class="contentR" th:errors="*{language}" th:if="${#fields.hasErrors('language')}">Book language Error</p>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Number of pages</span>
-            </div>
-            <input class="form-control" placeholder="How many pages does it have?" th:field="*{numberOfPages}"
-                   type="text"/>
-        </div>
-        <p class="contentR" th:errors="*{numberOfPages}" th:if="${#fields.hasErrors('numberOfPages')}">Book number of
-            pages Error</p>
-        <div class="row row-no-gutters">
-            <div class="col-md-6">
-                <br>
-                <div class="container mt-3">
-                    <h5>Book condition</h5>
-                    <select class="form-control custom-select" th:field="*{condition}">
-                        <option
-                                th:each="condition: ${conditions}"
-                                th:text=${condition.getCondition()}
-                                th:value="${condition}">
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <br>
-                <br>
-                <div class="forRent" style="float:right">
-                    <div class="checkbox checkbox-primary">
-                        <input th:field="*{bookRent}" type="checkbox">
-                        <b><label th:for="bookRent" th:text="'Is book for rent?'"></label></b>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="forSale" style="float:right">
-                    <div class="checkbox checkbox-info">
-                        <input th:field="*{bookSale}" type="checkbox">
-                        <b><label th:for="bookSale" th:text="'Is book for sale?'"></label></b>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="rentPrice"><b>Rent Price</b></label>
-                    <input class="form-control" id="rentPrice" placeholder="Price" th:field="*{rentPrice}"
-                           type="text"/>
-                </div>
-                <p class="contentR" th:errors="*{rentPrice}" th:if="${#fields.hasErrors('rentPrice')}">Price
-                    Error</p>
-                <div class="form-group">
-                    <label for="sellPrice"><b>Sell Price</b></label>
-                    <input class="form-control" id="sellPrice" placeholder="Price" th:field="*{sellPrice}"
-                           type="text"/>
-                </div>
-                <p class="contentR" th:errors="*{sellPrice}" th:if="${#fields.hasErrors('sellPrice')}">Price
-                    Error</p>
-            </div>
-        </div>
-        <div class="form-group shadow-textarea">
-            <label for="bookDescription">Book description</label>
-            <textarea class="form-control z-depth-1" id="bookDescription" placeholder="Write something here..."
-                      rows="3" th:field="*{description}"/></textarea>
-        </div>
-        <p class="contentR" th:errors="*{description}" th:if="${#fields.hasErrors('description')}">Description
-            Error</p>
-        <div class="rating">
-            <section>
-                <h5>Rate the book that you are about to add</h5>
-                <ul class="rate-area">
-                    <input id="5-star" name="rating" type="radio" value="5"/><label for="5-star" title="Amazing">5
-                    stars</label>
-                    <input id="4-star" name="rating" type="radio" value="4"/><label for="4-star" title="Good">4
-                    stars</label>
-                    <input id="3-star" name="rating" type="radio" value="3"/><label for="3-star" title="Average">3
-                    stars</label>
-                    <input id="2-star" name="rating" type="radio" value="2"/><label for="2-star" title="Not Good">2
-                    stars</label>
-                    <input id="1-star" name="rating" type="radio" value="1"/><label for="1-star" title="Bad">1
-                    star</label>
-                </ul>
-            </section>
-        </div>
-        <br>
-        <br>
-        <br>
-        <div class="row row-no-gutters">
-            <div class="col-md-3">
-                <button class="btn btn-success" type="submit"><b>Update Book</b></button>
-            </div>
-            <div class="col-md-6">
-                <div class="custom-file mb-3">
-                    <input class="custom-file-input" id="customFile" name="filename" th:field="*{photo}"
-                           type="file">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                </div>
-                <p class="contentR" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Image Error! Image
-                    might be to big!</p>
-                <script>
-                // Following code is for the name of the file appear on select
-                $(".custom-file-input").on("change", function() {
-                  var fileName = $(this).val().split("\\").pop();
-                  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                });
-
-
-
-                </script>
-            </div>
-        </div>
-    </form>
-</div>
-<br>
-<br>
-<!--Footer -->
-<div id="footer">
-    <div class="card img-fluid" style="width:1600px">
-        <img class="card-img-top" src="static/images/Footerv2.jpg" style="width:100%"
-             th:src="@{../images/Footerv2.jpg}">
-        <div class="card-img-overlay">
-            <div class="text-right" style="margin-bottom:0">
-                <h6>Bookworms Community</h6>
-                <p>&copy; Copyright AIRS 2019 All Rights Reserved.</p>
-            </div>
-        </div>
-    </div>
-</div>
+<form enctype="multipart/form-data" method="post" th:action="@{/edit/{id}(id=${book.id})}" th:object="${book}">
+    <table>
+        <tr>
+            <td>Book Name:</td>
+            <td><input th:field="*{bookName}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Author Name:</td>
+            <td><input th:field="*{authorName}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Number of Pages:</td>
+            <td><input th:field="*{numberOfPages}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Book Type:</td>
+            <td><input th:field="*{type}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Book Language:</td>
+            <td><input th:field="*{language}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Book Description:</td>
+            <td><textarea th:field="*{description}"></textarea></td>
+        </tr>
+        <tr>
+            <td>Sell Price:</td>
+            <td><input th:field="*{sellPrice}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Rent Price:</td>
+            <td><input th:field="*{rentPrice}" type="text"></td>
+        </tr>
+        <tr>
+            <td>Condition:</td>
+            <td><select th:field="*{condition}">
+                <option
+                        th:each="condition: ${conditions}"
+                        th:text=${condition.getCondition()}
+                        th:value="${condition}">
+                </option>
+            </select></td>
+        </tr>
+        <tr>
+            <td>Is book for rent?</td>
+            <td><input th:field="*{bookRent}" type="checkbox">
+        </tr>
+        <tr>
+            <td>Is book for sale?</td>
+            <td><input th:field="*{bookSale}" type="checkbox">
+        </tr>
+        <tr>
+            <td>Book Cover Photo:</td>
+            <td><input type="file" th:field="*{photo}"></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Update Book</button></td>
+        </tr>
+    </table>
+</form>
+<p><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${book.getPhotoAsString()}"></p>
 </body>
 </html>

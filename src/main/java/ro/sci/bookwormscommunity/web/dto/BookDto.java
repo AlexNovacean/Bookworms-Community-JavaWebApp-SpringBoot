@@ -11,35 +11,44 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Base64;
 
 public class BookDto {
 
     private Long id;
+
     @NotEmpty
     @Size(min = 2, max = 100)
     private String bookName;
+
     @NotEmpty
     @Size(min = 2, max = 100)
     private String authorName;
+
     @Min(value = 20)
     @Max(value = 9999)
     private int numberOfPages;
+
     @NotEmpty
     private String type;
+
     @NotEmpty
     private String language;
+
     @NotEmpty
     @Size(max = 3000, message = "Description must not exceed 3000 characters!")
     private String description;
+
+    @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB.")
+    private MultipartFile photo;
+
+    private User user;
     private String condition;
     private boolean bookRent;
     private boolean bookSale;
     private double sellPrice;
     private double rentPrice;
-    @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB.")
-    private MultipartFile photo;
-
-    private User user;
 
     public Long getId() {
         return id;
@@ -158,5 +167,16 @@ public class BookDto {
             return new MockMultipartFile("book.png", new FileInputStream(new File("src/main/resources/static/images/book.png")));
         }
         return photo;
+    }
+
+    public byte[] returnUpdatePhoto(byte[] image) throws Exception {
+        if (!photo.isEmpty()) {
+            return photo.getBytes();
+        }
+        return image;
+    }
+
+    public String getPhotoAsString() throws IOException {
+        return Base64.getEncoder().encodeToString(this.photo.getBytes());
     }
 }

@@ -13,6 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<h3 style="color: green" th:if="${param.updated}">Profile Updated!</h3>
 <section class="login-block">
     <div class="container user-profile" >
         <br>
@@ -35,7 +36,7 @@
                         </ul>
                     </h6>
                 </div>
-                <p style="color: green" th:if="${param.sent}">You message has been sent!</p>
+                <a th:href="@{/user/editProfile}" button class="btn btn-success">Edit Profile</a>
                 <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">Send message</button>
             </div>
         </div>
@@ -55,7 +56,7 @@
                     <tbody>
                     <th:block th:each="book : ${books}">
                         <tr class="table-warning">
-                            <td><a th:href="@{bookDetails/{id}(id=${book.id})}" button class="btn btn-success">Details</a></td>
+                            <td><a th:href="@{/bookDetails/{id}(id=${book.id})}" button class="btn btn-success">Details</a></td>
                             <td th:text="${book.bookName}"></td>
                             <td th:text="${book.authorName}"></td>
                             <td th:text="${book.bookRent} ? 'YES' : 'NO'"></td>

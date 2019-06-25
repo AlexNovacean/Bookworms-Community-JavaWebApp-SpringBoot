@@ -13,13 +13,8 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    private UserService userService;
-
     @Autowired
-    public MainController(UserService userService) {
-        this.userService = userService;
-    }
-
+    private UserService userService;
 
     @GetMapping("")
     public String root(Model model, Principal principal) {

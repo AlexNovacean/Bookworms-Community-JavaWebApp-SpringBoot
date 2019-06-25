@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.UserRepository;
+import ro.sci.bookwormscommunity.web.dto.UserDto;
 import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 
 import java.util.Arrays;
@@ -72,5 +73,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void updateUser(long id, UserDto userDto) throws Exception {
+        User user = userRepository.getOne(id);
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setNickname(userDto.getNickname());
+        user.setLocation(userDto.getLocation());
+        user.setEmail(userDto.getEmail());
+        if(!userDto.getPassword().isEmpty()){
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+        user.setPhoto(userDto.returnUpdatePhoto(user.getPhoto()));
+        userRepository.save(user);
     }
 }
