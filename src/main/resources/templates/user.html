@@ -1,46 +1,89 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" th:href="@{/css/style.css}">
-    <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>My Profile</title> <!-- Page title -->
+    <link href="static/css/style.css" rel="stylesheet" th:href="@{../css/style.css}" type="text/css">
+    <meta content-type="width=device-width initial-scale=1" name="viewport">
+    <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1 th:text="${user.nickname} + '\'s profile.'"></h1>
-
-<h2 style="color: green" th:if="${param.trimis}">Mesajul tau a fost trimis</h2>
-
-<div th:text="'First Name: ' + ${user.firstName}"></div>
-<div th:text="'Last Name: ' + ${user.lastName}"></div>
-<div th:text="'E-mail: ' + ${user.email}"></div>
-<div th:text="'Location: ' + ${user.location}"></div>
-<div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}">
+<section class="login-block">
+    <div class="container user-profile" >
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <img alt="User Picture" class="user-image" th:src="'data:image/*;base64,' + ${user.getImageAsString()}">
+                </div>
+                    <h5 class="user-name" p th:text="${user.nickname}"/>
+                    <!-- User Rating-->
+            </div>
+            <div class="col-md-8">
+                <div class="user-details-body">
+                    <h6 class="user-details">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">First Name: <span><b th:text="${user.firstName}"/></span></li>
+                            <li class="list-group-item">Last Name: <span><b th:text="${user.lastName}" /></span></li>
+                            <li class="list-group-item">E-mail: <span><b th:text="${user.email}" /></span></li>
+                            <li class="list-group-item">Location: <span><b th:text="${user.location}" /></span></li>
+                        </ul>
+                    </h6>
+                </div>
+                <p style="color: green" th:if="${param.sent}">You message has been sent!</p>
+                <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">Send message</button>
+            </div>
+        </div>
+                <table class="table">
+                    <thead>
+                    <tr class="table-error">
+                        <th>Details</th>
+                        <th>Book Name</th>
+                        <th>Author</th>
+                        <th>For Rent</th>
+                        <th>Rent Price</th>
+                        <th>For Sale</th>
+                        <th>Sale Price</th>
+                        <!--Book Rating-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="book : ${books}">
+                        <tr class="table-warning">
+                            <td><a th:href="@{bookDetails/{id}(id=${book.id})}" button class="btn btn-success">Details</a></td>
+                            <td th:text="${book.bookName}"></td>
+                            <td th:text="${book.authorName}"></td>
+                            <td th:text="${book.bookRent} ? 'YES' : 'NO'"></td>
+                            <td th:if="${book.bookRent}" th:text="*{#numbers.formatDecimal(rentPrice,1,1,'POINT')}"></td>
+                            <td th:text="${book.bookSale} ? 'YES' : 'NO'"></td>
+                            <td th:if="${book.bookSale}" th:text="*{#numbers.formatDecimal(sellPrice,1,1,'POINT')}"></td>
+                            <td><a th:href="@{/updateBook/{id}(id=${book.id})} "button class="btn btn-info">Update Book</a></td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+                <br>
+                <a th:href="@{/addBook}" button class="btn btn-success">Add Book</a>
+            <br>
+        </div>
+        <p><a th:href="@{/}" button class="btn btn-primary">Home Page</a></p>
+        <br>
+</section>
+<!--Footerr -->
+<div id="footer">
+    <div class="card img-fluid" style="width:1600px">
+        <div class="card-img-overlay">
+            <div class="text-right" style="margin-bottom:0">
+                <h6>Bookworms Community</h6>
+                <p>&copy; Copyright AIRS 2019 All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
 </div>
-
-<br>
-<br>
-
-<div><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${user.getImageAsString()}"></div>
-
-<a th:href="@{/addBook}">Add Book</a>
-<a th:href="@{/updateBook}">Update Book</a>
-<a th:href="@{/deleteBook}">Delete Book</a>
-
-
-<br>
-<br>
-
-<div>
-    <button th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/user/msg/${user.id}'|">
-        Trimite mesaj
-    </button>
-</div>
-
-<br>
-
-<p><a th:href="@{/}">Back to index.</a></p>
-
 </body>
 </html>

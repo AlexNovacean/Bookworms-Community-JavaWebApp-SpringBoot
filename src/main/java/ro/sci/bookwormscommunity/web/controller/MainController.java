@@ -13,15 +13,20 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public MainController(UserService userService) {
+        this.userService = userService;
+    }
+
 
     @GetMapping("")
     public String root(Model model, Principal principal) {
         String email = principal.getName();
         User user = userService.findByEmail(email);
         model.addAttribute(user);
-        return "index";
+        return "Home";
     }
 
     @GetMapping("/login")

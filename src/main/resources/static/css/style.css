@@ -1,5 +1,9 @@
-.test{
-color:blue}
+.Header{
+  padding-top: 50px;
+  padding-right: 50px;
+  padding-left:820px;
+}
+
 ul {
 	list-style-type: none;
 	margin: 0;
@@ -75,6 +79,25 @@ background:#fff;
 border-radius: 10px;
  box-shadow:15px 20px 0px rgba(0,0,0,0.1);
  }
+.user-profile{
+background:#fff;
+border-radius: 10px;
+ box-shadow:15px 20px 0px rgba(0,0,0,0.1);
+}
+.user-image{
+  max-width: 300px;
+  max-height: 200px;
+  border-top-left-radius: 10px;
+  padding: 10 px, 0px, 10px, 0px;
+ }
+ .book-title{
+   padding-left:100px;
+ }
+ .user-name{
+ padding-left:40px;
+ }
+
+
 
 
 

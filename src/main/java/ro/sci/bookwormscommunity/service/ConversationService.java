@@ -37,4 +37,8 @@ public class ConversationService {
     public Conversation findById(long id) {
         return conversationRepository.findById(id).get();
     }
+
+    public void deleteById(long id){
+        conversationRepository.deleteById(id);
+    }
 }
