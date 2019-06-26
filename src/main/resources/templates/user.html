@@ -63,7 +63,7 @@
                             <td th:if="${book.bookRent}" th:text="*{#numbers.formatDecimal(rentPrice,1,1,'POINT')}"></td>
                             <td th:text="${book.bookSale} ? 'YES' : 'NO'"></td>
                             <td th:if="${book.bookSale}" th:text="*{#numbers.formatDecimal(sellPrice,1,1,'POINT')}"></td>
-                            <td><a th:href="@{/updateBook/{id}(id=${book.id})} "button class="btn btn-info">Update Book</a></td>
+                            <td><a th:href="@{/editBook/{id}(id=${book.id})} "button class="btn btn-info">Update Book</a></td>
                         </tr>
                     </th:block>
                     </tbody>

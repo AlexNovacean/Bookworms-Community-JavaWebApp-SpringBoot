@@ -26,6 +26,9 @@ public class BookDto {
     @Size(min = 2, max = 100)
     private String authorName;
 
+    //TODO: fix the Failed to convert property value of type java.lang.String to required type int for property numberOfPages;
+    // nested exception is java.lang.NumberFormatException: For input string: "" in html
+
     @Min(value = 20)
     @Max(value = 9999)
     private int numberOfPages;

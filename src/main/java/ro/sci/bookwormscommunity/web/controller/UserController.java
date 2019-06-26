@@ -1,6 +1,7 @@
 package ro.sci.bookwormscommunity.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.UserDto;
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -53,13 +55,13 @@ public class UserController {
     }
 
     @GetMapping("/user/editProfile")
-    public String showUpdateForm(Principal principal, Model model) throws IOException {
+    public String showUpdateForm(Model model, Principal principal) throws IOException {
         User user = userService.findByEmail(principal.getName());
-        model.addAttribute("user", UserMapper.mapUserToUserDto(user));
+        model.addAttribute(UserMapper.mapUserToUserDto(user));
         return "updateUser";
     }
 
-    @PostMapping("/user/update")
+    @PostMapping("/user/updateProfile")
     public String updateUser(@Valid UserDto userDto, BindingResult result, Principal principal, Model model) throws Exception {
         User user = userService.findByEmail(principal.getName());
 
@@ -71,6 +73,7 @@ public class UserController {
         }
 
         if (result.hasErrors()) {
+            userDto.setPhoto(new MockMultipartFile("userPhoto.png",new ByteArrayInputStream(user.getPhoto())));
             return "updateUser";
         }
 

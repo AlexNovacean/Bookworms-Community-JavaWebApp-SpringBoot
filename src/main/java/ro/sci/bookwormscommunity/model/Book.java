@@ -24,6 +24,9 @@ public class Book {
     private String condition;
     private boolean bookRent;
     private boolean bookSale;
+
+    //TODO change the prices to integer
+
     private double sellPrice;
     private double rentPrice;
     @Lob

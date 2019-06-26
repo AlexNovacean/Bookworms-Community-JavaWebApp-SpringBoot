@@ -5,67 +5,81 @@
     <title>Book Edit</title>
 </head>
 <body>
-<form enctype="multipart/form-data" method="post" th:action="@{/edit/{id}(id=${book.id})}" th:object="${book}">
+<p><img style="max-width: 300px; max-height: 150px" th:src="'data:image/*;base64,' + ${bookDto.getPhotoAsString()}"></p>
+<form enctype="multipart/form-data" method="post" th:action="@{/updateBook/{id}(id=${bookDto.id})}" th:object="${bookDto}">
     <table>
         <tr>
-            <td>Book Name:</td>
-            <td><input th:field="*{bookName}" type="text"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}">Book Name Error</td>
         </tr>
         <tr>
-            <td>Author Name:</td>
-            <td><input th:field="*{authorName}" type="text"></td>
+            <td><label for="bookName">Book Name: </label><input type="text" id="bookName" th:field="*{bookName}" ></td>
         </tr>
         <tr>
-            <td>Number of Pages:</td>
-            <td><input th:field="*{numberOfPages}" type="text"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('authorName')}" th:errors="*{authorName}">Author Name Error</td>
         </tr>
         <tr>
-            <td>Book Type:</td>
-            <td><input th:field="*{type}" type="text"></td>
+            <td><label for="authorName">Author Name: </label><input type="text" id="authorName" th:field="*{authorName}" ></td>
         </tr>
         <tr>
-            <td>Book Language:</td>
-            <td><input th:field="*{language}" type="text"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('numberOfPages')}" th:errors="*{numberOfPages}">Number of Pages Error</td>
         </tr>
         <tr>
-            <td>Book Description:</td>
-            <td><textarea th:field="*{description}"></textarea></td>
+            <td><label for="numberOfPages">Number of Pages: </label><input type="text" id="numberOfPages" th:field="*{numberOfPages}" ></td>
         </tr>
         <tr>
-            <td>Sell Price:</td>
-            <td><input th:field="*{sellPrice}" type="text"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Book Type Error</td>
         </tr>
         <tr>
-            <td>Rent Price:</td>
-            <td><input th:field="*{rentPrice}" type="text"></td>
+            <td><label for="type">Book Type: </label><input type="text" id="type" th:field="*{type}" ></td>
         </tr>
         <tr>
-            <td>Condition:</td>
-            <td><select th:field="*{condition}">
-                <option
-                        th:each="condition: ${conditions}"
-                        th:text=${condition.getCondition()}
-                        th:value="${condition}">
-                </option>
-            </select></td>
+            <td style="color: red" th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Book Language Error</td>
         </tr>
         <tr>
-            <td>Is book for rent?</td>
-            <td><input th:field="*{bookRent}" type="checkbox">
+            <td><label for="language">Book Language: </label><input type="text" id="language" th:field="*{language}" ></td>
         </tr>
         <tr>
-            <td>Is book for sale?</td>
-            <td><input th:field="*{bookSale}" type="checkbox">
+            <td><label for="bookRent">Check if the book will be available to rent: </label><input type="checkbox" id="bookRent" th:field="*{bookRent}"></td>
         </tr>
         <tr>
-            <td>Book Cover Photo:</td>
-            <td><input type="file" th:field="*{photo}"></td>
+            <td style="color: cornflowerblue">If the book will be available for renting, please specify the rent price below.</td>
+        </tr>
+        <tr>
+            <td><label for="rentPrice">Rent Price(RON/day): </label><input type="text" id="rentPrice" th:field="*{rentPrice}"></td>
+        </tr>
+        <tr>
+            <td><label for="bookSale">Check if the book will be available for sale: </label><input type="checkbox" id="bookSale" th:field="*{bookSale}"></td>
+        </tr>
+        <tr>
+            <td style="color: cornflowerblue">If the book will be available for sale, please specify the price below.</td>
+        </tr>
+        <tr>
+            <td><label for="sellPrice">Rent Price(RON/day): </label><input type="text" id="sellPrice" th:field="*{sellPrice}"></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="condition">Please chose the condition in which the book is: </label>
+                <select id="condition" th:field="*{condition}">
+                    <option th:each="condition: ${conditions}" th:text=${condition.getCondition()} th:value="${condition}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
+        </tr>
+        <tr>
+            <td><label for="description">Description: </label><textarea id="description" th:field="*{description}" ></textarea></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}">Photo Error</td>
+        </tr>
+        <tr>
+            <td><label for="photo">Update Book Picture:</label><input type="file" id="photo" th:field="*{photo}"></td>
         </tr>
         <tr>
             <td><button type="submit">Update Book</button></td>
         </tr>
     </table>
 </form>
-<p><img style="max-width: 200px; max-height: 100px" th:src="'data:image/*;base64,' + ${book.getPhotoAsString()}"></p>
 </body>
 </html>

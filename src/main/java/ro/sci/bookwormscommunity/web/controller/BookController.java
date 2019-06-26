@@ -3,6 +3,7 @@ package ro.sci.bookwormscommunity.web.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Optional;
@@ -94,19 +96,23 @@ public class BookController {
     }
 
     //update a book
-    @GetMapping("/updateBook/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model, @ModelAttribute("book") BookDto bookDto) throws IOException {
+    @GetMapping("/editBook/{id}")
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) throws IOException {
         Optional<Book> book = bookService.getBookById(id);
-        model.addAttribute("book", BookMapper.mapBookToBookDto(book.get(), bookDto));
+        model.addAttribute(BookMapper.mapBookToBookDto(book.get()));
         model.addAttribute("conditions", BookCondition.values());
         return "updateBook";
     }
 
-    @PostMapping("/edit/{id}")
-    public String updateBook(@PathVariable("id") Long id, @ModelAttribute("book") @Valid BookDto bookdto, BindingResult result, Principal principal) {
+    @PostMapping("/updateBook/{id}")
+    public String updateBook(@PathVariable("id") Long id, @Valid BookDto bookdto, BindingResult result, Principal principal) throws IOException {
         User user = userService.findByEmail(principal.getName());
+        Book book = bookService.getBookById(id).get();
+        bookdto.setPhoto(new MockMultipartFile("bookPhoto.png",new ByteArrayInputStream(book.getImage())));
+        bookdto.setCondition(book.getCondition());
         bookdto.setUser(user);
         if (result.hasErrors()) {
+
             return "updateBook";
         }
         try {

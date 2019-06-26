@@ -23,8 +23,8 @@ public class UserDto {
     @NotEmpty(message = "Please provide your Last Name")
     private String lastName;
 
-    @NotEmpty(message = "Please provide a Nickname")
     @Size(min = 4, max = 32, message = "Nickname size must be between 4 and 32")
+    @NotEmpty(message = "Please provide a Nickname")
     private String nickname;
 
     private String password;

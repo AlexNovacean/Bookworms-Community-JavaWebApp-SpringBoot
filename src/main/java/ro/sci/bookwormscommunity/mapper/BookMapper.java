@@ -12,7 +12,8 @@ public final class BookMapper {
     private BookMapper() {
     }
 
-    public static BookDto mapBookToBookDto(Book book, BookDto bookDto) throws IOException {
+    public static BookDto mapBookToBookDto(Book book) throws IOException {
+        BookDto bookDto = new BookDto();
         bookDto.setUser(book.getUser());
         bookDto.setBookName(book.getBookName());
         bookDto.setAuthorName(book.getAuthorName());
