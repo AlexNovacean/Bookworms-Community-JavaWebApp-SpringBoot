@@ -11,7 +11,8 @@ public final class UserMapper {
 
     private UserMapper() {}
 
-    public static UserDto mapUserToUserDto(User user, UserDto userDto) throws IOException {
+    public static UserDto mapUserToUserDto(User user) throws IOException {
+        UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());

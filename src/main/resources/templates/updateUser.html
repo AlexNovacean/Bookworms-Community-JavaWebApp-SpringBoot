@@ -5,68 +5,62 @@
     <title>Profile Edit</title>
 </head>
 <body>
-<p><img style="max-width: 300px; max-height: 150px" th:src="'data:image/*;base64,' + ${user.returnPhotoAsString()}"></p>
+<!--<p><img style="max-width: 300px; max-height: 150px" th:src="'data:image/*;base64,' + ${user.returnPhotoAsString()}"></p>-->
 <form enctype="multipart/form-data" method="post" th:action="@{/user/update}" th:object="${user}">
     <table>
+
         <tr>
-            <td style="color: red" th:each="error : ${#fields.errors('global')}" th:if="${#fields.hasGlobalErrors()}" th:text="${error}">Password Mismatch</td>
+            <td style="color: red" th:errors="*{nickname}" th:if="${#fields.hasErrors('nickname')}">Nick Name Error</td>
         </tr>
         <tr>
             <td>Nickname: </td>
             <td><input th:field="*{nickname}" type="text"></td>
         </tr>
         <tr>
-            <td style="color: red" th:errors="*{nickname}" th:if="${#fields.hasErrors('nickname')}">Nick Name Error</td>
+            <td style="color: red" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}">First Name Error</td>
         </tr>
         <tr>
             <td>First Name: </td>
             <td><input th:field="*{firstName}" type="text"></td>
         </tr>
         <tr>
-            <td style="color: red" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}">First Name Error</td>
+            <td style="color: red" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}">Last Name Error</td>
         </tr>
         <tr>
             <td>Last Name: </td>
             <td><input th:field="*{lastName}" type="text"></td>
         </tr>
         <tr>
-            <td style="color: red" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}">Last Name Error</td>
+            <td style="color: red" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">Email Error</td>
         </tr>
         <tr>
             <td>Email: </td>
             <td><input th:field="*{email}" type="text"></td>
         </tr>
         <tr>
-            <td style="color: red" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">Email Error</td>
+            <td style="color: red" th:errors="*{location}" th:if="${#fields.hasErrors('location')}">Location Error</td>
         </tr>
         <tr>
             <td>Location: </td>
             <td><input th:field="*{location}" type="text"></td>
         </tr>
         <tr>
-            <td style="color: red" th:errors="*{location}" th:if="${#fields.hasErrors('location')}">Location Error</td>
-        </tr>
-        <tr>
             <td>New Password (Optional): </td>
             <td><input th:field="*{password}" type="password"></td>
         </tr>
         <tr>
-            <td style="color: red" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Password Error</td>
+            <td style="color: red" th:each="error : ${#fields.errors('global')}" th:if="${#fields.hasGlobalErrors()}" th:text="${error}">Password Mismatch</td>
         </tr>
         <tr>
             <td>Confirm New Password: </td>
             <td><input th:field="*{confirmPassword}" type="password"></td>
         </tr>
         <tr>
-            <td style="color: red" th:errors="*{confirmPassword}" th:if="${#fields.hasErrors('confirmPassword')}">Password Error</td>
+            <td style="color: red" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Photo Error</td>
         </tr>
-
         <tr>
             <td>Update Photo: </td>
             <td><input type="file" th:field="*{photo}"></td>
-        </tr>
-        <tr>
-            <td style="color: red" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Photo Error</td>
         </tr>
         <tr>
             <td><button type="submit">Update Profile</button></td>

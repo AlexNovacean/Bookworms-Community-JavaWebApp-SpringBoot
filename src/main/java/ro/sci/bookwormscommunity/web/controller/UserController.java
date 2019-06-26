@@ -53,14 +53,14 @@ public class UserController {
     }
 
     @GetMapping("/user/editProfile")
-    public String showUpdateForm(@ModelAttribute("user") UserDto userDto, Principal principal, Model model) throws IOException {
+    public String showUpdateForm(Principal principal, Model model) throws IOException {
         User user = userService.findByEmail(principal.getName());
-        model.addAttribute("user", UserMapper.mapUserToUserDto(user, userDto));
+        model.addAttribute("user", UserMapper.mapUserToUserDto(user));
         return "updateUser";
     }
 
     @PostMapping("/user/update")
-    public String updateUser(@ModelAttribute("user") @Valid UserDto userDto, Principal principal, BindingResult result) throws Exception {
+    public String updateUser(@Valid UserDto userDto, BindingResult result, Principal principal, Model model) throws Exception {
         User user = userService.findByEmail(principal.getName());
 
         if (!principal.getName().equals(userDto.getEmail())) {
