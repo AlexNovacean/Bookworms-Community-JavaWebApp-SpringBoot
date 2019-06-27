@@ -27,8 +27,8 @@ public class Book {
 
     //TODO change the prices to integer
 
-    private double sellPrice;
-    private double rentPrice;
+    private int sellPrice;
+    private int rentPrice;
     @Lob
     private byte[] image;
 
@@ -132,19 +132,19 @@ public class Book {
         this.bookSale = bookSale;
     }
 
-    public double getSellPrice() {
+    public int getSellPrice() {
         return sellPrice;
     }
 
-    public void setSellPrice(double sellPrice) {
+    public void setSellPrice(int sellPrice) {
         this.sellPrice = sellPrice;
     }
 
-    public double getRentPrice() {
+    public int getRentPrice() {
         return rentPrice;
     }
 
-    public void setRentPrice(double rentPrice) {
+    public void setRentPrice(int rentPrice) {
         this.rentPrice = rentPrice;
     }
 

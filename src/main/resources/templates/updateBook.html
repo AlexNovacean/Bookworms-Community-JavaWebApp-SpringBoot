@@ -24,7 +24,7 @@
             <td style="color: red" th:if="${#fields.hasErrors('numberOfPages')}" th:errors="*{numberOfPages}">Number of Pages Error</td>
         </tr>
         <tr>
-            <td><label for="numberOfPages">Number of Pages: </label><input type="text" id="numberOfPages" th:field="*{numberOfPages}" ></td>
+            <td><label for="numberOfPages">Number of Pages: </label><input type="number" id="numberOfPages" th:field="*{numberOfPages}" ></td>
         </tr>
         <tr>
             <td style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Book Type Error</td>

@@ -67,9 +67,9 @@
                     <th>Language</th>
                     <th>Condition</th>
                     <th>For Rent</th>
-                    <th>Rent Price</th>
+                    <th>Rent Price (RON/day)</th>
                     <th>For Sale</th>
-                    <th>Sale Price</th>
+                    <th>Sale Price (RON)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,9 +83,9 @@
                     <td th:text="*{language}"></td>
                     <td th:text="*{condition}"></td>
                     <td th:text="*{bookRent} ? 'YES' : 'NO'"></td>
-                    <td th:if="*{bookRent}" th:text="*{#numbers.formatDecimal(rentPrice,1,1,'POINT')}"></td>
+                    <td th:if="*{bookRent}" th:text="*{rentPrice}"></td>
                     <td th:text="*{bookSale} ? 'YES' : 'NO'"></td>
-                    <td th:if="*{bookSale}" th:text="*{#numbers.formatDecimal(sellPrice,1,1,'POINT')}"></td>
+                    <td th:if="*{bookSale}" th:text="*{sellPrice}"></td>
                     <td></td>
                 </tr>
                 </th:block>

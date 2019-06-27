@@ -1,14 +1,12 @@
 package ro.sci.bookwormscommunity.web.dto;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.validators.ValidPhoto;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,9 +27,9 @@ public class BookDto {
     //TODO: fix the Failed to convert property value of type java.lang.String to required type int for property numberOfPages;
     // nested exception is java.lang.NumberFormatException: For input string: "" in html
 
-    @Min(value = 20)
-    @Max(value = 9999)
-    private int numberOfPages;
+    @NotNull(message = "Please provided a valid number of pages.")
+    @Range(min = 20, max = 9999, message = "The number of pages must be a positive number between 20 and 9999")
+    private Integer numberOfPages;
 
     @NotEmpty
     private String type;
@@ -50,8 +48,8 @@ public class BookDto {
     private String condition;
     private boolean bookRent;
     private boolean bookSale;
-    private double sellPrice;
-    private double rentPrice;
+    private Integer sellPrice;
+    private Integer rentPrice;
 
     public Long getId() {
         return id;
@@ -85,11 +83,11 @@ public class BookDto {
         this.authorName = authorName;
     }
 
-    public int getNumberOfPages() {
+    public Integer getNumberOfPages() {
         return numberOfPages;
     }
 
-    public void setNumberOfPages(int numberOfPages) {
+    public void setNumberOfPages(Integer numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
 
@@ -141,19 +139,19 @@ public class BookDto {
         this.bookSale = bookSale;
     }
 
-    public double getSellPrice() {
+    public Integer getSellPrice() {
         return sellPrice;
     }
 
-    public void setSellPrice(double sellPrice) {
+    public void setSellPrice(Integer sellPrice) {
         this.sellPrice = sellPrice;
     }
 
-    public double getRentPrice() {
+    public Integer getRentPrice() {
         return rentPrice;
     }
 
-    public void setRentPrice(double rentPrice) {
+    public void setRentPrice(Integer rentPrice) {
         this.rentPrice = rentPrice;
     }
 
