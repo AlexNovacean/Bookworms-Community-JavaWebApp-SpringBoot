@@ -24,9 +24,6 @@ public class BookDto {
     @Size(min = 2, max = 100)
     private String authorName;
 
-    //TODO: fix the Failed to convert property value of type java.lang.String to required type int for property numberOfPages;
-    // nested exception is java.lang.NumberFormatException: For input string: "" in html
-
     @NotNull(message = "Please provided a valid number of pages.")
     @Range(min = 20, max = 9999, message = "The number of pages must be a positive number between 20 and 9999")
     private Integer numberOfPages;
@@ -45,10 +42,15 @@ public class BookDto {
     private MultipartFile photo;
 
     private User user;
+
     private String condition;
+
     private boolean bookRent;
+
     private boolean bookSale;
+
     private Integer sellPrice;
+
     private Integer rentPrice;
 
     public Long getId() {

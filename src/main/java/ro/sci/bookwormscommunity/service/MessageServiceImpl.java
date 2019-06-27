@@ -22,18 +22,13 @@ public class MessageServiceImpl implements MessageService {
     private MessageRepository messageRepository;
 
     @Override
-    public List<Message> getUserMessages(long convId) {
-        return messageRepository.getUserMessages(convId);
+    public List<Message> getUserMessages(long conversationId) {
+        return messageRepository.getUserMessages(conversationId);
     }
 
     @Override
-    public void saveMessage(Message message) {
-        messageRepository.save(message);
-    }
-
-    @Override
-    public List<Message> saveAndRetrieve(long convId, MessageDto messageDto, Principal principal) {
-        Conversation conversation = conversationService.findById(convId);
+    public List<Message> saveAndRetrieve(long conversationId, MessageDto messageDto, Principal principal) {
+        Conversation conversation = conversationService.findById(conversationId);
 
         User toUser;
         User fromUser = userService.findByEmail(principal.getName());
@@ -46,6 +41,6 @@ public class MessageServiceImpl implements MessageService {
         Message message = new Message(messageDto.getContent(), toUser, fromUser);
         message.setConversation(conversation);
         messageRepository.save(message);
-        return messageRepository.getUserMessages(convId);
+        return messageRepository.getUserMessages(conversationId);
     }
 }

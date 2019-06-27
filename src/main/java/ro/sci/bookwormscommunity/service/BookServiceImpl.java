@@ -2,10 +2,11 @@ package ro.sci.bookwormscommunity.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ro.sci.bookwormscommunity.mapper.BookMapper;
 import ro.sci.bookwormscommunity.model.Book;
+import ro.sci.bookwormscommunity.model.Review;
 import ro.sci.bookwormscommunity.repositories.BookRepository;
+import ro.sci.bookwormscommunity.repositories.ReviewRepository;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
 import java.util.List;
@@ -16,6 +17,9 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Override
     public List<Book> getAllBooks() {
@@ -60,6 +64,21 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getUserBooks(long id) {
         return bookRepository.getUserBooks(id);
+    }
+
+    @Override
+    public void calculateRating(long id) {
+        Book book = bookRepository.getOne(id);
+        List<Review> reviews = reviewRepository.getBookReviews(id);
+
+        int reviewSum = 0;
+
+        for(Review r : reviews){
+            reviewSum += r.getRating();
+        }
+
+        book.setRating(reviewSum/reviews.size());
+        bookRepository.save(book);
     }
 }
 

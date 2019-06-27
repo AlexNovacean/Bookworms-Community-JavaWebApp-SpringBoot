@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ro.sci.bookwormscommunity.mapper.BookMapper;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.BookCondition;
+import ro.sci.bookwormscommunity.model.Review;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.BookService;
+import ro.sci.bookwormscommunity.service.ReviewService;
 import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
@@ -23,6 +25,7 @@ import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -35,6 +38,9 @@ public class BookController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @ModelAttribute("book")
     public BookDto book() {
@@ -52,7 +58,9 @@ public class BookController {
     @GetMapping("/bookDetails/{id}")
     public String bookDetailsForm(@PathVariable("id") Long id, Model model) {
         Optional<Book> book = bookService.getBookById(id);
+        List<Review> reviews = reviewService.getBookReviews(id);
         model.addAttribute("book", book.get());
+        model.addAttribute("reviews",reviews);
         return "bookDetails";
     }
 
@@ -112,7 +120,6 @@ public class BookController {
         bookdto.setCondition(book.getCondition());
         bookdto.setUser(user);
         if (result.hasErrors()) {
-
             return "updateBook";
         }
         try {
@@ -121,6 +128,21 @@ public class BookController {
             logger.error("Error when saving the book: ", e);
         }
         return "redirect:/communityBooks";
+    }
 
+    @ModelAttribute("review")
+    public Review review(){ return new Review();}
+
+    @PostMapping("/bookDetails/{id}")
+    public String postReview(@PathVariable("id")long id, @ModelAttribute("review") Review review, Principal principal){
+
+        review.setBook(bookService.getBookById(id).get());
+        review.setUserNickname(userService.findByEmail(principal.getName()).getNickname());
+
+        reviewService.saveReview(review);
+
+        bookService.calculateRating(id);
+
+        return "redirect:/bookDetails/" + id;
     }
 }

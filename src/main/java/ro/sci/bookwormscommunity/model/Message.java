@@ -31,6 +31,7 @@ public class Message {
     private Conversation conversation;
 
     public Message() {
+        this.sentDate = new Date();
     }
 
     public Message(String content, User toUser, User fromUser) {

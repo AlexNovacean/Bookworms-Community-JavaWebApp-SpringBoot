@@ -9,7 +9,5 @@ import java.util.List;
 public interface MessageService {
     List<Message> getUserMessages(long convId);
 
-    void saveMessage(Message message);
-
     List<Message> saveAndRetrieve(long convId, MessageDto messageDto, Principal principal);
 }

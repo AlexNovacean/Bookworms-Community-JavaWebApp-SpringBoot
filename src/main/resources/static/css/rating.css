@@ -40,7 +40,7 @@ h3 {
 .rate-area:not(:checked) > label:hover,
 .rate-area:not(:checked) > label:hover ~ label {
     color: gold;
-    
+
 }
 
 .rate-area > input:checked + label:hover,
@@ -49,8 +49,8 @@ h3 {
 .rate-area > input:checked ~ label:hover ~ label,
 .rate-area > label:hover ~ input:checked ~ label {
     color: gold;
-    text-shadow: 1px 1px goldenrod;   
-    
+    text-shadow: 1px 1px goldenrod;
+
 }
 
 .rate-area > label:active {

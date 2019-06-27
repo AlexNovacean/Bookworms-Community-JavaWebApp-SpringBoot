@@ -20,4 +20,6 @@ public interface BookService {
     void deleteBook(Book book);
 
     List<Book> getUserBooks(long id);
+
+    public void calculateRating(long id);
 }

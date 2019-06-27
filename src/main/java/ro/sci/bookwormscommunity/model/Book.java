@@ -2,6 +2,7 @@ package ro.sci.bookwormscommunity.model;
 
 import javax.persistence.*;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * <h1>Book</h1>
@@ -10,30 +11,61 @@ import java.util.Base64;
  */
 @Entity
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String bookName;
+
     private String authorName;
+
     private int numberOfPages;
+
     private String type;
+
     private String language;
+
     @Column(length = 3000)
     private String description;
+
     private String condition;
+
     private boolean bookRent;
+
     private boolean bookSale;
 
-    //TODO change the prices to integer
-
     private int sellPrice;
+
     private int rentPrice;
+
     @Lob
     private byte[] image;
 
     @ManyToOne
     private User user;
+
+    @Column(columnDefinition = "int default 0")
+    private int rating;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public User getUser() {
         return user;
