@@ -63,23 +63,23 @@
                 <img class="book-image" th:src="'data:image/*;base64,' + ${book.getImageAsString()}" alt="Book image" style="width:100%">
                 <h5 class="book-title"><p th:text="${book.bookName}" /></h5>
                 <br>
-                <div class="rating">
-                    <section>
-                        <h5>Rate the book</h5>
-                        <ul class="rate-area">
-                            <input id="5-star" name="rating" type="radio" value="5"/><label for="5-star" title="Amazing">5
-                            stars</label>
-                            <input id="4-star" name="rating" type="radio" value="4"/><label for="4-star" title="Good">4
-                            stars</label>
-                            <input id="3-star" name="rating" type="radio" value="3"/><label for="3-star" title="Average">3
-                            stars</label>
-                            <input id="2-star" name="rating" type="radio" value="2"/><label for="2-star" title="Not Good">2
-                            stars</label>
-                            <input id="1-star" name="rating" type="radio" value="1"/><label for="1-star" title="Bad">1
-                            star</label>
-                        </ul>
-                    </section>
-                </div>
+<!--                <div class="rating">-->
+<!--                    <section>-->
+<!--                        <h5>Rate the book</h5>-->
+<!--                        <ul class="rate-area">-->
+<!--                            <input id="5-star" name="rating" type="radio" value="5"/><label for="5-star" title="Amazing">5-->
+<!--                            stars</label>-->
+<!--                            <input id="4-star" name="rating" type="radio" value="4"/><label for="4-star" title="Good">4-->
+<!--                            stars</label>-->
+<!--                            <input id="3-star" name="rating" type="radio" value="3"/><label for="3-star" title="Average">3-->
+<!--                            stars</label>-->
+<!--                            <input id="2-star" name="rating" type="radio" value="2"/><label for="2-star" title="Not Good">2-->
+<!--                            stars</label>-->
+<!--                            <input id="1-star" name="rating" type="radio" value="1"/><label for="1-star" title="Bad">1-->
+<!--                            star</label>-->
+<!--                        </ul>-->
+<!--                    </section>-->
+<!--                </div>-->
             </div>
         </div>
         <div class="col-lg-6 col-sm-12 right">
@@ -100,7 +100,38 @@
             </div>
         </div>
     </div>
-<!--Comments here-->
+</div>
+<div>
+<!--Send Review here-->
+    <form method="post" th:action="@{/bookDetails/{id}(id=${book.id})}" th:object="${review}">
+        <div class="rating">
+            <section>
+                <h5>Rate the book</h5>
+                <p class="rate-area">
+                    <input id="5-star" name="rating" type="radio" value="5" th:field="*{rating}"><label for="5-star" title="Amazing">5
+                    stars</label>
+                    <input id="4-star" name="rating" type="radio" value="4" th:field="*{rating}"><label for="4-star" title="Good">4
+                    stars</label>
+                    <input id="3-star" name="rating" type="radio" value="3" th:field="*{rating}"><label for="3-star" title="Average">3
+                    stars</label>
+                    <input id="2-star" name="rating" type="radio" value="2" th:field="*{rating}"><label for="2-star" title="Not Good">2
+                    stars</label>
+                    <input id="1-star" name="rating" type="radio" value="1" th:field="*{rating}"><label for="1-star" title="Bad">1
+                    star</label>
+                </p>
+            </section>
+        </div>
+        <div class="form-group shadow-textarea">
+            <label for="comment" hidden>Review Message</label>
+            <textarea class="form-control z-depth-1" id="comment" placeholder="Write you review here..."
+                      rows="3" th:field="*{comment}"/></textarea>
+        </div>
+        <button class="btn btn-info" type="submit">Send Review</button>
+    </form>
+</div>
+<!--Comments and Stars Here-->
+<div>
+
 </div>
 <!--Footerr -->
 <div id="footer">
