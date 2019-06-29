@@ -22,6 +22,27 @@ public class Review {
     @ManyToOne
     private Book book;
 
+    @Column(columnDefinition = "bool default false")
+    private boolean edited;
+
+    private String editedBy;
+
+    public boolean isEdited() {
+        return edited;
+    }
+
+    public void setEdited(boolean edited) {
+        this.edited = edited;
+    }
+
+    public String getEditedBy() {
+        return editedBy;
+    }
+
+    public void setEditedBy(String editedBy) {
+        this.editedBy = editedBy;
+    }
+
     public Review(){
         this.created = new Date();
     }

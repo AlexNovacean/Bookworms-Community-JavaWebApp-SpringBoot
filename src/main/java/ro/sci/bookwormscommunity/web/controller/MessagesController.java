@@ -48,10 +48,11 @@ public class MessagesController {
     }
 
     @GetMapping("/messages/conversation/{id}")
-    public String openConversation(@PathVariable("id") long id, Model model) {
+    public String openConversation(@PathVariable("id") long id, Model model, Principal principal) {
         List<Message> texts = messageService.getUserMessages(id);
         model.addAttribute("texts", texts);
         model.addAttribute("conv", conversationService.findById(id));
+        model.addAttribute("principal", principal);
         return "texts";
     }
 

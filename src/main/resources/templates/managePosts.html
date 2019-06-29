@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="static/css/rating.css" media="all" rel="stylesheet" th:href="@{../css/rating.css}" type="text/css">
+    <meta charset="UTF-8">
+    <title>Manage Posts</title>
+</head>
+<body>
+<form th:action="@{/managePosts/{id}(id=${review.id})}" th:object="${review}" method="post">
+    <table>
+        <tr>
+            <td th:text="'Posted by ' + ${review.userNickname} + ' on ' + ${#dates.format(review.created,'dd-MMM HH:mm')}"></td>
+        </tr>
+        <tr th:switch="${review.rating}">
+            <td th:case="5">Rating: <span class="stars-container stars-100">★★★★★</span></td>
+            <td th:case="4">Rating: <span class="stars-container stars-80">★★★★★</span></td>
+            <td th:case="3">Rating: <span class="stars-container stars-60">★★★★★</span></td>
+            <td th:case="2">Rating: <span class="stars-container stars-40">★★★★★</span></td>
+            <td th:case="1">Rating: <span class="stars-container stars-20">★★★★★</span></td>
+            <td th:case="0">Rating: <span class="stars-container stars-0">★★★★★</span></td>
+        </tr>
+        <tr>
+            <td><label for="comment"><textarea id="comment" th:field="*{comment}"></textarea></label></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Save Changes</button></td>
+        </tr>
+    </table>
+</form>
+<button th:onclick="|window.location.href='/managePosts/delete/${review.id}'|">Delete Posts</button>
+<button th:onclick="|window.location.href='/bookDetails/${review.book.id}'|">Cancel</button>
+</body>
+</html>

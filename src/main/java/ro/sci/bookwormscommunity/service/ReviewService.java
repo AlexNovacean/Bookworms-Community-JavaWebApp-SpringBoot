@@ -1,23 +1,19 @@
 package ro.sci.bookwormscommunity.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.sci.bookwormscommunity.model.Review;
-import ro.sci.bookwormscommunity.repositories.ReviewRepository;
 
 import java.util.List;
 
-@Service
-public class ReviewService {
+public interface ReviewService {
+    void saveReview(Review review);
 
-    @Autowired
-    private ReviewRepository reviewRepository;
+    List<Review> getBookReviews(long bookId);
 
-    public void saveReview(Review review){
-        reviewRepository.save(review);
-    }
+    Review getReviewById(long id);
 
-    public List<Review> getBookReviews(long bookId){
-        return reviewRepository.getBookReviews(bookId);
-    }
+    @Transactional
+    void updateReview(long id, Review review);
+
+    void deleteReviewById(long id);
 }

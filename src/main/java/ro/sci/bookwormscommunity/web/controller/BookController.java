@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ro.sci.bookwormscommunity.mapper.BookMapper;
-import ro.sci.bookwormscommunity.model.Book;
-import ro.sci.bookwormscommunity.model.BookCondition;
-import ro.sci.bookwormscommunity.model.Review;
-import ro.sci.bookwormscommunity.model.User;
+import ro.sci.bookwormscommunity.model.*;
 import ro.sci.bookwormscommunity.service.BookService;
 import ro.sci.bookwormscommunity.service.ReviewService;
 import ro.sci.bookwormscommunity.service.UserService;
@@ -143,6 +140,33 @@ public class BookController {
 
         bookService.calculateRating(id);
 
-        return "redirect:/bookDetails/" + id;
+        return "redirect:/bookDetails/" + id + "#allreviews";
+    }
+
+    @GetMapping("/managePosts/{id}")
+    public String managePosts(@PathVariable("id")long id, Model model){
+        Review review = reviewService.getReviewById(id);
+        model.addAttribute(review);
+        return "managePosts";
+    }
+
+    @PostMapping("/managePosts/{id}")
+    public String editPost(@PathVariable("id")long id, Principal principal, Review review){
+
+        String[] userRoles = userService.findByEmail(principal.getName()).getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
+        long redirectId = reviewService.getReviewById(id).getBook().getId();
+        review.setEdited(true);
+        review.setEditedBy(userRoles[0].equals("ROLE_ADMIN")? "Admin" : "Moderator");
+
+        reviewService.updateReview(id,review);
+
+        return "redirect:/bookDetails/" + redirectId;
+    }
+
+    @GetMapping("/managePosts/delete/{id}")
+    public String deletePost(@PathVariable("id")long id){
+        Book book = reviewService.getReviewById(id).getBook();
+        reviewService.deleteReviewById(id);
+        return "redirect:/bookDetails/" + book.getId();
     }
 }

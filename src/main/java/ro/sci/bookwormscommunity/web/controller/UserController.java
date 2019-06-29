@@ -85,5 +85,11 @@ public class UserController {
 
         return "redirect:/user";
     }
+
+    @GetMapping("/user/ban/{id}")
+    public String banUser(@PathVariable("id")long id){
+        userService.banUser(id);
+        return "redirect:/user/" + id + "?banned";
+    }
 }
 

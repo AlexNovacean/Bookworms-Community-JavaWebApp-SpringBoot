@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Edit</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#renting, #selling').change(function () {
+                var row = $(this).closest('tr').next();
+
+                if (this.checked)
+                    row.fadeIn('slow');
+                else
+                    row.fadeOut('slow');
+            }).change();
+        });
+    </script>
 </head>
 <body>
 <p><img style="max-width: 300px; max-height: 150px" th:src="'data:image/*;base64,' + ${bookDto.getPhotoAsString()}"></p>
@@ -39,22 +52,16 @@
             <td><label for="language">Book Language: </label><input type="text" id="language" th:field="*{language}" ></td>
         </tr>
         <tr>
-            <td><label for="bookRent">Check if the book will be available to rent: </label><input type="checkbox" id="bookRent" th:field="*{bookRent}"></td>
+            <td><label for="renting">Check if the book will be available to rent: </label><input type="checkbox" id="renting" th:field="*{bookRent}"></td>
         </tr>
         <tr>
-            <td style="color: cornflowerblue">If the book will be available for renting, please specify the rent price below.</td>
+            <td><label for="rentPrice">Rent Price(RON/day): </label><input type="number" id="rentPrice" th:field="*{rentPrice}"></td>
         </tr>
         <tr>
-            <td><label for="rentPrice">Rent Price(RON/day): </label><input type="text" id="rentPrice" th:field="*{rentPrice}"></td>
+            <td><label for="selling">Check if the book will be available for sale: </label><input type="checkbox" id="selling" th:field="*{bookSale}"></td>
         </tr>
         <tr>
-            <td><label for="bookSale">Check if the book will be available for sale: </label><input type="checkbox" id="bookSale" th:field="*{bookSale}"></td>
-        </tr>
-        <tr>
-            <td style="color: cornflowerblue">If the book will be available for sale, please specify the price below.</td>
-        </tr>
-        <tr>
-            <td><label for="sellPrice">Rent Price(RON/day): </label><input type="text" id="sellPrice" th:field="*{sellPrice}"></td>
+            <td><label for="sellPrice">Sale Price(RON): </label><input type="number" id="sellPrice" th:field="*{sellPrice}"></td>
         </tr>
         <tr>
             <td>

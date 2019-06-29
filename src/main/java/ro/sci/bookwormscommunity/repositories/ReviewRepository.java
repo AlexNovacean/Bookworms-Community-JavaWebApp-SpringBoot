@@ -12,6 +12,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("SELECT r " +
             "FROM Review AS r " +
             "WHERE " +
-            "r.book.id = :bookId")
+            "r.book.id = :bookId " +
+            "ORDER BY r.created")
     List<Review> getBookReviews(@Param("bookId")long bookId);
 }

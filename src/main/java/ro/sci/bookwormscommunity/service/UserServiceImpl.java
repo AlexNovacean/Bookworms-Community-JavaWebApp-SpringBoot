@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.UserRepository;
 import ro.sci.bookwormscommunity.web.dto.UserDto;
@@ -41,8 +42,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword(),
-                getAuthorities(user));
+                user.getPassword(), user.isEnabled(),true,true,true,getAuthorities(user));
     }
 
     @Override
@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRoles(Arrays.asList(roleService.createRoleIfNotFound("ROLE_USER")));
         user.setPhoto(userDto.returnImage().getBytes());
+        user.setEnabled(true);
         userRepository.save(user);
     }
 
@@ -87,6 +88,12 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
         user.setPhoto(userDto.returnUpdatePhoto(user.getPhoto()));
+        userRepository.save(user);
+    }
+
+    public void banUser(long id){
+        User user = userRepository.getOne(id);
+        user.setEnabled(false);
         userRepository.save(user);
     }
 }

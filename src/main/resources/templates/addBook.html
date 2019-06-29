@@ -27,9 +27,9 @@
 <div id="header">
     <ul id="navigation"><!--Navigation bar -->
         <script>
-			    	$(document).ready(function(){
-	  				$('[data-toggle="tooltip"]').tooltip();
-					});
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
         </script>
         <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="topRated.html"
                title="Top Rated Books for Bookworms">Top Rated Books</a></li>
@@ -42,12 +42,12 @@
         <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks}"
                title="A list of all the books">Community Books</a></li>
         <li style="float:right">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <form action="search.html" class="form-inline">
-                <input class="form-control mr-sm-2" placeholder="Search" type="text">
-                <button class="btn btn-success" type="submit">Search</button>
-            </form>
-        </nav>
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                <form action="search.html" class="form-inline">
+                    <input class="form-control mr-sm-2" placeholder="Search" type="text">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </nav>
         </li>
         <!--User bar -->
         <li sec:authorize="isAnonymous()" style="float:right"><a class="Log In" th:href="@{/login}" data-toggle="tooltip" data-placement="bottom" title="Log In"><i class="fa fa-sign-in"></i></a></li>
@@ -158,23 +158,6 @@
         </div>
         <p class="contentR" th:errors="*{description}" th:if="${#fields.hasErrors('description')}">Description
             Error</p>
-        <div class="rating">
-            <section>
-                <h5>Rate the book that you are about to add</h5>
-                <ul class="rate-area">
-                    <input id="5-star" name="rating" type="radio" value="5"/><label for="5-star" title="Amazing">5
-                    stars</label>
-                    <input id="4-star" name="rating" type="radio" value="4"/><label for="4-star" title="Good">4
-                    stars</label>
-                    <input id="3-star" name="rating" type="radio" value="3"/><label for="3-star" title="Average">3
-                    stars</label>
-                    <input id="2-star" name="rating" type="radio" value="2"/><label for="2-star" title="Not Good">2
-                    stars</label>
-                    <input id="1-star" name="rating" type="radio" value="1"/><label for="1-star" title="Bad">1
-                    star</label>
-                </ul>
-            </section>
-        </div>
         <br>
         <br>
         <br>
@@ -191,14 +174,11 @@
                 <p class="contentR" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Image Error! Image
                     might be to big!</p>
                 <script>
-                // Following code is for the name of the file appear on select
-                $(".custom-file-input").on("change", function() {
-                  var fileName = $(this).val().split("\\").pop();
-                  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                });
-
-
-
+                    // Following code is for the name of the file appear on select
+                    $(".custom-file-input").on("change", function() {
+                        var fileName = $(this).val().split("\\").pop();
+                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                    });
                 </script>
             </div>
         </div>

@@ -14,6 +14,7 @@
 </head>
 <body>
 <h3 style="color: green" th:if="${param.updated}">Profile Updated!</h3>
+<h3 style="color: orange" th:if="${param.banned}">User Banned!</h3>
 <section class="login-block">
     <div class="container user-profile" >
         <br>
@@ -35,9 +36,9 @@
                             <li class="list-group-item">Location: <span><b th:text="${user.location}" /></span></li>
                         </ul>
                     </h6>
-                </div>
-                <a th:href="@{/user/editProfile}" button class="btn btn-success">Edit Profile</a>
-                <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">Send message</button>
+                </div><a th:href="@{/user/editProfile}" th:if="${user.email.equals(principal.name)}" button class="btn btn-success">Edit Profile</a>
+              <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" th:onclick="|window.location.href='/user/ban/${user.id}'|">Ban User</button>
+                 <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">Send message</button>
             </div>
         </div>
                 <table class="table">
