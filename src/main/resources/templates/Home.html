@@ -17,7 +17,7 @@
 	</head>
 	<body>
 		  <div class="card img-fluid" style="width:1600px">
-			  <img class="card-img-top" src="static/images/headerv4.jpg" style="max-width:100%" th:src="@{../images/headerv4.jpg}">
+			  <img class="card-img-top" src="static/images/header.jpg" style="max-width:100%" th:src="@{../images/header.jpg}">
    			 <div class="card-img-overlay">
    			 	<div class="Header">
       			<h1>Bookworms Community</h1><!-- Heather title -->
@@ -65,137 +65,21 @@
 				        <th>Rating</th>
 				      </tr>
 				    </thead>
-				    <tbody>
-				      <tr>
-				        <td>Default</td>
-				        <td>Defaultson</td>
-				        <td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							</div>
-						</td>
-				      </tr>      
-				      <tr class="table-primary">
-				        <td>Primary</td>
-				        <td>Joe</td>
-						<td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							</div>
-						</td>
-				      </tr>
-				      <tr class="table-success">
-				        <td>Success</td>
-				        <td>Doe</td>
-				        	<td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star"></span>
-							</div>
-						</td>
-				      </tr>
-				      <tr class="table-danger">
-				        <td>Danger</td>
-				        <td>Moe</td>
-				        	<td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star"></span>
-							</div>
-						</td>
-				      </tr>
-				      <tr class="table-info">
-				        <td>Info</td>
-				        <td>Dooley</td>
-				        	<td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star"></span>
-							</div>
-						</td>
-				      </tr>
-				      <tr class="table-warning">
-				        <td>Warning</td>
-				        <td>Refs</td>
-				        	<td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star"></span>
-							<span class="fa fa-star"></span>
-							</div>
-						</td>
-				      </tr>
-				      <tr class="table-active">
-				        <td>Active</td>
-				        <td>Activeson</td>
-				        <td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star"></span>
-							<span class="fa fa-star"></span>
-							</div>
-						</td>
-				      </tr>
-				      <tr class="table-secondary">
-				        <td>Secondary</td>
-				        <td>Secondson</td>
-				        <td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star"></span>
-							<span class="fa fa-star"></span>
-							</div>
-						</td>
-				      </tr>
-				      <tr class="table-light">
-				        <td>Light</td>
-				        <td>Angie</td>
-				        <td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star checked"></span>
-							<span class="fa fa-star"></span>
-							<span class="fa fa-star"></span>
-							<span class="fa fa-star"></span>
-							</div>
-						</td>
-				      </tr>
-				      <tr class="table-dark text-dark">
-				        <td>Dark</td>
-				        <td>Bo</td>
-				        <td>		      
-				        	<div class="rating">
-					        <span class="fa fa-star checked"></span>
-							<span class="fa fa-star"></span>
-							<span class="fa fa-star"></span>
-							<span class="fa fa-star"></span>
-							<span class="fa fa-star"></span>
-							</div>
-						</td>
-				      </tr>
+				    <tbody th:each="book : ${books}">
+					<tr>
+						<td th:text="${book.bookName}"></td>
+					</tr>
+					<tr>
+						<td th:text="${book.authorName}"></td>
+					</tr>
+					<tr th:switch="${book.rating}">
+						<td th:case="5">Rating: <span class="stars-container stars-100">★★★★★</span></td>
+						<td th:case="4">Rating: <span class="stars-container stars-80">★★★★★</span></td>
+						<td th:case="3">Rating: <span class="stars-container stars-60">★★★★★</span></td>
+						<td th:case="2">Rating: <span class="stars-container stars-40">★★★★★</span></td>
+						<td th:case="1">Rating: <span class="stars-container stars-20">★★★★★</span></td>
+						<td th:case="0">Rating: <span class="stars-container stars-0">★★★★★</span></td>
+					</tr>
 				    </tbody>
 				  </table>
 		    </div>

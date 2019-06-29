@@ -23,6 +23,7 @@
                 <div>
                     <img alt="User Picture" class="user-image" th:src="'data:image/*;base64,' + ${user.getImageAsString()}">
                 </div>
+                <br>
                     <h5 class="user-name" p th:text="${user.nickname}"/>
                     <!-- User Rating-->
             </div>
@@ -36,14 +37,21 @@
                             <li class="list-group-item">Location: <span><b th:text="${user.location}" /></span></li>
                         </ul>
                     </h6>
-                </div><a th:href="@{/user/editProfile}" th:if="${user.email.equals(principal.name)}" button class="btn btn-success">Edit Profile</a>
-              <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" th:onclick="|window.location.href='/user/ban/${user.id}'|">Ban User</button>
-                 <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">Send message</button>
+                    <p>
+                        <a th:href="@{/addBook}" button class="btn btn-success">Add Book</a>
+                        <a th:href="@{/user/editProfile}" th:if="${user.email.equals(principal.name)}" button class="btn btn-success">Edit Profile</a>
+                        <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">Send message</button>
+                        <button class="btn btn-success" th:if="${not user.email.equals(principal.name)}" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" th:onclick="|window.location.href='/user/ban/${user.id}'|">Ban User</button>
+                    </p>
+                </div>
+                <p class="alert alert-success text-center" th:if="${param.sent}">Your message has been sent!</p>
+
+                </div>
             </div>
-        </div>
-                <table class="table">
-                    <thead>
-                    <tr class="table-error">
+        <br>
+                <table class="table table-striped table-hover">
+                    <thead th:if="${not books.isEmpty()}">
+                    <tr class="table-info">
                         <th>Details</th>
                         <th>Book Name</th>
                         <th>Author</th>
@@ -51,7 +59,7 @@
                         <th>Rent Price</th>
                         <th>For Sale</th>
                         <th>Sale Price</th>
-                        <!--Book Rating-->
+                        <th>Rating</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -61,20 +69,21 @@
                             <td th:text="${book.bookName}"></td>
                             <td th:text="${book.authorName}"></td>
                             <td th:text="${book.bookRent} ? 'YES' : 'NO'"></td>
-                            <td th:if="${book.bookRent}" th:text="*{#numbers.formatDecimal(rentPrice,1,1,'POINT')}"></td>
+                            <td th:text="${book.bookRent} ? ${book.rentPrice} : ' '"></td>
                             <td th:text="${book.bookSale} ? 'YES' : 'NO'"></td>
-                            <td th:if="${book.bookSale}" th:text="*{#numbers.formatDecimal(sellPrice,1,1,'POINT')}"></td>
-                            <td><a th:href="@{/editBook/{id}(id=${book.id})} "button class="btn btn-info">Update Book</a></td>
+                            <td th:text="${book.bookSale} ? ${book.sellPrice} : ' '"></td>
+                            <td><a th:if="${user.email.equals(principal.name)}" th:href="@{/editBook/{id}(id=${book.id})} "button class="btn btn-info">Update Book</a></td>
+                            <!--Book Rating-->
+
                         </tr>
                     </th:block>
                     </tbody>
                 </table>
                 <br>
-                <a th:href="@{/addBook}" button class="btn btn-success">Add Book</a>
             <br>
-        </div>
         <p><a th:href="@{/}" button class="btn btn-primary">Home Page</a></p>
         <br>
+        </div>
 </section>
 <!--Footerr -->
 <div id="footer">

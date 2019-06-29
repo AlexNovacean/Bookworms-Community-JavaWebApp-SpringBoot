@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.User;
+import ro.sci.bookwormscommunity.service.BookService;
 import ro.sci.bookwormscommunity.service.UserService;
 
 import java.security.Principal;
@@ -16,12 +18,19 @@ public class MainController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BookService bookService;
+
     @GetMapping("")
     public String root(Model model, Principal principal) {
         if (principal != null) {
             User user = userService.findByEmail(principal.getName());
             model.addAttribute("user", user);
         }
+
+        List<Book>books =bookService.getTopRatedBooks();
+        model.addAttribute("books",books);
+
         return "Home";
     }
 

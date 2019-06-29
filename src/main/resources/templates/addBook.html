@@ -1,7 +1,7 @@
 <!doctypeHTML>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Book to the Community</title> <!-- Page title -->
     <link href="static/css/style.css" media="all" rel="stylesheet" th:href="@{../css/style.css}" type="text/css">
@@ -16,7 +16,8 @@
 </head>
 <body>
 <div class="card img-fluid" style="width:1600px">
-    <img class="card-img-top" src="static/images/headerv4.jpg" style="max-width:100%" th:src="@{../images/headerv4.jpg}">
+    <img class="card-img-top" src="static/images/header.jpg" style="max-width:100%"
+         th:src="@{../images/header.jpg}">
     <div class="card-img-overlay">
         <div class="Header">
             <h1>Bookworms Community</h1><!-- Heather title -->
@@ -27,9 +28,10 @@
 <div id="header">
     <ul id="navigation"><!--Navigation bar -->
         <script>
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-            });
+			    	$(document).ready(function(){
+	  				$('[data-toggle="tooltip"]').tooltip();
+					});
+
         </script>
         <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="topRated.html"
                title="Top Rated Books for Bookworms">Top Rated Books</a></li>
@@ -42,12 +44,12 @@
         <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks}"
                title="A list of all the books">Community Books</a></li>
         <li style="float:right">
-            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-                <form action="search.html" class="form-inline">
-                    <input class="form-control mr-sm-2" placeholder="Search" type="text">
-                    <button class="btn btn-success" type="submit">Search</button>
-                </form>
-            </nav>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <form action="search.html" class="form-inline">
+                <input class="form-control mr-sm-2" placeholder="Search" type="text">
+                <button class="btn btn-success" type="submit">Search</button>
+            </form>
+        </nav>
         </li>
         <!--User bar -->
         <li sec:authorize="isAnonymous()" style="float:right"><a class="Log In" th:href="@{/login}" data-toggle="tooltip" data-placement="bottom" title="Log In"><i class="fa fa-sign-in"></i></a></li>
@@ -153,7 +155,8 @@
         </div>
         <div class="form-group shadow-textarea">
             <label for="bookDescription">Book description</label>
-            <textarea class="form-control z-depth-1" id="bookDescription" placeholder="Write a description (up to 3000 characters) ..."
+            <textarea class="form-control z-depth-1" id="bookDescription"
+                      placeholder="Write a description (up to 3000 characters) ..."
                       rows="3" th:field="*{description}"/></textarea>
         </div>
         <p class="contentR" th:errors="*{description}" th:if="${#fields.hasErrors('description')}">Description
@@ -174,11 +177,14 @@
                 <p class="contentR" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Image Error! Image
                     might be to big!</p>
                 <script>
-                    // Following code is for the name of the file appear on select
-                    $(".custom-file-input").on("change", function() {
-                        var fileName = $(this).val().split("\\").pop();
-                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                    });
+                // Following code is for the name of the file appear on select
+                $(".custom-file-input").on("change", function() {
+                  var fileName = $(this).val().split("\\").pop();
+                  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                });
+
+
+
                 </script>
             </div>
         </div>

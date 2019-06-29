@@ -18,4 +18,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             "b.user.id = :userId")
     List<Book> getUserBooks(@Param("userId") long userId);
 
+    @Transactional
+    @Query(nativeQuery = true, value = "SELECT * FROM book AS b ORDER BY rating DESC LIMIT 10")
+    List<Book> findTopRatedBooks();
+
 }

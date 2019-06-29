@@ -52,7 +52,7 @@ public class MessagesController {
         List<Message> texts = messageService.getUserMessages(id);
         model.addAttribute("texts", texts);
         model.addAttribute("conv", conversationService.findById(id));
-        model.addAttribute("principal", principal);
+        model.addAttribute("principal",principal);
         return "texts";
     }
 

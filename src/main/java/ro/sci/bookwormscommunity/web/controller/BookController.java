@@ -61,6 +61,15 @@ public class BookController {
         return "bookDetails";
     }
 
+    @GetMapping("/user/bookDetails/{id}")
+    public String userBookDetails(@PathVariable("id") Long id, Model model, Principal principal) {
+        User user = userService.findByEmail(principal.getName());
+        Optional<Book> book = bookService.getBookById(id);
+        model.addAttribute("book", book.get());
+        model.addAttribute("user", user);
+        return "bookDetails";
+    }
+
     //add a book
     @GetMapping("/addBook")
     public String showSaveBookForm(Model model) {
@@ -85,19 +94,9 @@ public class BookController {
 
     //delete a book
     @GetMapping("/deleteBook/{id}")
-    public String deleteBookForm(@PathVariable("id") Long id, Model model) {
-        Optional<Book> book = bookService.getBookById(id);
-        model.addAttribute("book", book.get());
-        return "deleteBook";
-    }
-
-    @PostMapping("/deleteBook/{id}")
-    public String deleteBook(@PathVariable("id") Long id, Model model) {
-        Book book = bookService.getBookById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
-        bookService.deleteBook(book);
-        model.addAttribute("books", bookService.getAllBooks());
-        return "redirect:/communityBooks";
+    public String deleteBookForm(@PathVariable("id") Long id) {
+        bookService.deleteBook(id);
+        return "redirect:/communityBooks?deletedBook";
     }
 
     //update a book

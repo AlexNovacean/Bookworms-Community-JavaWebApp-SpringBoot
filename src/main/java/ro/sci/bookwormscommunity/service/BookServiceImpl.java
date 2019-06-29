@@ -38,8 +38,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(Book book) {
-        this.bookRepository.delete(book);
+    public void deleteBook(long id) {
+        this.bookRepository.deleteById(id);
     }
 
     @Override
@@ -79,6 +79,11 @@ public class BookServiceImpl implements BookService {
 
         book.setRating(reviewSum/reviews.size());
         bookRepository.save(book);
+    }
+
+    @Override
+    public List<Book> getTopRatedBooks(){
+        return bookRepository.findTopRatedBooks();
     }
 }
 

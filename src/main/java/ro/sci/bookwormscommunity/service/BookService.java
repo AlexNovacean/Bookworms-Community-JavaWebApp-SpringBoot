@@ -17,9 +17,11 @@ public interface BookService {
     @Transactional
     void updateBook(long id, BookDto bookDto) throws Exception;
 
-    void deleteBook(Book book);
+    void deleteBook(long id);
 
     List<Book> getUserBooks(long id);
 
-    public void calculateRating(long id);
+    void calculateRating(long id);
+
+    List<Book> getTopRatedBooks();
 }
