@@ -1,6 +1,9 @@
 package ro.sci.bookwormscommunity.web.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,7 @@ import ro.sci.bookwormscommunity.mapper.UserMapper;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.BookService;
+import ro.sci.bookwormscommunity.service.BanMailService;
 import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.UserDto;
 
@@ -23,11 +27,16 @@ import java.util.List;
 @RequestMapping("/user/**")
 public class UserController {
 
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private BanMailService mailService;
 
     @ModelAttribute("user")
     public UserDto userDto() {
@@ -73,7 +82,7 @@ public class UserController {
         }
 
         if (result.hasErrors()) {
-            userDto.setPhoto(new MockMultipartFile("userPhoto.png",new ByteArrayInputStream(user.getPhoto())));
+            userDto.setPhoto(new MockMultipartFile("userPhoto.png", new ByteArrayInputStream(user.getPhoto())));
             return "updateUser";
         }
 
@@ -87,8 +96,17 @@ public class UserController {
     }
 
     @GetMapping("/user/ban/{id}")
-    public String banUser(@PathVariable("id")long id){
+    public String banUser(@PathVariable("id") long id) {
+        User user = userService.findById(id);
+
         userService.banUser(id);
+
+        try {
+            mailService.sendAccountDisabledMail(user);
+        } catch (MailException e) {
+            logger.error("Error Sending the Ban Mail: {e}",e);
+        }
+
         return "redirect:/user/" + id + "?banned";
     }
 }

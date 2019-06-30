@@ -99,7 +99,6 @@ public class Book {
         this.condition = condition;
     }
 
-
     public String getBookName() {
         return bookName;
     }
