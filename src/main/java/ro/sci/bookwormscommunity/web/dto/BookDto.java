@@ -142,7 +142,7 @@ public class BookDto {
     }
 
     public Integer getSellPrice() {
-        return sellPrice;
+        return (sellPrice != null) ? sellPrice : 0;
     }
 
     public void setSellPrice(Integer sellPrice) {
@@ -150,7 +150,7 @@ public class BookDto {
     }
 
     public Integer getRentPrice() {
-        return rentPrice;
+        return (rentPrice != null) ? rentPrice : 0;
     }
 
     public void setRentPrice(Integer rentPrice) {

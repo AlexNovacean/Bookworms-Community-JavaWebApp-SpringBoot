@@ -99,7 +99,7 @@
                 <span class="input-group-text">Number of pages</span>
             </div>
             <input class="form-control" placeholder="How many pages does it have?" th:field="*{numberOfPages}"
-                   type="text"/>
+                   type="number"/>
         </div>
         <p class="contentR" th:errors="*{numberOfPages}" th:if="${#fields.hasErrors('numberOfPages')}">Book number of
             pages Error</p>
@@ -140,14 +140,14 @@
                 <div class="form-group">
                     <label for="rentPrice"><b>Rent Price</b></label>
                     <input class="form-control" id="rentPrice" placeholder="Price" th:field="*{rentPrice}"
-                           type="text"/>
+                           type="number"/>
                 </div>
                 <p class="contentR" th:errors="*{rentPrice}" th:if="${#fields.hasErrors('rentPrice')}">Price
                     Error</p>
                 <div class="form-group">
                     <label for="sellPrice"><b>Sell Price</b></label>
                     <input class="form-control" id="sellPrice" placeholder="Price" th:field="*{sellPrice}"
-                           type="text"/>
+                           type="number"/>
                 </div>
                 <p class="contentR" th:errors="*{sellPrice}" th:if="${#fields.hasErrors('sellPrice')}">Price
                     Error</p>

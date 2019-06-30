@@ -24,4 +24,6 @@ public interface BookService {
     void calculateRating(long id);
 
     List<Book> getTopRatedBooks();
+
+    List<Book> getLatestAddedBooks();
 }

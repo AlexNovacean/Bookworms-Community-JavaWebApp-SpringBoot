@@ -60,25 +60,25 @@
 		        <table class="table">
 				    <thead>
 				      <tr>
-				        <th>Book</th>
-				        <th>Author</th>
-				        <th>Rating</th>
+						  <th>Cover</th>
+				      	  <th>Book</th>
+				      	  <th>Author</th>
+				      	  <th>Rating</th>
 				      </tr>
 				    </thead>
-				    <tbody th:each="book : ${books}">
+				    <tbody th:each="book : ${topBooks}">
 					<tr>
+						<td><img style="max-width: 100px; max-height: 200px" th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></td>
 						<td th:text="${book.bookName}"></td>
-					</tr>
-					<tr>
 						<td th:text="${book.authorName}"></td>
-					</tr>
-					<tr th:switch="${book.rating}">
-						<td th:case="5">Rating: <span class="stars-container stars-100">★★★★★</span></td>
-						<td th:case="4">Rating: <span class="stars-container stars-80">★★★★★</span></td>
-						<td th:case="3">Rating: <span class="stars-container stars-60">★★★★★</span></td>
-						<td th:case="2">Rating: <span class="stars-container stars-40">★★★★★</span></td>
-						<td th:case="1">Rating: <span class="stars-container stars-20">★★★★★</span></td>
-						<td th:case="0">Rating: <span class="stars-container stars-0">★★★★★</span></td>
+						<td th:switch="${book.rating}">
+							<span th:case="5" class="stars-container stars-100">★★★★★</span>
+							<span th:case="4" class="stars-container stars-80">★★★★★</span>
+							<span th:case="3" class="stars-container stars-60">★★★★★</span>
+							<span th:case="2" class="stars-container stars-40">★★★★★</span>
+							<span th:case="1" class="stars-container stars-20">★★★★★</span>
+							<span th:case="0" class="stars-container stars-0">★★★★★</span>
+						</td>
 					</tr>
 				    </tbody>
 				  </table>

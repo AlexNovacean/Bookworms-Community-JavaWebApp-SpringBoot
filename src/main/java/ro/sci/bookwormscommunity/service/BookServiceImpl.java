@@ -73,17 +73,22 @@ public class BookServiceImpl implements BookService {
 
         int reviewSum = 0;
 
-        for(Review r : reviews){
+        for (Review r : reviews) {
             reviewSum += r.getRating();
         }
 
-        book.setRating(reviewSum/reviews.size());
+        book.setRating(reviewSum / reviews.size());
         bookRepository.save(book);
     }
 
     @Override
-    public List<Book> getTopRatedBooks(){
+    public List<Book> getTopRatedBooks() {
         return bookRepository.findTopRatedBooks();
+    }
+
+    @Override
+    public List<Book> getLatestAddedBooks() {
+        return bookRepository.findLatestAddedBooks();
     }
 }
 

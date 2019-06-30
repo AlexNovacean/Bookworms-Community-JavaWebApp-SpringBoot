@@ -28,8 +28,11 @@ public class MainController {
             model.addAttribute("user", user);
         }
 
-        List<Book>books =bookService.getTopRatedBooks();
-        model.addAttribute("books",books);
+        List<Book> topBooks = bookService.getTopRatedBooks();
+        model.addAttribute("topBooks",topBooks);
+
+        List<Book> latestBooks = bookService.getLatestAddedBooks();
+        model.addAttribute("latestBooks",latestBooks);
 
         return "Home";
     }

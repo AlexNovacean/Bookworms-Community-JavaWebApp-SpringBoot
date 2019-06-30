@@ -2,6 +2,7 @@ package ro.sci.bookwormscommunity.model;
 
 import javax.persistence.*;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,8 +36,10 @@ public class Book {
 
     private boolean bookSale;
 
+    @Column(columnDefinition = "int default 0")
     private int sellPrice;
 
+    @Column(columnDefinition = "int default 0")
     private int rentPrice;
 
     @Lob
@@ -50,6 +53,20 @@ public class Book {
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
     private List<Review> reviews;
+
+    private Date addDate;
+
+    public Book(){
+        this.addDate = new Date();
+    }
+
+    public Date getAddDate() {
+        return addDate;
+    }
+
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
+    }
 
     public int getRating() {
         return rating;
