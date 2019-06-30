@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Edit</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#renting, #selling').change(function () {
+                var row = $(this).closest('tr').next();
+
+                if (this.checked)
+                    row.fadeIn('slow');
+                else
+                    row.fadeOut('slow');
+            }).change();
+        });
+    </script>
+</head>
+<body>
+<p><img style="max-width: 300px; max-height: 150px" th:src="'data:image/*;base64,' + ${bookDto.getPhotoAsString()}"></p>
+<form enctype="multipart/form-data" method="post" th:action="@{/updateBook/{id}(id=${bookDto.id})}" th:object="${bookDto}">
+    <table>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}">Book Name Error</td>
+        </tr>
+        <tr>
+            <td><label for="bookName">Book Name: </label><input type="text" id="bookName" th:field="*{bookName}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('authorName')}" th:errors="*{authorName}">Author Name Error</td>
+        </tr>
+        <tr>
+            <td><label for="authorName">Author Name: </label><input type="text" id="authorName" th:field="*{authorName}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('numberOfPages')}" th:errors="*{numberOfPages}">Number of Pages Error</td>
+        </tr>
+        <tr>
+            <td><label for="numberOfPages">Number of Pages: </label><input type="number" id="numberOfPages" th:field="*{numberOfPages}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Book Type Error</td>
+        </tr>
+        <tr>
+            <td><label for="type">Book Type: </label><input type="text" id="type" th:field="*{type}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('language')}" th:errors="*{language}">Book Language Error</td>
+        </tr>
+        <tr>
+            <td><label for="language">Book Language: </label><input type="text" id="language" th:field="*{language}" ></td>
+        </tr>
+        <tr>
+            <td><label for="renting">Check if the book will be available to rent: </label><input type="checkbox" id="renting" th:field="*{bookRent}"></td>
+        </tr>
+        <tr>
+            <td><label for="rentPrice">Rent Price(RON/day): </label><input type="number" id="rentPrice" th:field="*{rentPrice}"></td>
+        </tr>
+        <tr>
+            <td><label for="selling">Check if the book will be available for sale: </label><input type="checkbox" id="selling" th:field="*{bookSale}"></td>
+        </tr>
+        <tr>
+            <td><label for="sellPrice">Sale Price(RON): </label><input type="number" id="sellPrice" th:field="*{sellPrice}"></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="condition">Please chose the condition in which the book is: </label>
+                <select id="condition" th:field="*{condition}">
+                    <option th:each="condition: ${conditions}" th:text=${condition.getCondition()} th:value="${condition}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
+        </tr>
+        <tr>
+            <td><label for="description">Description: </label><textarea id="description" th:field="*{description}" ></textarea></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}">Photo Error</td>
+        </tr>
+        <tr>
+            <td><label for="photo">Update Book Picture:</label><input type="file" id="photo" th:field="*{photo}"></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Update Book</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

@@ -1,33 +1,73 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctypeHTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Texts</title>
+    <title>Your messages in the Community</title> <!-- Page title -->
+    <link href="static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
+    <meta content-type="width=device-width initial-scale=1" name="viewport">
+    <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>Date</th>
-        <th>Sender</th>
-        <th>Message</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${texts.isEmpty()}">
-        <td colspan="2">No Messages</td>
-    </tr>
-    <tr th:each="text : ${texts}">
-        <td><span th:text="${#dates.format(text.sentDate, 'dd-MMM HH:mm')}"> Date </span></td>
-        <td><span th:text="${text.getFromUser().nickname}"> Sender </span></td>
-        <td><span th:text="${text.content}"> Content </span></td>
-    </tr>
-    </tbody>
-</table>
+<section class="login-block">
+    <div class="container register">
+        <div class="container">
+            <div class="message-title">
+                <h2 class="text-center"
+                    th:text="'Conversation between ' + ${conv.getFromUser().nickname} + ' and ' + ${conv.getToUser().nickname}"></h2>
+            </div>
+            <p class="alert alert-success text-center" th:if="${param.sent}">Message Sent!</p>
+            <table class="table table-striped">
+                <thead>
+                <tr class="table-primary">
+                    <th>Sender</th>
+                    <th>Message</th>
+                </thead>
+                <tbody class="thead-light">
+                <tr th:if="${texts.isEmpty()}">
+                    <h6>
+                        <td class="alert alert-warning text-center" colspan="2">No Messages!</td>
+                    </h6>
+                </tr>
+                <tr th:each="text : ${texts}">
+                    <td class="text-primary"
+                        th:text="${text.getFromUser().nickname} +' '+ ${#dates.format(text.sentDate, 'dd-MMM HH:mm')}">
+                    </td>
+                    <td><span data-th-utext="${#strings.replace(#strings.escapeXml(text.content),'&#10;','&lt;br&gt;')}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+            <form method="post" th:action="@{/messages/{id}(id=${conv.id})}">
+                <textarea class="form-control z-depth-1" placeholder="Whrite message here... " cols="50" name="content" rows="5"></textarea>
+                <br>
+                <input button class="btn btn-info" type="submit" value="Send"></button>
+                <a th:href="@{/messages}" button class="btn btn-primary" style="float:right">Back to Messages</a>
+            </form>
 
-<br>
-
-<p><a th:href="@{/}">Back to index.</a></p>
-
+            <br>
+        </div>
+    </div>
+</section>
+<!--Footerr -->
+<div id="footer">
+    <div class="card img-fluid" style="width:1600px">
+        <div class="card-img-overlay">
+            <div class="text-right" style="margin-bottom:0">
+                <h6>Bookworms Community</h6>
+                <p>&copy; Copyright AIRS 2019 All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
+
+
+
+
+
+

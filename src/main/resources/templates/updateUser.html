@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Edit</title>
+</head>
+<body>
+<p><img style="max-width: 300px; max-height: 150px" th:src="'data:image/*;base64,' + ${userDto.returnPhotoAsString()}"></p>
+<form autocomplete="off" enctype="multipart/form-data" method="post" th:action="@{/user/updateProfile}" th:object="${userDto}">
+    <table>
+
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">Nick Name Error</td>
+        </tr>
+        <tr>
+            <td><label for="nickname">Nickname: </label><input type="text" id="nickname" th:field="*{nickname}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</td>
+        </tr>
+        <tr>
+            <td><label for="firstName">First Name: </label><input type="text" id="firstName" th:field="*{firstName}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">First Name Error</td>
+        </tr>
+        <tr>
+            <td><label for="lastName">Last Name: </label><input type="text" id="lastName" th:field="*{lastName}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">First Name Error</td>
+        </tr>
+        <tr>
+            <td><label for="email">Email: </label><input type="text" id="email" th:field="*{email}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasErrors('location')}" th:errors="*{location}">First Name Error</td>
+        </tr>
+        <tr>
+            <td><label for="location">Location: </label><input type="text" id="location" th:field="*{location}" ></td>
+        </tr>
+        <tr>
+            <td><label for="password">New Password(Optional): </label><input autocomplete="new-password" type="password" id="password" th:field="*{password}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:if="${#fields.hasGlobalErrors()}" th:each="error : ${#fields.errors('global')}"  th:text="${error}">Password Mismatch</td>
+        </tr>
+        <tr>
+            <td><label for="confirmPassword">Confirm Password: </label><input type="password" id="confirmPassword" th:field="*{confirmPassword}" ></td>
+        </tr>
+        <tr>
+            <td style="color: red" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Photo Error</td>
+        </tr>
+        <tr>
+            <td><label for="photo">Update Photo: </label><input type="file" id="photo" th:field="*{photo}"></td>
+        </tr>
+        <tr>
+            <td style="color: darkseagreen">You will have to log back in if either the password or email is changed!</td>
+        </tr>
+        <tr>
+            <td><button type="submit">Update Profile</button></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

@@ -18,7 +18,7 @@ import java.io.FileInputStream;
 })
 public class UserRegistrationDto {
 
-    @NotEmpty(message = "Plese provice your First Name")
+    @NotEmpty(message = "Please provide your First Name")
     private String firstName;
 
     @NotEmpty(message = "Please provide your Last Name")
@@ -36,13 +36,15 @@ public class UserRegistrationDto {
     private String password;
 
     @NotEmpty(message = "Please confirm your password")
+    @Size(min = 6, max = 16, message = "Password must be between 6 and 16 characters")
     private String confirmPassword;
 
     @Email(message = "Please provide a valid email address")
     @NotEmpty(message = "Please provide an email address")
     private String email;
 
-    @Email(message = "Please confirm you email")
+    @Email(message = "Please provide a matching email address")
+    @NotEmpty(message = "Please provide an email address")
     private String confirmEmail;
 
     @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB.")

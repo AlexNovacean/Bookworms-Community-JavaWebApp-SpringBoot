@@ -2,6 +2,8 @@ package ro.sci.bookwormscommunity.model;
 
 import javax.persistence.*;
 import java.util.Base64;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <h1>Book</h1>
@@ -10,27 +12,77 @@ import java.util.Base64;
  */
 @Entity
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String bookName;
+
     private String authorName;
+
     private int numberOfPages;
+
     private String type;
+
     private String language;
+
+    @Column(length = 3000)
     private String description;
+
     private String condition;
+
     private boolean bookRent;
+
     private boolean bookSale;
-    private double sellPrice;
-    private double rentPrice;
+
+    @Column(columnDefinition = "int default 0")
+    private int sellPrice;
+
+    @Column(columnDefinition = "int default 0")
+    private int rentPrice;
+
     @Lob
     private byte[] image;
+
     @ManyToOne
-    @JoinTable(name = "book_user", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private User user;
+
+    @Column(columnDefinition = "int default 0")
+    private int rating;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
+    private Date addDate;
+
+    public Book(){
+        this.addDate = new Date();
+    }
+
+    public Date getAddDate() {
+        return addDate;
+    }
+
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public User getUser() {
         return user;
@@ -63,7 +115,6 @@ public class Book {
     public void setCondition(String condition) {
         this.condition = condition;
     }
-
 
     public String getBookName() {
         return bookName;
@@ -129,19 +180,19 @@ public class Book {
         this.bookSale = bookSale;
     }
 
-    public double getSellPrice() {
+    public int getSellPrice() {
         return sellPrice;
     }
 
-    public void setSellPrice(double sellPrice) {
+    public void setSellPrice(int sellPrice) {
         this.sellPrice = sellPrice;
     }
 
-    public double getRentPrice() {
+    public int getRentPrice() {
         return rentPrice;
     }
 
-    public void setRentPrice(double rentPrice) {
+    public void setRentPrice(int rentPrice) {
         this.rentPrice = rentPrice;
     }
 

@@ -1,46 +1,29 @@
 package ro.sci.bookwormscommunity.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ro.sci.bookwormscommunity.model.Book;
-import ro.sci.bookwormscommunity.repositories.BookRepository;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class BookService {
+public interface BookService {
+    List<Book> getAllBooks();
 
-    @Autowired
-    BookRepository bookRepository;
+    Optional<Book> getBookById(Long id);
 
-    public List<Book> findAll(){
-        return bookRepository.findAll();
-    }
+    void saveBook(BookDto bookDto) throws Exception;
 
-    public Optional<Book> findById(Long id){
-        return bookRepository.findById(id);
-    }
+    @Transactional
+    void updateBook(long id, BookDto bookDto) throws Exception;
 
-    public void save(BookDto bookdto) throws Exception{
-        Book book = new Book();
-        book.setBookName(bookdto.getBookName());
-        book.setAuthorName(bookdto.getAuthorName());
-        book.setNumberOfPages(bookdto.getNumberOfPages());
-        book.setCondition(bookdto.getCondition());
-        book.setLanguage(bookdto.getLanguage());
-        book.setBookRent(bookdto.isBookRent());
-        book.setBookSale(bookdto.isBookSale());
-        book.setRentPrice(bookdto.getRentPrice());
-        book.setSellPrice(bookdto.getSellPrice());
-        book.setDescription(bookdto.getDescription());
-        book.setType(bookdto.getType());
-        book.setImage(bookdto.returnPhoto().getBytes());
-        book.setUser(bookdto.getUser());
-        bookRepository.save(book);
-    }
+    void deleteBook(long id);
+
+    List<Book> getUserBooks(long id);
+
+    void calculateRating(long id);
+
+    List<Book> getTopRatedBooks();
+
+    List<Book> getLatestAddedBooks();
 }
-
-
-

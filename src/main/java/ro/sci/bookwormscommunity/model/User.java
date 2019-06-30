@@ -3,6 +3,7 @@ package ro.sci.bookwormscommunity.model;
 import javax.persistence.*;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -13,11 +14,19 @@ public class User {
     private Long id;
 
     private String firstName;
+
     private String lastName;
+
     private String email;
+
     private String password;
+
     private String nickname;
+
     private String location;
+
+    @Column(columnDefinition = "bool default true")
+    private boolean enabled;
 
     @Lob
     @Column(name = "photo")
@@ -32,11 +41,10 @@ public class User {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    public User() {
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Book> books;
 
-    public User(Long id){
-        this.id = id;
+    public User() {
     }
 
     public User(String firstName, String lastName, String email, String nickname, String location) {
@@ -47,16 +55,20 @@ public class User {
         this.email = email;
     }
 
-    public User(String firstName, String lastName, String email, String nickname, String location, String password, byte[] photo, Collection<Role> roles) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.nickname = nickname;
-        this.location = location;
-        this.password = password;
-        this.photo = photo;
-        this.roles = roles;
+    public boolean isEnabled() {
+        return enabled;
+    }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public byte[] getPhoto() {
