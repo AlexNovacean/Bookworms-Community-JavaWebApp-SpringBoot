@@ -45,6 +45,7 @@
             </nav>
         </li>
         <!--User bar -->
+        <li style="float:right"><a class="Home" th:href="@{/}" data-toggle="tooltip" data-placement="bottom" title="Home"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         <li sec:authorize="isAnonymous()" style="float:right"><a class="Log In" th:href="@{/login}" data-toggle="tooltip" data-placement="bottom" title="Log In"><i class="fa fa-sign-in"></i></a></li>
         <li sec:authorize="isAuthenticated()" style="float:right"><a class="Log Out" th:href="@{/logout}" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="fa fa-sign-out"></i></a></li>
         <li style="float:right"><a class="User profile" th:href="@{/user}" data-toggle="tooltip" data-placement="bottom" title="My profile" ><i class="fa fa-user"></i></a></li>
@@ -121,20 +122,3 @@
 </div>
 </body>
 </html>
-
-<!--<form th:action="@{/deleteBook/{id}(id=${book.id})}" th:object="${book}" method="post" enctype="multipart/form-data">-->
-<!--    <p>Book Name: <span th:text="*{bookName}"/></p>-->
-<!--    <p>Author Name: <span th:text="*{authorName}"/></p>-->
-<!--    <p>Number Of Pages: <span th:text="*{numberOfPages}"/></p>-->
-<!--    <p>Language: <span th:text="*{numberOfPages}"/></p>-->
-<!--    <p>Type:<span th:text="*{type}"/></p>-->
-<!--    <p>Condition:<span th:text="*{condition}"/></p>-->
-<!--    <p>For Rent:<span th:text="*{bookRent}"/></p>-->
-<!--    <p>For Sale:<span th:text="*{bookSale}"/></p>-->
-<!--    <p>Rent Price:<span th:text="*{rentPrice}"/></p>-->
-<!--    <p>Sell Price:<span th:text="*{sellPrice}"/></p>-->
-<!--    <p>Description:<span th:text="*{description}"/></p>-->
-<!--    <p>Description:<span th:text="*{image}"/></p>-->
-<!--    <p><button type="submit">Delete Book</button></p>-->
-<!--    <p th:href="@{/user}">Back to user</p>-->
-<!--</form>-->

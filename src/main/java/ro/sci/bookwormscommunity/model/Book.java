@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * <h1>Book</h1>
- * A generic class
+ * A POJO class
  * It is used to create the elements within the classes.
  */
 @Entity

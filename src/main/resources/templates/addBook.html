@@ -13,6 +13,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#renting, #selling').change(function () {
+                var row = $(this).closest('tr').next();
+
+                if (this.checked)
+                    row.fadeIn('slow');
+                else
+                    row.fadeOut('slow');
+            }).change();
+        });
+    </script>
 </head>
 <body>
 <div class="card img-fluid" style="width:1600px">
@@ -52,6 +64,7 @@
         </nav>
         </li>
         <!--User bar -->
+        <li style="float:right"><a class="Home" th:href="@{/}" data-toggle="tooltip" data-placement="bottom" title="Home"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         <li sec:authorize="isAnonymous()" style="float:right"><a class="Log In" th:href="@{/login}" data-toggle="tooltip" data-placement="bottom" title="Log In"><i class="fa fa-sign-in"></i></a></li>
         <li sec:authorize="isAuthenticated()" style="float:right"><a class="Log Out" th:href="@{/logout}" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="fa fa-sign-out"></i></a></li>
         <li style="float:right"><a class="User profile" th:href="@{/user}" data-toggle="tooltip" data-placement="bottom" title="My profile" ><i class="fa fa-user"></i></a></li>
@@ -116,45 +129,94 @@
                         </option>
                     </select>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <br>
-                <br>
-                <div class="forRent" style="float:right">
-                    <div class="checkbox checkbox-primary">
-                        <input th:field="*{bookRent}" type="checkbox">
-                        <b><label th:for="bookRent" th:text="'Is book for rent?'"></label></b>
+                <div class="container mt-3">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Legend</button>
+                </div>
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Types of book conditions</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <ol>
+                                    <li><b>As new</b> - the book is in the state that it should have been in when it was left by the publisher</li>
+                                    <li><b>Fine</b> - the book is "as new", but allowing for the normal effects of time on an unused book that has been protected</li>
+                                    <li><b>Very Good</b> - describes a book that is worn, but untorn (any defects must be noted)</li>
+                                    <li><b>Good</b> - describes the condition of an average used worn book that is complete (any defects must be noted)</li>
+                                    <li><b>Fair</b> - shows wear and tear, but all the text pages and illustrations are present (it may lack end papers, half-title and even the title page)(any defects must be noted)</li>
+                                    <li><b>Poor</b> - describes a book  that has the complete text, but is so damaged that is only of interest to a buyer who seeks a reading copy</li>
+                                </ol>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <br>
-                <br>
-                <br>
-                <div class="forSale" style="float:right">
-                    <div class="checkbox checkbox-info">
-                        <input th:field="*{bookSale}" type="checkbox">
-                        <b><label th:for="bookSale" th:text="'Is book for sale?'"></label></b>
-                    </div>
-                </div>
             </div>
             <div class="col-md-3">
-                <div class="form-group">
-                    <label for="rentPrice"><b>Rent Price</b></label>
-                    <input class="form-control" id="rentPrice" placeholder="Price" th:field="*{rentPrice}"
-                           type="number"/>
-                </div>
-                <p class="contentR" th:errors="*{rentPrice}" th:if="${#fields.hasErrors('rentPrice')}">Price
-                    Error</p>
-                <div class="form-group">
-                    <label for="sellPrice"><b>Sell Price</b></label>
-                    <input class="form-control" id="sellPrice" placeholder="Price" th:field="*{sellPrice}"
-                           type="number"/>
-                </div>
-                <p class="contentR" th:errors="*{sellPrice}" th:if="${#fields.hasErrors('sellPrice')}">Price
-                    Error</p>
+                <table>
+                <br>
+                <tr>
+                    <td>
+                        <div class="forRent">
+                            <div class="checkbox checkbox-primary">
+                             <input th:field="*{bookRent}" type="checkbox" id="renting">
+                             <b><label th:for="renting" th:text="'Is book for rent?'"></label></b>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <br>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="rentPrice"><b>Rent Price(RON/day)</b></label>
+                                <input class="form-control" id="rentPrice" placeholder="Price" th:field="*{rentPrice}" type="number"/>
+                                <p class="contentR" th:errors="*{rentPrice}" th:if="${#fields.hasErrors('rentPrice')}">Price Error</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table>
+                    <br>
+                    <tr>
+                        <td>
+                            <div class="forSale">
+                                <div class="checkbox checkbox-info">
+                                    <input th:field="*{bookSale}" type="checkbox" id="selling">
+                                    <b><label th:for="selling" th:text="'Is book for sale?'"></label></b>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <br>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="sellPrice"><b>Sale Price(RON)</b></label>
+                                <input class="form-control" id="sellPrice" placeholder="Price" th:field="*{sellPrice}" type="number"/>
+                                <p class="contentR" th:errors="*{sellPrice}" th:if="${#fields.hasErrors('sellPrice')}">Price Error</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
+        <br>
         <div class="form-group shadow-textarea">
-            <label for="bookDescription">Book description</label>
+            <h5><label for="bookDescription">Book description</label></h5>
             <textarea class="form-control z-depth-1" id="bookDescription"
                       placeholder="Write a description (up to 3000 characters) ..."
                       rows="3" th:field="*{description}"/></textarea>

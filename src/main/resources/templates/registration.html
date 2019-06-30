@@ -18,13 +18,11 @@
     <div class="row">
         <div class="col-md-5">
             <div class="book" style="width:450px">
-                <img alt="Book image" class="bookImage" src="static/images/Bookworms.jpg"
-                     style="width:100%" th:src="@{~/images/Bookworms.jpg}">
+                <img alt="Book image" class="bookImage" src="static/images/Bookworms.jpg" th:src="@{~/images/Bookworms.jpg}">
             </div>
         </div>
         <div class="col-md-6">
             <br>
-            <p class="alert alert-success text-center" th:if="${param.success}">Registration Successful!</p>
             <form enctype="multipart/form-data" method="post" th:action="@{/registration}" th:object="${user}">
                 <table style="max-width: 800px; margin: auto">
                     <tr>
@@ -40,7 +38,6 @@
                                 <input class="form-control" placeholder="First Name" th:field="*{firstName}"
                                        type="text"/>
                             </div>
-
                         </td>
                     </tr>
                     <tr>
@@ -102,7 +99,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="contentR" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Password Error!</p>
+                            <p class="contentR" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Password Mismatch!</p>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Password</span>
@@ -114,12 +111,12 @@
                     </tr>
                     <tr>
                         <td>
-                            <p class="contentR" th:errors="*{confirmPassword}" th:if="${#fields.hasErrors('confirmPassword')}">Confirm Password Error</p>
+                            <p class="contentR" th:errors="*{confirmPassword}" th:if="${#fields.hasErrors('confirmPassword')}">Password Mismatch!</p>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Confirm password</span>
                                 </div>
-                                <input class="form-control" placeholder="Password" th:field="*{confirmPassword}"
+                                <input class="form-control" placeholder="Confirm Password" th:field="*{confirmPassword}"
                                        type="password"/>
                             </div>
                         </td>
@@ -144,8 +141,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <button class="btn btn-success" type="submit">Register</button>
-                            <a th:href="@{/login}" style="float:right" button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Already registered?">Login here</a>
+                            <a th:href="@{/login}" style="float:left" button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Already registered?">Login here</a>
+                            <button class="btn btn-success" style="float:right" type="submit">Register</button>
                         </td>
                     </tr>
                 </table>
@@ -153,7 +150,6 @@
         </div>
     </div>
 </div>
-</form>
 </section>
 <!--Footerr -->
 <div id="footer">

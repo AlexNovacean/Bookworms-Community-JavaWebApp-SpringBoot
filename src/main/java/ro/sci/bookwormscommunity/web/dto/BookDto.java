@@ -16,29 +16,29 @@ public class BookDto {
 
     private Long id;
 
-    @NotEmpty
-    @Size(min = 2, max = 100)
+    @NotEmpty(message = "Must not be empty!")
+    @Size(min = 2, max = 100, message = "Required size between 2 and 100")
     private String bookName;
 
-    @NotEmpty
-    @Size(min = 2, max = 100)
+    @NotEmpty(message = "Must not be empty!")
+    @Size(min = 2, max = 100, message = "Required size between 2 and 100")
     private String authorName;
 
-    @NotNull(message = "Please provided a valid number of pages.")
+    @NotNull(message = "Please provided a valid number of pages!")
     @Range(min = 20, max = 9999, message = "The number of pages must be a positive number between 20 and 9999")
     private Integer numberOfPages;
 
-    @NotEmpty
+    @NotEmpty(message = "Must not be empty!")
     private String type;
 
-    @NotEmpty
+    @NotEmpty(message = "Must not be empty!")
     private String language;
 
-    @NotEmpty
+    @NotEmpty(message = "Must not be empty!")
     @Size(max = 3000, message = "Description must not exceed 3000 characters!")
     private String description;
 
-    @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB.")
+    @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB!")
     private MultipartFile photo;
 
     private User user;
