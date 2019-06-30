@@ -48,6 +48,24 @@ public class Book {
     @ManyToOne
     private User user;
 
+    public Book(){}
+
+    public Book(Long id, String bookName, String authorName, int numberOfPages, String type, String language, String description, String condition, boolean bookRent, boolean bookSale, double sellPrice, double rentPrice) {
+        this.id = id;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.numberOfPages = numberOfPages;
+        this.type = type;
+        this.language = language;
+        this.description = description;
+        this.condition = condition;
+        this.bookRent = bookRent;
+        this.bookSale = bookSale;
+        this.sellPrice = sellPrice;
+        this.rentPrice = rentPrice;
+
+    }
+
     @Column(columnDefinition = "int default 0")
     private int rating;
 

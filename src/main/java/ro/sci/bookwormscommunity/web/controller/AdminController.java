@@ -1,13 +1,12 @@
 package ro.sci.bookwormscommunity.web.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.AdminRepository;
 import ro.sci.bookwormscommunity.service.AdminService;
@@ -15,10 +14,12 @@ import ro.sci.bookwormscommunity.service.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/**")
 public class AdminController {
+
 
     @Autowired
     AdminService adminService;
@@ -26,43 +27,31 @@ public class AdminController {
     @Autowired
     UserService userService;
 
-    @ModelAttribute("user")
-    public User user(){
-        return new User();
-    }
-
     @GetMapping("/home")
-    public String adminHome() {
+    public String adminHome(Model model){
+
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
         return "adminhome";
     }
 
-    @GetMapping("/create")
-    public String moderator(){
-        return "moderator";
+    @GetMapping("/home/user/{id}")
+    public String seeUsers(@PathVariable("id") long id, Model model, Principal principal){
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("principal", principal);
+        return "user";
     }
 
-
-    @GetMapping("/all")
-    public String listAllUsers(Model model){
-
-       model.addAttribute("users", adminService.listAllUsers());
-        return "adminhome";
-    }
-
-    @PostMapping(path = "/create")
-    public String createModerator(@ModelAttribute("user") @Valid User user, BindingResult result, Principal principal){
-        if (result.hasErrors()){
-            return "adminhome";
+    @GetMapping("/home/user/{id}/promote")
+    public String promote(@PathVariable("id") long id, Model model) {
+        User user = userService.findById(id);
+            adminService.createModerator(user);
+        model.addAttribute("user", user);
+        return "redirect:/user/" + id + "?promoted";
         }
-        User userr = userService.findByEmail(principal.getName());
-        try{
-            adminService.createModerator(userr);
-        }catch (Exception e){
-            System.out.println("something");
-        }
-        return "moderator";
 
-    }
+
 
 
 //    @PostMapping

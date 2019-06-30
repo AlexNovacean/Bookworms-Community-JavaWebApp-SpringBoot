@@ -9,7 +9,8 @@
 <body>
 <h1 th:text="'Hello ' + ${user.nickname} + '! How are you today?'"></h1>
 <p sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></p>
-<div sec:authorize="hasRole('ROLE_ADMIN')">This content is only shown to administrators.</div>
+<!--<div sec:authorize="hasRole('ROLE_ADMIN')">This content is only shown to administrators.</div>-->
+<div sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')">This content is only shown to moderators/admins.</div>
 <div><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/home}">Admin Home</a></div>
 <div>
     User: <span sec:authentication="name">NOT FOUND</span>
