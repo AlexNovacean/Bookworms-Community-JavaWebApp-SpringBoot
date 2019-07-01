@@ -1,6 +1,9 @@
 package ro.sci.bookwormscommunity.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -13,8 +16,10 @@ public class Review {
     private String userNickname;
 
     @Column(length = 1000)
+    @NotEmpty(message = "Please provide a comment for your review.")
     private String comment;
 
+    @Min(value = 1, message = "Please provide a rating with your review.")
     private int rating;
 
     private Date created;

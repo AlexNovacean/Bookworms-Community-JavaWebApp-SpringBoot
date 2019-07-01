@@ -15,6 +15,7 @@
 <body>
 <h3 style="color: green" th:if="${param.updated}">Profile Updated!</h3>
 <h3 style="color: orange" th:if="${param.banned}">User Banned!</h3>
+<h3 style="color: orange" th:if="${param.promoted}">User Promoted!</h3>
 <section class="login-block">
     <div class="container user-profile" >
         <br>
@@ -39,8 +40,11 @@
                     <p>
                         <a th:href="@{/addBook}" th:if="${user.email.equals(principal.name)}" button class="btn btn-success">Add Book</a>
                         <a th:href="@{/user/editProfile}" th:if="${user.email.equals(principal.name)}" button class="btn btn-primary">Edit Profile</a>
+                        <a th:href="@{/export-users}" th:if="${user.email.equals(principal.name)}" sec:authorize="hasRole('ROLE_ADMIN')" button class="btn btn-primary">Download User CSV</a>
+                        <a th:href="@{/export-books}" th:if="${user.email.equals(principal.name)}" sec:authorize="hasRole('ROLE_ADMIN')" button class="btn btn-primary">Download Books CSV</a>
                         <button class="btn btn-info" th:if="${not user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${user.id}'|">Send message</button>
                         <button class="btn btn-danger" th:if="${not user.email.equals(principal.name)}" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')" th:onclick="|window.location.href='/user/ban/${user.id}'|">Ban User</button>
+                        <button class="btn btn-danger" th:if="${not user.email.equals(principal.name)}" sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|window.location.href='/user/${user.id}/promote'|">Promote User</button>
                     </p>
                 </div>
                 <p class="alert alert-success text-center" th:if="${param.sent}">Your message has been sent!</p>

@@ -1,5 +1,7 @@
 package ro.sci.bookwormscommunity.model;
 
+import com.opencsv.bean.CsvBindByName;
+
 import javax.persistence.*;
 import java.util.Base64;
 import java.util.Date;
@@ -15,30 +17,41 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @CsvBindByName(column = "Book Id")
     private Long id;
 
+    @CsvBindByName(column = "Book Name")
     private String bookName;
 
+    @CsvBindByName(column = "Book Author")
     private String authorName;
 
+    @CsvBindByName(column = "Number of Pages")
     private int numberOfPages;
 
+    @CsvBindByName(column = "Book Type")
     private String type;
 
+    @CsvBindByName(column = "Book Language")
     private String language;
 
     @Column(length = 3000)
     private String description;
 
+    @CsvBindByName(column = "Book Condition")
     private String condition;
 
+    @CsvBindByName(column = "Book Rent")
     private boolean bookRent;
 
+    @CsvBindByName(column = "Book Sale")
     private boolean bookSale;
 
+    @CsvBindByName(column = "Sell Price")
     @Column(columnDefinition = "int default 0")
     private int sellPrice;
 
+    @CsvBindByName(column = "Rent Price")
     @Column(columnDefinition = "int default 0")
     private int rentPrice;
 
@@ -48,24 +61,6 @@ public class Book {
     @ManyToOne
     private User user;
 
-    public Book(){}
-
-    public Book(Long id, String bookName, String authorName, int numberOfPages, String type, String language, String description, String condition, boolean bookRent, boolean bookSale, double sellPrice, double rentPrice) {
-        this.id = id;
-        this.bookName = bookName;
-        this.authorName = authorName;
-        this.numberOfPages = numberOfPages;
-        this.type = type;
-        this.language = language;
-        this.description = description;
-        this.condition = condition;
-        this.bookRent = bookRent;
-        this.bookSale = bookSale;
-        this.sellPrice = sellPrice;
-        this.rentPrice = rentPrice;
-
-    }
-
     @Column(columnDefinition = "int default 0")
     private int rating;
 
@@ -74,7 +69,7 @@ public class Book {
 
     private Date addDate;
 
-    public Book(){
+    public Book() {
         this.addDate = new Date();
     }
 

@@ -7,12 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ro.sci.bookwormscommunity.model.Role;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.UserRepository;
 import ro.sci.bookwormscommunity.web.dto.UserDto;
 import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -29,12 +30,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
-        String[] userRoles = user.getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
-        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
-        return authorities;
-    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -42,7 +37,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword(), user.isEnabled(),true,true,true,getAuthorities(user));
+                user.getPassword(), user.isEnabled(), true, true, true, getAuthorities(user));
     }
 
     @Override
@@ -84,16 +79,33 @@ public class UserServiceImpl implements UserService {
         user.setNickname(userDto.getNickname());
         user.setLocation(userDto.getLocation());
         user.setEmail(userDto.getEmail());
-        if(!userDto.getPassword().isEmpty()){
+        if (!userDto.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         }
         user.setPhoto(userDto.returnUpdatePhoto(user.getPhoto()));
         userRepository.save(user);
     }
 
-    public void banUser(long id){
+    @Override
+    public void banUser(long id) {
         User user = userRepository.getOne(id);
         user.setEnabled(false);
         userRepository.save(user);
+    }
+
+    @Override
+    public void promoteUser(long userId){
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleService.createRoleIfNotFound("ROLE_MODERATOR"));
+        User user = userRepository.getOne(userId);
+        user.setRoles(roles);
+        userRepository.save(user);
+    }
+
+
+    private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
+        String[] userRoles = user.getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
+        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
+        return authorities;
     }
 }

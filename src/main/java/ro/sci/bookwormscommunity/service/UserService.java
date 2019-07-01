@@ -23,4 +23,6 @@ public interface UserService extends UserDetailsService {
     @Transactional
     public void banUser(long id);
 
+    void promoteUser(long userId);
+
 }

@@ -61,15 +61,6 @@ public class BookController {
         return "bookDetails";
     }
 
-    @GetMapping("/user/bookDetails/{id}")
-    public String userBookDetails(@PathVariable("id") Long id, Model model, Principal principal) {
-        User user = userService.findByEmail(principal.getName());
-        Optional<Book> book = bookService.getBookById(id);
-        model.addAttribute("book", book.get());
-        model.addAttribute("user", user);
-        return "bookDetails";
-    }
-
     //add a book
     @GetMapping("/addBook")
     public String showSaveBookForm(Model model) {
@@ -112,10 +103,10 @@ public class BookController {
     public String updateBook(@PathVariable("id") Long id, @Valid BookDto bookdto, BindingResult result, Principal principal) throws IOException {
         User user = userService.findByEmail(principal.getName());
         Book book = bookService.getBookById(id).get();
-        bookdto.setPhoto(new MockMultipartFile("bookPhoto.png",new ByteArrayInputStream(book.getImage())));
-        bookdto.setCondition(book.getCondition());
         bookdto.setUser(user);
         if (result.hasErrors()) {
+            bookdto.setPhoto(new MockMultipartFile("bookPhoto.png",new ByteArrayInputStream(book.getImage())));
+            bookdto.setCondition(book.getCondition());
             return "updateBook";
         }
         try {
@@ -123,14 +114,20 @@ public class BookController {
         } catch (Exception e) {
             logger.error("Error when saving the book: ", e);
         }
-        return "redirect:/communityBooks";
+        return "redirect:/bookDetails/" + id;
     }
 
     @ModelAttribute("review")
     public Review review(){ return new Review();}
 
     @PostMapping("/bookDetails/{id}")
-    public String postReview(@PathVariable("id")long id, @ModelAttribute("review") Review review, Principal principal){
+    public String postReview(@PathVariable("id")long id, @ModelAttribute("review") @Valid Review review, BindingResult result, Principal principal, Model model){
+
+        if(result.hasErrors()){
+            model.addAttribute("book",bookService.getBookById(id).get());
+            model.addAttribute("reviews",reviewService.getBookReviews(id));
+            return "bookDetails";
+        }
 
         review.setBook(bookService.getBookById(id).get());
         review.setUserNickname(userService.findByEmail(principal.getName()).getNickname());

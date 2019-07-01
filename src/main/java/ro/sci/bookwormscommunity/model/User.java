@@ -1,5 +1,7 @@
 package ro.sci.bookwormscommunity.model;
 
+import com.opencsv.bean.CsvBindByName;
+
 import javax.persistence.*;
 import java.util.Base64;
 import java.util.Collection;
@@ -11,21 +13,28 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @CsvBindByName(column = "User Id")
     private Long id;
 
+    @CsvBindByName(column = "First Name")
     private String firstName;
 
+    @CsvBindByName(column = "Last Name")
     private String lastName;
 
+    @CsvBindByName(column = "E-mail")
     private String email;
 
     private String password;
 
+    @CsvBindByName(column = "Nickname")
     private String nickname;
 
+    @CsvBindByName(column = "Location")
     private String location;
 
     @Column(columnDefinition = "bool default true")
+    @CsvBindByName(column = "Account Enabled")
     private boolean enabled;
 
     @Lob
@@ -146,5 +155,4 @@ public class User {
     public void setLocation(String location) {
         this.location = location;
     }
-
 }

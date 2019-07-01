@@ -134,6 +134,7 @@
     <div>
         <!--Send Review here-->
         <form method="post" th:action="@{/bookDetails/{id}(id=${book.id})}" th:object="${review}">
+            <div style="color: #ff0000;" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">Rating Error</div>
             <fieldset class="rating">
                 <legend>Review the book:</legend>
                 <input id="star5" name="rating" th:field="*{rating}" type="radio" value="5"/><label for="star5"
@@ -152,10 +153,12 @@
                                                                                                     title="Sucks big time">1
                 star</label>
             </fieldset>
+
+
             <div class="form-group shadow-textarea">
                 <label for="comment" hidden>Review Message</label>
-                <textarea class="form-control z-depth-1" id="comment" placeholder="Write you review here..." rows="3"
-                          th:field="*{comment}"></textarea>
+                <textarea class="form-control z-depth-1" id="comment" placeholder="Write you review here..." rows="3" th:field="*{comment}"></textarea>
+                <div style="color: #ff0000;" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Comment Error</div>
             </div>
             <button class="btn btn-info" type="submit">Send Review</button>
         </form>
@@ -168,7 +171,7 @@
             <span class="glyphicon glyphicon-comment"></span>
             <h3 class="panel-title">Recent Comments</h3>
         </div>
-        <div class="panel-body">
+        <div id="allreviews" class="panel-body">
             <table>
                 <th:block th:each="review : ${reviews}">
                     <tr>

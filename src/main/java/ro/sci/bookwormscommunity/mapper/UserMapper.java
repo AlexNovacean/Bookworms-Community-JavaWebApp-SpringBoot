@@ -9,7 +9,8 @@ import java.io.IOException;
 
 public final class UserMapper {
 
-    private UserMapper() {}
+    private UserMapper() {
+    }
 
     public static UserDto mapUserToUserDto(User user) throws IOException {
         UserDto userDto = new UserDto();
@@ -19,7 +20,7 @@ public final class UserMapper {
         userDto.setNickname(user.getNickname());
         userDto.setEmail(user.getEmail());
         userDto.setLocation(user.getLocation());
-        userDto.setPhoto(new MockMultipartFile("userPhoto.png",new ByteArrayInputStream(user.getPhoto())));
+        userDto.setPhoto(new MockMultipartFile("userPhoto.png", new ByteArrayInputStream(user.getPhoto())));
         return userDto;
     }
 }

@@ -52,6 +52,6 @@ public class UserRegistrationController {
         } catch (Exception e) {
             logger.warn("An error occurred while saving the profile picture: ", e);
         }
-        return "redirect:/registration?success";
+        return "redirect:/login?success";
     }
 }
