@@ -46,24 +46,25 @@ public class BookController {
 
     //list all books
     @GetMapping("/communityBooks")
-    public String showBooks(Model model) {
+    public String showBooks(@ModelAttribute("searchWord")Word searchWord, Model model) {
         model.addAttribute("books", bookService.getAllBooks());
         return "communityBooks";
     }
 
     //show book by id
     @GetMapping("/bookDetails/{id}")
-    public String bookDetailsForm(@PathVariable("id") Long id, Model model) {
+    public String bookDetailsForm(@ModelAttribute("searchWord")Word searchWord, @PathVariable("id") Long id, Model model, Principal principal) {
         Optional<Book> book = bookService.getBookById(id);
         List<Review> reviews = reviewService.getBookReviews(id);
         model.addAttribute("book", book.get());
         model.addAttribute("reviews",reviews);
+        model.addAttribute("principal",principal);
         return "bookDetails";
     }
 
     //add a book
     @GetMapping("/addBook")
-    public String showSaveBookForm(Model model) {
+    public String showSaveBookForm(@ModelAttribute("searchWord")Word searchWord, Model model) {
         model.addAttribute("conditions", BookCondition.values());
         return "addBook";
     }
@@ -92,7 +93,7 @@ public class BookController {
 
     //update a book
     @GetMapping("/editBook/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model) throws IOException {
+    public String showUpdateForm(@ModelAttribute("searchWord")Word searchWord, @PathVariable("id") Long id, Model model) throws IOException {
         Optional<Book> book = bookService.getBookById(id);
         model.addAttribute(BookMapper.mapBookToBookDto(book.get()));
         model.addAttribute("conditions", BookCondition.values());
@@ -164,5 +165,37 @@ public class BookController {
         Book book = reviewService.getReviewById(id).getBook();
         reviewService.deleteReviewById(id);
         return "redirect:/bookDetails/" + book.getId();
+    }
+
+    @GetMapping("/communityBooks/byRating")
+    public String showBooksByRating(@ModelAttribute("searchWord")Word searchWord, Model model) {
+        model.addAttribute("books", bookService.getAllBooksOrderedByRating());
+        return "communityBooks";
+    }
+
+    @GetMapping("/communityBooks/byDate")
+    public String showBooksByDate(@ModelAttribute("searchWord")Word searchWord, Model model) {
+        model.addAttribute("books", bookService.getAllBooksOrderedByDate());
+        return "communityBooks";
+    }
+
+    @GetMapping("/communityBooks/forRent")
+    public String showBooksForRent(@ModelAttribute("searchWord")Word searchWord, Model model) {
+        model.addAttribute("books", bookService.getAllBooksForRent());
+        return "communityBooks";
+    }
+
+    @GetMapping("/communityBooks/forSale")
+    public String showBooksForSale(@ModelAttribute("searchWord")Word searchWord, Model model) {
+        model.addAttribute("books", bookService.getAllBooksForSale());
+        return "communityBooks";
+    }
+
+    @GetMapping("/searchBooks")
+    public String searchForBooks(@ModelAttribute("searchWord")Word searchWord, Model model){
+        model.addAttribute("booksOfAuthors",bookService.searchForAuthors(searchWord.getSearchPattern()));
+        model.addAttribute("booksWithName",bookService.searchForBookName(searchWord.getSearchPattern()));
+        model.addAttribute("booksOfType", bookService.searchForBookType(searchWord.getSearchPattern()));
+        return "searchResults";
     }
 }

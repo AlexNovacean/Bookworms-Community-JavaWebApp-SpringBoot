@@ -17,7 +17,7 @@
     <div class="container register">
         <div class="container">
             <div class="message-title">
-                <h2 class="text-center">Bookworms Chat</h2>
+                <h2 class="text-center" th:text="${user.nickname} + '&lsquo;s Conversations'"></h2>
             </div>
             <p class="alert alert-danger text-center" th:if="${param.deleted}">The conversation was deleted!</p>
 <!--        <div class="row">-->
@@ -25,17 +25,17 @@
                 <thead>
                 <tr class="table-primary">
                     <th>Between</th>
-                    <th>See messages</th>
-                    <th>Delete Conversation</th>
+                    <th>Conversation Topic</th>
+                    <th>Action</th>
                 </thead>
                 <tbody class="thead-light">
                 <tr th:if="${messages.isEmpty()}">
-                    <h6><td class="alert alert-warning text-center" colspan="2">No Messages!</td></h6>
+                    <h6><td class="alert alert-warning text-center" colspan="3">No Messages!</td></h6>
                 </tr>
                 <tr th:each="message : ${messages}">
-                    <td><span b th:text="${message.getFromUser().nickname} + ' and ' + ${message.getToUser().nickname}"> Between </span></td>
-                    <td><span><a b button th:href="@{/messages/conversation/{id}(id=${message.id})}" class="btn btn-info">Open Conversation</a></span></td>
-                    <td><button b class="btn btn-danger" th:onclick="|window.location.href='/messages/${message.id}/delete'|">Delete Conversation</button> </td>
+                    <td><span th:text="${message.getFromUser().nickname.equals(user.nickname)} ? 'Me & ' + ${message.toUser.nickname} : 'Me & ' + ${message.fromUser.nickname}"></span></td>
+                    <td><span><a style="color: #000;" th:href="@{/messages/conversation/{id}(id=${message.id})}"><b th:text="${message.conversationTopic}"></b></a></span></td>
+                    <td><button class="btn" th:onclick="|window.location.href='/messages/${message.id}/delete'|"><i class="fa fa-trash"></i></button></td>
                 </tr>
                 </tbody>
             </table>

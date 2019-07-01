@@ -16,8 +16,10 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
             "WHERE " +
             "c.fromUser.id IN (:userIdOne, :userIdTwo) " +
             "AND " +
-            "c.toUser.id IN (:userIdOne, :userIdTwo)")
-    Conversation getConversation(@Param("userIdOne") long userIdOne, @Param("userIdTwo") long userIdTwo);
+            "c.toUser.id IN (:userIdOne, :userIdTwo) " +
+            "AND " +
+            "c.conversationTopic = :bookName")
+    Conversation getConversation(@Param("userIdOne") long userIdOne, @Param("userIdTwo") long userIdTwo, @Param("bookName")String bookName);
 
     @Transactional
     @Query("SELECT c " +

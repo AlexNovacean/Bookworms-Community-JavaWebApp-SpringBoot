@@ -19,6 +19,7 @@
             <div class="col-md-4 login-sec">
                 <h2 class="text-center">Login Now</h2>
                 <p style="color: green" th:if="${param.logout}">You have been logged out.</p>
+                <p style="color: green" th:if="${param.success}">Registration Successful!</p>
                 <div style="color: red" th:if="${param.error}">Invalid e-mail or password.</div>
                 <form class="login-form" th:action="@{/login}" method="post">
 

@@ -37,10 +37,10 @@ public class MessagesController {
     }
 
     @GetMapping("/messages/{id}")
-    public String seeSpecific(@PathVariable("id") long id, Model model, Principal principal) {
+    public String seeSpecific(@PathVariable("id") long id, @RequestParam(required = false)String bookName, Model model, Principal principal) {
         User toUser = userService.findById(id);
         User fromUser = userService.findByEmail(principal.getName());
-        Conversation conversation = conversationService.startConversation(toUser.getId(), fromUser.getId());
+        Conversation conversation = conversationService.startConversation(toUser.getId(), fromUser.getId(), bookName);
         List<Message> texts = messageService.getUserMessages(conversation.getId());
         model.addAttribute("texts", texts);
         model.addAttribute("conv", conversationService.findById(conversation.getId()));
@@ -59,6 +59,7 @@ public class MessagesController {
     @PostMapping("/messages/{id}")
     public String sendMessage(@PathVariable("id") long id, Model model, @ModelAttribute("msg") MessageDto messageDto, Principal principal) {
         List<Message> texts = messageService.saveAndRetrieve(id, messageDto, principal);
+        Conversation conversation = conversationService.findById(id);
         User user = userService.findByEmail(principal.getName());
         long forViewId;
         if (!texts.get(0).getToUser().getId().equals(user.getId())) {
@@ -67,7 +68,7 @@ public class MessagesController {
             forViewId = texts.get(0).getFromUser().getId();
         }
         model.addAttribute("texts", texts);
-        return "redirect:/messages/" + forViewId;
+        return "redirect:/messages/" + forViewId +"?bookName=" + conversation.getConversationTopic();
 
     }
 

@@ -45,22 +45,22 @@
 					});
 
         </script>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="topRated.html"
+        <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks/byRating}"
                title="Top Rated Books for Bookworms">Top Rated Books</a></li>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="latestBooks.html"
+        <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks/byDate}"
                title="Latest Books added to our collection">Latest Books</a></li>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="buyABook.html"
+        <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks/forSale}"
                title="Buy a book from a bookworm">Buy a book</a></li>
-        <li><a class="#" data-placement="bottom" data-toggle="tooltip" href="rentABook.html" title="Rent a book from a bookworm">Rent a book</a></li>
-
+        <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks/forRent}"
+               title="Rent a book from a bookworm">Rent a book</a></li>
         <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks}"
                title="A list of all the books">Community Books</a></li>
         <li style="float:right">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <form action="search.html" class="form-inline">
-                <input class="form-control mr-sm-2" placeholder="Search" type="text">
-                <button class="btn btn-success" type="submit">Search</button>
-            </form>
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                <form class="form-inline" th:action="@{/searchBooks}" method="get" th:object="${searchWord}">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" th:field="*{searchPattern}">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
         </nav>
         </li>
         <!--User bar -->

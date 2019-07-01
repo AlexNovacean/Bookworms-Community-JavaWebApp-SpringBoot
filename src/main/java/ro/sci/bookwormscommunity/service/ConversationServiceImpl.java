@@ -7,6 +7,7 @@ import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.ConversationRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ConversationServiceImpl implements ConversationService {
@@ -18,13 +19,13 @@ public class ConversationServiceImpl implements ConversationService {
     private UserService userService;
 
     @Override
-    public Conversation startConversation(long toUserId, long fromUserId) {
-        Conversation conversation = conversationRepository.getConversation(toUserId, fromUserId);
+    public Conversation startConversation(long toUserId, long fromUserId, String bookName) {
+        Conversation conversation = conversationRepository.getConversation(toUserId, fromUserId, bookName);
 
         if (conversation == null) {
             User toUser = userService.findById(toUserId);
             User fromUser = userService.findById(fromUserId);
-            conversation = new Conversation(toUser, fromUser);
+            conversation = new Conversation(toUser, fromUser, bookName);
             conversationRepository.save(conversation);
         }
 
@@ -42,7 +43,7 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
-    public void deleteById(long id){
+    public void deleteById(long id) {
         conversationRepository.deleteById(id);
     }
 }

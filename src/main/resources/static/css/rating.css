@@ -57,6 +57,7 @@
 
 
 .stars-container {
+    font-size: 150%;
     position: relative;
     display: inline-block;
     color: transparent;

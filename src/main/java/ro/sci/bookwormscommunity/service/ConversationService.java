@@ -5,7 +5,7 @@ import ro.sci.bookwormscommunity.model.Conversation;
 import java.util.List;
 
 public interface ConversationService {
-    Conversation startConversation(long toUserId, long fromUserId);
+    Conversation startConversation(long toUserId, long fromUserId, String bookName);
 
     List<Conversation> getUserConversations(long id);
 

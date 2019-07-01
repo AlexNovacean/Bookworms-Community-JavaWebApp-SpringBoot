@@ -23,7 +23,21 @@ public interface BookService {
 
     void calculateRating(long id);
 
-    List<Book> getTopRatedBooks();
+    List<Book> getTop10RatedBooks();
 
-    List<Book> getLatestAddedBooks();
+    List<Book> getLatest10AddedBooks();
+
+    List<Book> getAllBooksOrderedByRating();
+
+    List<Book> getAllBooksOrderedByDate();
+
+    List<Book> getAllBooksForRent();
+
+    List<Book> getAllBooksForSale();
+
+    List<Book> searchForAuthors(String searchPattern);
+
+    List<Book> searchForBookName(String searchPattern);
+
+    List<Book> searchForBookType(String searchPattern);
 }

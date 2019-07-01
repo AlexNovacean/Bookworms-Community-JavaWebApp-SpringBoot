@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-6">
             <br>
-            <form enctype="multipart/form-data" method="post" th:action="@{/user/updateProfile}" th:object="${userDto}">
+            <form autocomplete="off" enctype="multipart/form-data" method="post" th:action="@{/user/updateProfile}" th:object="${userDto}">
                 <table style="max-width: 800px; margin: auto">
                     <tr>
                         <td class="alert alert-danger text-center" th:each="error : ${#fields.errors('global')}" th:if="${#fields.hasGlobalErrors()}" th:text="${error}">Validation Error!</td>
@@ -75,7 +75,7 @@
                     </tr>
                     <script>
                     function myFunction() {
-                      alert("You will be logged of automatically after you change this field!");
+                      alert("You will have to log in again if either the e-mail or password are updated.");
                     }
                     </script>
                     <tr>
@@ -85,7 +85,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">New E-mail</span>
                                 </div>
-                                <input class="form-control" onclick="myFunction()" placeholder="E-mail address" th:field="*{email}"
+                                <input autocomplete="off" class="form-control" onclick="myFunction()" placeholder="E-mail address" th:field="*{email}"
                                        type="text"/>
                             </div>
                         </td>
@@ -97,7 +97,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">New Password(Optional)</span>
                                 </div>
-                                <input class="form-control"onclick="myFunction()" placeholder="New Password" th:field="*{password}"
+                                <input autocomplete="new-password" class="form-control"onclick="myFunction()" placeholder="New Password" th:field="*{password}"
                                        type="password"/>
                             </div>
                         </td>

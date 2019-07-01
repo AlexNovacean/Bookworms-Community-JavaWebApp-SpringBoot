@@ -21,20 +21,31 @@ public class Conversation {
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages;
 
+    private String conversationTopic;
+
+    public Conversation() {
+    }
+
+    public Conversation(User toUser, User fromUser, String conversationTopic) {
+        this.toUser = toUser;
+        this.fromUser = fromUser;
+        this.conversationTopic = conversationTopic;
+    }
+
+    public String getConversationTopic() {
+        return conversationTopic;
+    }
+
+    public void setConversationTopic(String conversationTopic) {
+        this.conversationTopic = conversationTopic;
+    }
+
     public List<Message> getMessages() {
         return messages;
     }
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
-    }
-
-    public Conversation() {
-    }
-
-    public Conversation(User toUser, User fromUser) {
-        this.toUser = toUser;
-        this.fromUser = fromUser;
     }
 
     public Long getId() {

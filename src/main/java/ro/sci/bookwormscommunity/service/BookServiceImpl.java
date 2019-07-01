@@ -9,6 +9,7 @@ import ro.sci.bookwormscommunity.repositories.BookRepository;
 import ro.sci.bookwormscommunity.repositories.ReviewRepository;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,13 +83,69 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getTopRatedBooks() {
-        return bookRepository.findTopRatedBooks();
+    public List<Book> getTop10RatedBooks() {
+        return bookRepository.findTop10RatedBooks();
     }
 
     @Override
-    public List<Book> getLatestAddedBooks() {
-        return bookRepository.findLatestAddedBooks();
+    public List<Book> getLatest10AddedBooks() {
+        return bookRepository.findLatest10AddedBooks();
+    }
+
+    @Override
+    public List<Book> getAllBooksOrderedByRating() {
+        return bookRepository.findAllBooksOrderedByRating();
+    }
+
+    @Override
+    public List<Book> getAllBooksOrderedByDate() {
+        return bookRepository.findAllBooksOrderedByDate();
+    }
+
+    @Override
+    public List<Book> getAllBooksForRent() {
+        return bookRepository.findAllBooksForRent();
+    }
+
+    @Override
+    public List<Book> getAllBooksForSale() {
+        return bookRepository.findAllBooksForSale();
+    }
+
+    public List<Book> searchForAuthors(String searchPattern){
+        List<Book> books = bookRepository.findAll();
+        List<Book> searchResults = new ArrayList<>();
+
+        for(Book book : books){
+            if(searchPattern.equalsIgnoreCase(book.getAuthorName())){
+                searchResults.add(book);
+            }
+        }
+        return searchResults;
+    }
+
+    public List<Book> searchForBookName(String searchPattern){
+        List<Book> books = bookRepository.findAll();
+        List<Book> searchResults = new ArrayList<>();
+
+        for(Book book : books){
+            if(searchPattern.equalsIgnoreCase(book.getBookName())){
+                searchResults.add(book);
+            }
+        }
+        return searchResults;
+    }
+
+    public List<Book> searchForBookType(String searchPattern){
+        List<Book> books = bookRepository.findAll();
+        List<Book> searchResults = new ArrayList<>();
+
+        for(Book book : books){
+            if(searchPattern.equalsIgnoreCase(book.getType())){
+                searchResults.add(book);
+            }
+        }
+        return searchResults;
     }
 }
 
