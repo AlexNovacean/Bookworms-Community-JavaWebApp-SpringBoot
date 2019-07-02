@@ -162,13 +162,30 @@ background:#fff;
   font-size: 2rem;
 }
 .error-title{
-align-text:center;
+text-align: center;
 padding-top:30px;}
 .error-footer{
-align-text:center;
+text-align: center;
 padding-top:350px;
 }
-
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  }
+.is-draft {
+	color:#D23;
+	border: 1rem double #D23;
+	transform: rotate(-5deg);
+  font-size: 12rem;
+  font-family: "Open sans", Helvetica, Arial, sans-serif;
+  border-radius: 0;
+  padding: 0.5rem;
+}
+.error-footer-404{
+text-align: center;
+padding-top:90px;
+}
 
 
 

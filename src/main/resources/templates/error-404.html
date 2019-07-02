@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="viewport" content-type="width=device-width initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="static/css/style.css" media="all" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
     <meta charset="UTF-8">
     <title>404 Error</title>
 </head>
 <body>
-    <h1>:-(</h1>
-    <h2>Something went wrong.</h2>
-    <h3 th:text="${message}"></h3>
+<div class="card img-fluid">
+    <img class="card-img-top" src="static/images/Full.jpg" th:src="@{~/images/Full.jpg}">
+    <div class="card-img-overlay">
+        <div class="error-title">
+            <h1>Bookworms Community</h1>
+            <h5><p>The p..page was NOT FOUND</p></h5>
+        </div>
+        <br>
+        <br>
+        <br>
+        <span class="stamp is-draft">404</span>
+        <div class="error-footer-404">
+            <b>
+                <h4>
+                    <p>Whatever you are looking for is not here!</p>
+                    <p th:text="${message}"></p>
+                    <p>Please return to <span><a th:href="@{/}" style="color: #000;">home page</a>.</span></p>
+                </h4>
+            </b>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -17,8 +17,9 @@
 <div class="container register">
     <div class="row">
         <div class="col-md-5">
+            <br>
             <div class="image-user" style="width:450px">
-                <img alt="User Image" class="userImage" th:src="'data:image/*;base64,' + ${userDto.returnPhotoAsString()}">
+                <img alt="User Image" class="userImage"  style="max-width:450px; max-height:600px" th:src="'data:image/*;base64,' + ${userDto.returnPhotoAsString()}">
             </div>
         </div>
         <div class="col-md-6">
@@ -134,7 +135,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button style="float:right" class="btn btn-primary" type="submit">Update Profile</button>
+                            <button style="float:right" class="btn btn-primary" type="submit">Edit Profile</button>
                             <a th:href="@{/user}"style="float:left" button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="No changes? Here is your way back!">Your Profile</a>
                         </td>
                     </tr>
@@ -145,7 +146,7 @@
     </div>
 </div>
 </section>
-<!--Footerr -->
+<!--Footer -->
 <div id="footer">
     <div class="card img-fluid" style="width:1600px">
         <div class="card-img-overlay">
