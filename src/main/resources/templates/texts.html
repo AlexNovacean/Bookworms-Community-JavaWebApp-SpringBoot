@@ -37,15 +37,18 @@
                     <td class="text-primary"
                         th:text="${text.getFromUser().nickname} +' '+ ${#dates.format(text.sentDate, 'dd-MMM HH:mm')}">
                     </td>
-                    <td><span data-th-utext="${#strings.replace(#strings.escapeXml(text.content),'&#10;','&lt;br&gt;')}"></span></td>
+                    <td><span
+                            data-th-utext="${#strings.replace(#strings.escapeXml(text.content),'&#10;','&lt;br&gt;')}"></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
             <form method="post" th:action="@{/messages/{id}(id=${conv.id})}">
-                <textarea class="form-control z-depth-1" placeholder="Whrite message here... " cols="50" name="content" rows="5"></textarea>
+                <textarea class="form-control z-depth-1" cols="50" name="content" placeholder="Whrite message here... "
+                          rows="5"></textarea>
                 <br>
                 <input button class="btn btn-info" type="submit" value="Send"></button>
-                <a th:href="@{/messages}" button class="btn btn-primary" style="float:right">Back to Messages</a>
+                <a button class="btn btn-primary" style="float:right" th:href="@{/messages}">Back to Messages</a>
             </form>
 
             <br>

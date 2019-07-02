@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Base64;
 import java.util.Date;
 
 @Entity
@@ -31,6 +32,31 @@ public class Review {
     private boolean edited;
 
     private String editedBy;
+
+    @Lob
+    private byte[] userPhoto;
+
+    private long userId;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public byte[] getUserPhoto() {
+        return userPhoto;
+    }
+
+    public String getUserPhotoAsString() {
+        return Base64.getEncoder().encodeToString(this.userPhoto);
+    }
+
+    public void setUserPhoto(byte[] userPhoto) {
+        this.userPhoto = userPhoto;
+    }
 
     public boolean isEdited() {
         return edited;

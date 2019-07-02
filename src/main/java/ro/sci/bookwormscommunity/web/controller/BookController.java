@@ -125,6 +125,8 @@ public class BookController {
     @PostMapping("/bookDetails/{id}")
     public String postReview(@ModelAttribute("searchWord")Word searchWord, @PathVariable("id")long id, @ModelAttribute("review") @Valid Review review, BindingResult result, Principal principal, Model model){
 
+        User user = userService.findByEmail(principal.getName());
+
         if(result.hasErrors()){
             model.addAttribute("book",bookService.getBookById(id).get());
             model.addAttribute("reviews",reviewService.getBookReviews(id));
@@ -133,7 +135,9 @@ public class BookController {
         }
 
         review.setBook(bookService.getBookById(id).get());
-        review.setUserNickname(userService.findByEmail(principal.getName()).getNickname());
+        review.setUserNickname(user.getNickname());
+        review.setUserPhoto(user.getPhoto());
+        review.setUserId(user.getId());
 
         reviewService.saveReview(review);
 

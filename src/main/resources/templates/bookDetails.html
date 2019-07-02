@@ -4,13 +4,13 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Book Details</title> <!-- Page title -->
-    <link href="static/css/style.css" media="all" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
-    <link href="static/css/rating.css" media="all" rel="stylesheet" th:href="@{~/css/rating.css}" type="text/css">
+    <link href="/static/css/style.css" media="all" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
+    <link href="/static/css/rating.css" media="all" rel="stylesheet" th:href="@{~/css/rating.css}" type="text/css">
     <meta content-type="width=device-width initial-scale=1" name="viewport">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -28,9 +28,9 @@
 <div id="header">
     <ul id="navigation"><!--Navigation bar -->
         <script>
-					$(document).ready(function(){
-	  				$('[data-toggle="tooltip"]').tooltip();
-					});
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
 
         </script>
         <li><a class="#" data-placement="bottom" data-toggle="tooltip" th:href="@{/communityBooks/byRating}"
@@ -45,8 +45,8 @@
                title="A list of all the books">Community Books</a></li>
         <li style="float:right">
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-                <form class="form-inline" th:action="@{/searchBooks}" method="get" th:object="${searchWord}">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" th:field="*{searchPattern}">
+                <form class="form-inline" method="get" th:action="@{/searchBooks}" th:object="${searchWord}">
+                    <input class="form-control mr-sm-2" placeholder="Search" th:field="*{searchPattern}" type="text">
                     <button class="btn btn-success" type="submit">Search</button>
                 </form>
             </nav>
@@ -71,137 +71,183 @@
 </div>
 <!--End of navigation bar -->
 <br>
-
-<div class="container">
-    <h2 class="bookDetails">Book Details</h2>
-    <br>
-    <div class="row row-no-gutters">
-        <div class="col-lg-6 col-sm-12 left">
-            <div class="book">
-                <img alt="Book image" class="book-image" style="max-width:450px; max-height:600px"
-                     th:src="'data:image/*;base64,' + ${book.getImageAsString()}">
-                <br>
+<div id="oala">
+    <div class="container" id="principalul">
+        <h2 class="bookDetails">Book Details</h2>
+        <br>
+        <div class="row row-no-gutters">
+            <div class="col-lg-6 col-sm-12 left">
+                <div class="book">
+                    <img alt="Book image" class="book-image" style="max-width:450px; max-height:600px"
+                         th:src="'data:image/*;base64,' + ${book.getImageAsString()}">
+                    <br>
+                </div>
+                <div class="rating-body">
+                    <h5 class="book-rating">
+                        <ul class="list-group list-group-flush details-rating">
+                            <li class="list-group-item">This book's current rating</li>
+                            <li>
+                                <th:block th:switch="${book.rating}">
+                                    <div th:case="5"><span class="stars-container stars-100">★★★★★</span></div>
+                                    <div th:case="4"><span class="stars-container stars-80">★★★★★</span></div>
+                                    <div th:case="3"><span class="stars-container stars-60">★★★★★</span></div>
+                                    <div th:case="2"><span class="stars-container stars-40">★★★★★</span></div>
+                                    <div th:case="1"><span class="stars-container stars-20">★★★★★</span></div>
+                                    <div th:case="0"><span class="stars-container stars-0">★★★★★</span></div>
+                                </th:block>
+                            </li>
+                        </ul>
+                    </h5>
+                </div>
             </div>
-            <div class="rating-body">
-                <h5 class="book-rating">
-                    <ul class="list-group list-group-flush details-rating">
-                        <li class="list-group-item">This book's current rating</li>
-                        <li>
-                            <th:block th:switch="${book.rating}">
-                                <div th:case="5"><span class="stars-container stars-100">★★★★★</span></div>
-                                <div th:case="4"><span class="stars-container stars-80">★★★★★</span></div>
-                                <div th:case="3"><span class="stars-container stars-60">★★★★★</span></div>
-                                <div th:case="2"><span class="stars-container stars-40">★★★★★</span></div>
-                                <div th:case="1"><span class="stars-container stars-20">★★★★★</span></div>
-                                <div th:case="0"><span class="stars-container stars-0">★★★★★</span></div>
-                            </th:block>
-                        </li>
-                    </ul>
-                </h5>
+            <div class="col-lg-6 col-sm-12 right">
+                <div class="book-body">
+                    <h6 class="book details">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Book's Name: <span><b th:text="${book.bookName}"/></span></li>
+                            <li class="list-group-item">Book's Author: <span><b th:text="${book.authorName}"/></span>
+                            </li>
+                            <li class="list-group-item">Book Type: <span><b th:text="${book.type}"/></span></li>
+                            <li class="list-group-item">Language: <span><b th:text="${book.language}"/></span></li>
+                            <li class="list-group-item">Number of pages: <span><b
+                                    th:text="${book.numberOfPages}"/></span>
+                            </li>
+                            <li class="list-group-item">Condition: <span><b th:text="${book.condition}"/></span></li>
+                            <li class="list-group-item" th:if="${book.bookRent}">Rent for <b
+                                    th:text="${book.rentPrice}+' ' +'RON'"/></li>
+                            <li class="list-group-item" th:if="${book.bookSale}">Buy for <b
+                                    th:text="${book.sellPrice} +' ' +'RON'"/></li>
+                            <li class="list-group-item">Description: <p
+                                    data-th-utext="${#strings.replace(#strings.escapeXml(book.description),'&#10;','&lt;br&gt;')}"/>
+                            </li>
+                        </ul>
+                    </h6>
+                </div>
             </div>
         </div>
-        <div class="col-lg-6 col-sm-12 right">
-            <div class="book-body">
-                <h6 class="book details">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Book's Name: <span><b th:text="${book.bookName}"/></span></li>
-                        <li class="list-group-item">Book's Author: <span><b th:text="${book.authorName}"/></span></li>
-                        <li class="list-group-item">Book Type: <span><b th:text="${book.type}"/></span></li>
-                        <li class="list-group-item">Language: <span><b th:text="${book.language}"/></span></li>
-                        <li class="list-group-item">Number of pages: <span><b th:text="${book.numberOfPages}"/></span>
-                        </li>
-                        <li class="list-group-item">Condition: <span><b th:text="${book.condition}"/></span></li>
-                        <li class="list-group-item" th:if="${book.bookRent}">Rent for <b
-                                th:text="${book.rentPrice}+' ' +'RON'"/></li>
-                        <li class="list-group-item" th:if="${book.bookSale}">Buy for <b
-                                th:text="${book.sellPrice} +' ' +'RON'"/></li>
-                        <li class="list-group-item">Description: <p data-th-utext="${#strings.replace(#strings.escapeXml(book.description),'&#10;','&lt;br&gt;')}"/></li>
-                    </ul>
-                </h6>
+        <div style="float: right; box-sizing: border-box; padding: 5px 6px 7px 7px; width: 200px">
+            <div style="margin-top: 1px; margin-bottom: 4px; font-size: 12px; white-space: nowrap;"
+                 th:text="'Added on ' + ${#dates.format(book.addDate,'MMM dd &lsquo;yy')} + ' at ' + ${#dates.format(book.addDate,'HH:mm')} + ' by:'"></div>
+            <div style="float: left; width: 32px; height: 32px; border-radius: 1px; box-sizing: inherit; margin: 0; padding: 0; border: 0; font: inherit; font-size: 100%; vertical-align: baseline; text-align: left;">
+                <a th:href="@{/user/{id}(id=${book.user.id})}"><img style="max-width: 32px; max-height: 32px"
+                                                                    th:src="'data:image/*;base64,' + ${book.user.getImageAsString()}"></a>
             </div>
+            <div style="margin-left: 8px; width: calc(100% - 40px); float: left; line-height: 17px; word-wrap: break-word; box-sizing: inherit; text-align: left; vertical-align: baseline;">
+                <a style="color: #000000" th:href="@{/user/{id}(id=${book.user.id})}"><b
+                        th:text="${book.user.nickname}"></b></a></div>
         </div>
-    </div>
-    <br>
-    <div class="row">
-        <a button class="btn btn-info" th:href="@{/editBook/{id}(id=${book.id})} ">Update Book</a>
-        <a button class="btn btn-danger" th:href="@{/deleteBook/{id}(id=${book.id})} ">Delete Book</a>
-        <button class="btn btn-info" th:if="${not book.user.email.equals(principal.name)}" th:onclick="|window.location.href='/messages/${book.user.id}?bookName=${book.bookName}'|">Send message</button>
-    </div>
-    <br>
-    <div>
-        <!--Send Review here-->
-        <form method="post" th:action="@{/bookDetails/{id}(id=${book.id})}" th:object="${review}">
-            <div style="color: #ff0000;" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">Rating Error</div>
-            <fieldset class="rating">
-                <legend>Review the book:</legend>
-                <input id="star5" name="rating" th:field="*{rating}" type="radio" value="5"/><label for="star5"
-                                                                                                    title="Rocks!">5
-                stars</label>
-                <input id="star4" name="rating" th:field="*{rating}" type="radio" value="4"/><label for="star4"
-                                                                                                    title="Pretty good">4
-                stars</label>
-                <input id="star3" name="rating" th:field="*{rating}" type="radio" value="3"/><label for="star3"
-                                                                                                    title="Meh">3
-                stars</label>
-                <input id="star2" name="rating" th:field="*{rating}" type="radio" value="2"/><label for="star2"
-                                                                                                    title="Kinda bad">2
-                stars</label>
-                <input id="star1" name="rating" th:field="*{rating}" type="radio" value="1"/><label for="star1"
-                                                                                                    title="Sucks big time">1
-                star</label>
-            </fieldset>
+        <br>
+        <div class="row">
+            <span style="padding-left: 5px;"><a button class="btn btn-info"
+                                                th:href="@{/editBook/{id}(id=${book.id})} "
+                                                th:if="${book.user.email.equals(principal.name)}">Update Book</a></span>
+            <span style="padding-left: 5px;"><a button class="btn btn-danger"
+                                                sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
+                                                th:href="@{/deleteBook/{id}(id=${book.id})} ">Delete Book</a></span>
+        </div>
+        <br>
+        <div class="row">
+            <span style="padding-left: 5px;"
+                  th:if="${not book.user.email.equals(principal.name)} AND ${book.bookSale} OR ${not book.user.email.equals(principal.name)} AND ${book.bookRent}"><button
+                    class="btn btn-info"
+                    th:onclick="|window.location.href='/messages/${book.user.id}?bookName=${book.bookName}'|">Contact Owner</button><b> if you wish to buy or rent this book.</b></span>
+        </div>
+        <br>
+        <div>
+            <!--Send Review here-->
+            <form method="post" th:action="@{/bookDetails/{id}(id=${book.id})}" th:object="${review}">
+                <div style="color: #ff0000;" th:errors="*{rating}" th:if="${#fields.hasErrors('rating')}">Rating Error
+                </div>
+                <fieldset class="rating">
+                    <legend>Review the book:</legend>
+                    <input id="star5" name="rating" th:field="*{rating}" type="radio" value="5"/><label for="star5"
+                                                                                                        title="Rocks!">5
+                    stars</label>
+                    <input id="star4" name="rating" th:field="*{rating}" type="radio" value="4"/><label for="star4"
+                                                                                                        title="Pretty good">4
+                    stars</label>
+                    <input id="star3" name="rating" th:field="*{rating}" type="radio" value="3"/><label for="star3"
+                                                                                                        title="Meh">3
+                    stars</label>
+                    <input id="star2" name="rating" th:field="*{rating}" type="radio" value="2"/><label for="star2"
+                                                                                                        title="Kinda bad">2
+                    stars</label>
+                    <input id="star1" name="rating" th:field="*{rating}" type="radio" value="1"/><label for="star1"
+                                                                                                        title="Sucks big time">1
+                    star</label>
+                </fieldset>
 
 
-            <div class="form-group shadow-textarea">
-                <label for="comment" hidden>Review Message</label>
-                <textarea class="form-control z-depth-1" id="comment" placeholder="Write you review here..." rows="3" th:field="*{comment}"></textarea>
-                <div style="color: #ff0000;" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">Comment Error</div>
-            </div>
-            <button class="btn btn-info" type="submit">Send Review</button>
-        </form>
-    </div>
-    <br>
-    <br>
-    <!--Comments and Stars Here-->
-    <div class="comment-rating">
-        <div class="panel-heading">
-            <span class="glyphicon glyphicon-comment"></span>
-            <h3 class="panel-title">Recent Comments</h3>
+                <div class="form-group shadow-textarea">
+                    <label for="comment" hidden>Review Message</label>
+                    <textarea class="form-control z-depth-1" id="comment" placeholder="Write you review here..."
+                              rows="3" th:field="*{comment}"></textarea>
+                    <div style="color: #ff0000;" th:errors="*{comment}" th:if="${#fields.hasErrors('comment')}">Comment
+                        Error
+                    </div>
+                </div>
+                <button class="btn btn-info" type="submit">Send Review</button>
+            </form>
         </div>
-        <div id="allreviews" class="panel-body">
-            <table>
-                <th:block th:each="review : ${reviews}">
-                    <tr>
-                        <td th:text="'Posted by ' + ${review.userNickname} + ' on ' + ${#dates.format(review.created, 'dd-MMM HH:mm')}"></td>
-                        <td th:if="${review.edited}"><b style="color: red"
-                                                        th:text="'Edited by ' + ${review.editedBy}"></b></td>
-                        <td sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')">
-                            <button class="btn btn-warning float-right"
-                                    th:onclick="|window.location.href='/managePosts/${review.id}'|">Edit/Delete Posts
-                            </button>
-                        </td>
-                    </tr>
-                    <tr th:switch="${review.rating}">
-                        <td th:case="5">Rating: <span class="stars-container stars-100">★★★★★</span></td>
-                        <td th:case="4">Rating: <span class="stars-container stars-80">★★★★★</span></td>
-                        <td th:case="3">Rating: <span class="stars-container stars-60">★★★★★</span></td>
-                        <td th:case="2">Rating: <span class="stars-container stars-40">★★★★★</span></td>
-                        <td th:case="1">Rating: <span class="stars-container stars-20">★★★★★</span></td>
-                        <td th:case="0">Rating: <span class="stars-container stars-0">★★★★★</span></td>
-                    </tr>
-                    <tr>
-                        <td th:text="'Review Comment: ' + ${review.comment}"></td>
-                    </tr>
-                </th:block>
-            </table>
-            </th:block>
+        <br>
+        <br>
+        <!--Comments and Stars Here-->
+        <div class="container">
+            <h2 class="text-center" id="allreviews">Recent Comments</h2>
+
+            <div class="card" style="padding-bottom: 10px">
+                <div class="card-body">
+                    <div class="row" th:each="review : ${reviews}">
+                        <div class="col-md-2">
+                            <img class="img img-rounded img-fluid" style="border-radius: 50% !important;"
+                                 th:src="'data:image/*;base64,' + ${review.getUserPhotoAsString()}"/>
+                            <p class="text-secondary text-center"
+                               th:text="'Posted on ' + ${#dates.format(review.created, 'dd-MMM-yyyy')} + ' at ' + ${#dates.format(review.created, 'HH:mm')}"></p>
+                        </div>
+                        <div class="col-md-10" th:switch="${review.rating}">
+                            <p>
+                                <a class="float-left" style="color: cornflowerblue"
+                                   th:href="@{/user/{id}(id=${review.userId})}"><strong
+                                        th:text="${review.userNickname}"></strong></a>
+                            <div class="float-right" th:case="1"><span class="stars-container stars-20">★★★★★</span>
+                            </div>
+                            <div class="float-right" th:case="2"><span class="stars-container stars-40">★★★★★</span>
+                            </div>
+                            <div class="float-right" th:case="3"><span class="stars-container stars-60">★★★★★</span>
+                            </div>
+                            <div class="float-right" th:case="4"><span class="stars-container stars-80">★★★★★</span>
+                            </div>
+                            <div class="float-right" th:case="5"><span class="stars-container stars-100">★★★★★</span>
+                            </div>
+                            </p>
+                            <div class="clearfix"></div>
+                            <p th:text="${review.comment}"></p>
+                            <p>
+                                <button class="float-right btn btn-outline-primary ml-2"
+                                        sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
+                                        th:onclick="|window.location.href='/managePosts/${review.id}'|"><i
+                                        class="fa fa-reply"></i>
+                                    Edit
+                                </button>
+                                <button class="float-right btn text-white btn-danger"
+                                        sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
+                                        th:onclick="|window.location.href='/managePosts/delete/${review.id}'|"><i
+                                        class="fa fa-trash"></i> Delete
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<br>
 <!--Footer -->
-<div id="footer">
+<footer id="footer">
     <div class="card img-fluid" style="width:1600px">
-        <img class="card-img-top" src="static/images/Footerv2.jpg" style="width:100%" th:src="@{~/images/Footerv2.jpg}">
+        <img class="card-img-top" src="/static/images/footer.jpg" style="width:100%"
+             th:src="@{~/images/footer.jpg}">
         <div class="card-img-overlay">
             <div class="text-right" style="margin-bottom:0">
                 <h6>Bookworms Community</h6>
@@ -209,6 +255,6 @@
             </div>
         </div>
     </div>
-</div>
+</footer>
 </body>
 </html>
