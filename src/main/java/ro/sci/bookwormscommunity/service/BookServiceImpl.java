@@ -117,7 +117,7 @@ public class BookServiceImpl implements BookService {
         List<Book> searchResults = new ArrayList<>();
 
         for(Book book : books){
-            if(searchPattern.equalsIgnoreCase(book.getAuthorName())){
+            if(simpleTextSearch(searchPattern.toLowerCase().toCharArray(),book.getAuthorName().toLowerCase().toCharArray())>=0){
                 searchResults.add(book);
             }
         }
@@ -129,7 +129,7 @@ public class BookServiceImpl implements BookService {
         List<Book> searchResults = new ArrayList<>();
 
         for(Book book : books){
-            if(searchPattern.equalsIgnoreCase(book.getBookName())){
+            if(simpleTextSearch(searchPattern.toLowerCase().toCharArray(),book.getBookName().toLowerCase().toCharArray())>=0){
                 searchResults.add(book);
             }
         }
@@ -141,11 +141,31 @@ public class BookServiceImpl implements BookService {
         List<Book> searchResults = new ArrayList<>();
 
         for(Book book : books){
-            if(searchPattern.equalsIgnoreCase(book.getType())){
+            if(simpleTextSearch(searchPattern.toLowerCase().toCharArray(),book.getType().toLowerCase().toCharArray())>=0){
                 searchResults.add(book);
             }
         }
         return searchResults;
+    }
+
+    private int simpleTextSearch(char[] pattern, char[] text) {
+        int patternSize = pattern.length;
+        int textSize = text.length;
+
+        if (patternSize==0)return -1;
+
+        int i = 0;
+
+        while ((i + patternSize) <= textSize) {
+            int j = 0;
+            while (text[i + j] == pattern[j]) {
+                j += 1;
+                if (j >= patternSize)
+                    return i;
+            }
+            i += 1;
+        }
+        return -1;
     }
 }
 
