@@ -115,7 +115,7 @@
                                 th:text="${book.rentPrice}+' ' +'RON'"/></li>
                         <li class="list-group-item" th:if="${book.bookSale}">Buy for <b
                                 th:text="${book.sellPrice} +' ' +'RON'"/></li>
-                        <li class="list-group-item">Description: <p th:text="${book.description}"/></li>
+                        <li class="list-group-item">Description: <p data-th-utext="${#strings.replace(#strings.escapeXml(book.description),'&#10;','&lt;br&gt;')}"/></li>
                     </ul>
                 </h6>
             </div>

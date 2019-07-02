@@ -1,7 +1,6 @@
 package ro.sci.bookwormscommunity.web.controller;
 
 import com.opencsv.CSVWriter;
-import com.opencsv.bean.ColumnPositionMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ro.sci.bookwormscommunity.mapper.BookMapper;
-import ro.sci.bookwormscommunity.mapper.UserMapper;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.BookService;
@@ -41,7 +38,7 @@ public class AdminController {
     }
 
     @GetMapping("/export-users")
-    public void exportCSVUsers(HttpServletResponse response) throws Exception{
+    public void exportCSVUsers(HttpServletResponse response) throws Exception {
 
         String fileName = "users.csv";
 
@@ -59,7 +56,7 @@ public class AdminController {
     }
 
     @GetMapping("/export-books")
-    public void exportCSVBooks(HttpServletResponse response) throws Exception{
+    public void exportCSVBooks(HttpServletResponse response) throws Exception {
 
         String fileName = "books.csv";
 

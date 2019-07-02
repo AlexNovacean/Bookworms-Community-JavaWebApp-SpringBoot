@@ -44,10 +44,4 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/showUsers")
-    public String showUsers(Model model) {
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
-        return "showUsers";
-    }
 }
