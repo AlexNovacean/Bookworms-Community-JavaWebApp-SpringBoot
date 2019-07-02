@@ -124,8 +124,8 @@
                     <select class="form-control custom-select" th:field="*{condition}">
                         <option
                                 th:each="condition: ${conditions}"
-                                th:text=${condition.getCondition()}
-                                th:value="${condition}">
+                                th:text="${condition.getCondition()}"
+                                th:value="${condition.getCondition()}">
                         </option>
                     </select>
                 </div>

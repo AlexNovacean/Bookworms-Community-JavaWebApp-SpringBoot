@@ -70,10 +70,11 @@ public class BookController {
     }
 
     @PostMapping("/addBook")
-    public String addBook(@ModelAttribute("book") @Valid BookDto bookdto, BindingResult result, Principal principal) {
+    public String addBook(@ModelAttribute("book") @Valid BookDto bookdto, BindingResult result, Principal principal, @ModelAttribute("searchWord")Word searchWord) {
         User user = userService.findByEmail(principal.getName());
         bookdto.setUser(user);
         if (result.hasErrors()) {
+
             return "addBook";
         }
         try {
@@ -101,7 +102,7 @@ public class BookController {
     }
 
     @PostMapping("/updateBook/{id}")
-    public String updateBook(@PathVariable("id") Long id, @Valid BookDto bookdto, BindingResult result, Principal principal) throws IOException {
+    public String updateBook(@PathVariable("id") Long id, @Valid BookDto bookdto, BindingResult result, Principal principal, @ModelAttribute("searchWord")Word searchWord) throws IOException {
         User user = userService.findByEmail(principal.getName());
         Book book = bookService.getBookById(id).get();
         bookdto.setUser(user);
@@ -122,11 +123,12 @@ public class BookController {
     public Review review(){ return new Review();}
 
     @PostMapping("/bookDetails/{id}")
-    public String postReview(@PathVariable("id")long id, @ModelAttribute("review") @Valid Review review, BindingResult result, Principal principal, Model model){
+    public String postReview(@ModelAttribute("searchWord")Word searchWord, @PathVariable("id")long id, @ModelAttribute("review") @Valid Review review, BindingResult result, Principal principal, Model model){
 
         if(result.hasErrors()){
             model.addAttribute("book",bookService.getBookById(id).get());
             model.addAttribute("reviews",reviewService.getBookReviews(id));
+            model.addAttribute("principal",principal);
             return "bookDetails";
         }
 
