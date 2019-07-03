@@ -28,9 +28,9 @@
 <div id="header">
     <ul id="navigation"><!--Navigation bar -->
         <script>
-				$(document).ready(function(){
-  				$('[data-toggle="tooltip"]').tooltip();   
-				});
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
 
 
         </script>
@@ -75,57 +75,22 @@
     </ul>
 </div>
 <!--End of navigation bar -->
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6">
-            <h3>Top 10 Rated Books</h3>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Book</th>
-                    <th>Author</th>
-                    <th>Rating</th>
-                </tr>
-                </thead>
-                <tbody th:each="book : ${topBooks}">
-                <tr class="table-warning table-striped">
-                    <td>
-                        <div class="book">
-                            <img alt="Book image" class="book-image" style="max-width:50px; max-height:50px"
-                                 th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></div>
-                    </td>
-                    <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
-                            th:text="${book.bookName}"></b></a></td>
-                    <td th:text="${book.authorName}"></td>
-                    <td>
-                        <th:block th:switch="${book.rating}">
-                            <div th:case="5"><span class="stars-container stars-100">★★★★★</span></div>
-                            <div th:case="4"><span class="stars-container stars-80">★★★★★</span></div>
-                            <div th:case="3"><span class="stars-container stars-60">★★★★★</span></div>
-                            <div th:case="2"><span class="stars-container stars-40">★★★★★</span></div>
-                            <div th:case="1"><span class="stars-container stars-20">★★★★★</span></div>
-                            <div th:case="0"><span class="stars-container stars-0">★★★★★</span></div>
-                        </th:block>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-sm-6">
-            <h3>Latest 10 Books Added</h3>
-            <table class="table">
-                <tr>
+<div id="oala">
+    <div class="container" id="principalul">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3>Top 10 Rated Books</h3>
+                <table class="table">
                     <thead>
                     <tr>
                         <th>Image</th>
                         <th>Book</th>
                         <th>Author</th>
-                        <th>Date</th>
+                        <th>Rating</th>
                     </tr>
                     </thead>
-                    <tbody th:each="book : ${latestBooks}">
-                    <tr class="table-secondary table-striped">
+                    <tbody th:each="book : ${topBooks}">
+                    <tr class="table-warning table-striped">
                         <td>
                             <div class="book">
                                 <img alt="Book image" class="book-image" style="max-width:50px; max-height:50px"
@@ -134,15 +99,52 @@
                         <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
                                 th:text="${book.bookName}"></b></a></td>
                         <td th:text="${book.authorName}"></td>
-                        <td th:text="${book.addDate}"></td>
+                        <td>
+                            <th:block th:switch="${book.rating}">
+                                <div th:case="5"><span class="stars-container stars-100">★★★★★</span></div>
+                                <div th:case="4"><span class="stars-container stars-80">★★★★★</span></div>
+                                <div th:case="3"><span class="stars-container stars-60">★★★★★</span></div>
+                                <div th:case="2"><span class="stars-container stars-40">★★★★★</span></div>
+                                <div th:case="1"><span class="stars-container stars-20">★★★★★</span></div>
+                                <div th:case="0"><span class="stars-container stars-0">★★★★★</span></div>
+                            </th:block>
+                        </td>
                     </tr>
                     </tbody>
-            </table>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <h3>Latest 10 Books Added</h3>
+                <table class="table">
+                    <tr>
+                        <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Book</th>
+                            <th>Author</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="book : ${latestBooks}">
+                        <tr class="table-secondary table-striped">
+                            <td>
+                                <div class="book">
+                                    <img alt="Book image" class="book-image" style="max-width:50px; max-height:50px"
+                                         th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></div>
+                            </td>
+                            <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
+                                    th:text="${book.bookName}"></b></a></td>
+                            <td th:text="${book.authorName}"></td>
+                            <td th:text="${book.addDate}"></td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 <!--Footer -->
-<footer class="footer">
+<footer id="footer">
     <div class="card img-fluid" style="width:1600px">
         <img class="card-img-top" src="static/images/footer.jpg" style="width:100%"
              th:src="@{~/images/footer.jpg}">

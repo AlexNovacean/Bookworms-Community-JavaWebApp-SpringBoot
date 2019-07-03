@@ -112,36 +112,36 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllBooksForSale();
     }
 
-    public List<Book> searchForAuthors(String searchPattern){
+    public List<Book> searchForAuthors(String searchPattern) {
         List<Book> books = bookRepository.findAll();
         List<Book> searchResults = new ArrayList<>();
 
-        for(Book book : books){
-            if(simpleTextSearch(searchPattern.toLowerCase().toCharArray(),book.getAuthorName().toLowerCase().toCharArray())>=0){
+        for (Book book : books) {
+            if (simpleTextSearch(searchPattern.toLowerCase().toCharArray(), book.getAuthorName().toLowerCase().toCharArray()) >= 0) {
                 searchResults.add(book);
             }
         }
         return searchResults;
     }
 
-    public List<Book> searchForBookName(String searchPattern){
+    public List<Book> searchForBookName(String searchPattern) {
         List<Book> books = bookRepository.findAll();
         List<Book> searchResults = new ArrayList<>();
 
-        for(Book book : books){
-            if(simpleTextSearch(searchPattern.toLowerCase().toCharArray(),book.getBookName().toLowerCase().toCharArray())>=0){
+        for (Book book : books) {
+            if (simpleTextSearch(searchPattern.toLowerCase().toCharArray(), book.getBookName().toLowerCase().toCharArray()) >= 0) {
                 searchResults.add(book);
             }
         }
         return searchResults;
     }
 
-    public List<Book> searchForBookType(String searchPattern){
+    public List<Book> searchForBookType(String searchPattern) {
         List<Book> books = bookRepository.findAll();
         List<Book> searchResults = new ArrayList<>();
 
-        for(Book book : books){
-            if(simpleTextSearch(searchPattern.toLowerCase().toCharArray(),book.getType().toLowerCase().toCharArray())>=0){
+        for (Book book : books) {
+            if (simpleTextSearch(searchPattern.toLowerCase().toCharArray(), book.getType().toLowerCase().toCharArray()) >= 0) {
                 searchResults.add(book);
             }
         }
@@ -152,7 +152,7 @@ public class BookServiceImpl implements BookService {
         int patternSize = pattern.length;
         int textSize = text.length;
 
-        if (patternSize==0)return -1;
+        if (patternSize == 0) return -1;
 
         int i = 0;
 

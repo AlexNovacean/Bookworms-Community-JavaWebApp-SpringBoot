@@ -44,12 +44,15 @@
                         <a button class="btn btn-secondary" th:href="@{/}">Home Page</a>
                         <a button class="btn btn-success" th:href="@{/addBook}"
                            th:if="${user.email.equals(principal.name)}">Add Book</a>
-                        <a button class="btn btn-primary" th:href="@{/user/editProfile}"
+                        <a button class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_USER','ROLE_MODERATOR')"
+                           th:href="@{/user/editProfile}"
                            th:if="${user.email.equals(principal.name)}">Edit Profile</a>
                         <a button class="btn btn-primary"
-                           sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/export-users}" th:if="${user.email.equals(principal.name)}">Download User CSV</a>
+                           sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/export-users}"
+                           th:if="${user.email.equals(principal.name)}">Download User CSV</a>
                         <a button class="btn btn-primary"
-                           sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/export-books}" th:if="${user.email.equals(principal.name)}">Download Books CSV</a>
+                           sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/export-books}"
+                           th:if="${user.email.equals(principal.name)}">Download Books CSV</a>
                         <button class="btn btn-danger" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
                                 th:if="${not user.email.equals(principal.name)}"
                                 th:onclick="|window.location.href='/user/ban/${user.id}'|">Ban User
@@ -82,7 +85,8 @@
             <th:block th:each="book : ${books}">
                 <tr class="table-warning">
                     <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
-                            th:text="${book.bookName}" data-placement="bottom" data-toggle="tooltip" title="Book Details"></b></a></td>
+                            data-placement="bottom" data-toggle="tooltip" th:text="${book.bookName}"
+                            title="Book Details"></b></a></td>
                     <td th:text="${book.authorName}"></td>
                     <td th:text="${book.bookRent} ? 'YES' : 'NO'"></td>
                     <td th:text="${book.bookRent} ? ${book.rentPrice} : ' '"></td>
@@ -98,9 +102,10 @@
                             <div th:case="0"><span class="stars-container stars-0">★★★★★</span></div>
                         </th:block>
                     </td>
-                    <td><a data-placement="bottom" data-toggle="tooltip" title="Edit Book"
-                           th:href="@{/editBook/{id}(id=${book.id})}"
-                           th:if="${user.email.equals(principal.name)}" ><i class="fa fa-edit" style="color: #000;"></i></a></td>
+                    <td><a data-placement="bottom" data-toggle="tooltip" th:href="@{/editBook/{id}(id=${book.id})}"
+                           th:if="${user.email.equals(principal.name)}"
+                           title="Edit Book"><i class="fa fa-edit" style="color: #000;"></i></a>
+                    </td>
                 </tr>
             </th:block>
             </tbody>
@@ -110,7 +115,7 @@
 </section>
 <!--Footer -->
 <div id="footer">
-    <div class="card img-fluid" style="width:1600px">
+    <div class="card img-fluid" style="width:100%; height: 100px;">
         <div class="card-img-overlay">
             <div class="text-right" style="margin-bottom:0">
                 <h6>Bookworms Community</h6>

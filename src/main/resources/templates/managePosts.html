@@ -18,27 +18,36 @@
     <div class="container register">
         <div class="container">
             <br>
-            <form th:action="@{/managePosts/{id}(id=${review.id})}" th:object="${review}" method="post">
+            <form method="post" th:action="@{/managePosts/{id}(id=${review.id})}" th:object="${review}">
                 <div class="manage-post">
-                        <b><p th:text="'Posted by ' + ${review.userNickname} + ' on ' + ${#dates.format(review.created,'dd-MMM HH:mm')}"></p></b>
+                    <b>
+                        <p th:text="'Posted by ' + ${review.userNickname} + ' on ' + ${#dates.format(review.created,'dd-MMM HH:mm')}"></p>
+                    </b>
                     <div class="Rating">
-                    <tblock th:switch="${review.rating}">
-                        <td th:case="5">Rating: <span class="stars-container stars-100">★★★★★</span></td>
-                        <td th:case="4">Rating: <span class="stars-container stars-80">★★★★★</span></td>
-                        <td th:case="3">Rating: <span class="stars-container stars-60">★★★★★</span></td>
-                        <td th:case="2">Rating: <span class="stars-container stars-40">★★★★★</span></td>
-                        <td th:case="1">Rating: <span class="stars-container stars-20">★★★★★</span></td>
-                        <td th:case="0">Rating: <span class="stars-container stars-0">★★★★★</span></td>
-                    </tblock>
+                        <tblock th:switch="${review.rating}">
+                            <td th:case="5">Rating: <span class="stars-container stars-100">★★★★★</span></td>
+                            <td th:case="4">Rating: <span class="stars-container stars-80">★★★★★</span></td>
+                            <td th:case="3">Rating: <span class="stars-container stars-60">★★★★★</span></td>
+                            <td th:case="2">Rating: <span class="stars-container stars-40">★★★★★</span></td>
+                            <td th:case="1">Rating: <span class="stars-container stars-20">★★★★★</span></td>
+                            <td th:case="0">Rating: <span class="stars-container stars-0">★★★★★</span></td>
+                        </tblock>
                     </div>
                     <br>
                     <div class="form-group shadow-textarea">
                         <h5><label for="bookDescription">Comment</label></h5>
-                            <textarea class="form-control z-depth-1" id="bookDescription" rows="3" th:field="*{comment}"/></textarea>
+                        <textarea class="form-control z-depth-1" id="bookDescription" rows="3"
+                                  th:field="*{comment}"/></textarea>
                     </div>
-                    <p><button class="btn btn-success" type="submit">Save Changes</button>
-                    <button class="btn btn-danger" th:onclick="|window.location.href='/managePosts/delete/${review.id}'|">Delete Posts</button>
-                    <button style="float:right" class="btn btn-warning" th:onclick="|window.location.href='/bookDetails/${review.book.id}'|">Cancel</button></p>
+                    <p>
+                        <button class="btn btn-success" type="submit">Save Changes</button>
+                        <button class="btn btn-danger"
+                                th:onclick="|window.location.href='/managePosts/delete/${review.id}'|">Delete Posts
+                        </button>
+                        <button class="btn btn-warning" style="float:right"
+                                th:onclick="|window.location.href='/bookDetails/${review.book.id}'|">Cancel
+                        </button>
+                    </p>
                 </div>
             </form>
             <br>

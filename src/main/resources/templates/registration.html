@@ -26,7 +26,8 @@
             <form enctype="multipart/form-data" method="post" th:action="@{/registration}" th:object="${user}">
                 <table style="max-width: 800px; margin: auto">
                     <tr>
-                        <td class="alert alert-danger text-center" th:each="error : ${#fields.errors('global')}" th:if="${#fields.hasGlobalErrors()}" th:text="${error}">Validation Error!</td>
+                        <td class="alert alert-danger text-center" th:each="error : ${#fields.errors('global')}"
+                            th:if="${#fields.hasGlobalErrors()}" th:text="${error}">Validation Error!</td>
                     </tr>
                     <tr>
                         <td>
