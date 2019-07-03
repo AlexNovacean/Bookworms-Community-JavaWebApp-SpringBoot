@@ -35,6 +35,7 @@ public class BookwormsCommunityApplication {
                 user.setPassword(passwordEncoder.encode("admin"));
                 user.setRoles(Arrays.asList(new Role("ROLE_ADMIN")));
                 user.setPhoto(Files.readAllBytes(path));
+                user.setEnabled(true);
                 userRepository.save(user);
             }
         };
