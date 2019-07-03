@@ -7,6 +7,15 @@ import org.slf4j.LoggerFactory;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Validates the fields annotated with the {@link FieldMatch} custom annotation, by implementing the {@link ConstraintValidator#isValid(Object, ConstraintValidatorContext)} method.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ * @see ConstraintValidator
+ */
 public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Object> {
 
     private Logger logger = LoggerFactory.getLogger(FieldMatchValidator.class);
@@ -26,8 +35,8 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
             final Object firstObj = BeanUtils.getProperty(value, firstFieldName);
             final Object secondObj = BeanUtils.getProperty(value, secondFieldName);
             return firstObj == null && secondObj == null || firstObj != null && firstObj.equals(secondObj);
-        } catch (final Exception e) {
-            logger.error("Field Match Validator Error: ",e);
+        } catch (Exception e) {
+            logger.error("Field Match Validator Error: ", e);
         }
         return true;
     }

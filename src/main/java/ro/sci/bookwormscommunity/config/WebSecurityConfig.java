@@ -8,10 +8,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ro.sci.bookwormscommunity.service.UserService;
 
+/**
+ * Spring Security configuration class
+ * By overriding the {@link WebSecurityConfigurerAdapter}'s {@link WebSecurityConfigurerAdapter#configure(HttpSecurity)} method,
+ * we configure Spring Security as to which paths can be accessed without authentication.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

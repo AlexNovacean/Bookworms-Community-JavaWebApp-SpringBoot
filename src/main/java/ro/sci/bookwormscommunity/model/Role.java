@@ -5,6 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * POJO class representing the administrative role of the users in the application.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @Entity
 public class Role {
 
@@ -36,11 +44,4 @@ public class Role {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

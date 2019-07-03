@@ -8,9 +8,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <h1>Book</h1>
- * A POJO class
- * It is used to create the elements within the classes.
+ * A POJO class representing the book objects of the application.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
  */
 @Entity
 public class Book {
@@ -64,7 +67,7 @@ public class Book {
     @Column(columnDefinition = "int default 0")
     private int rating;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
     private Date addDate;
@@ -209,6 +212,11 @@ public class Book {
         this.rentPrice = rentPrice;
     }
 
+    /**
+     * Encodes the {@link Book} image field's byte array with the {@link Base64} encoder and returns it as a String.
+     *
+     * @return a the {@link Book}'s image field as a String encoded with the {@link Base64} encode.
+     */
     public String getImageAsString() {
         return Base64.getEncoder().encodeToString(this.image);
     }

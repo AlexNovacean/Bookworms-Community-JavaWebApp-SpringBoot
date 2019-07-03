@@ -1,5 +1,13 @@
 package ro.sci.bookwormscommunity.model;
 
+/**
+ * Enum class representing the book's conditions.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 public enum BookCondition {
     AS_NEW("As new"), //the book is in the state that it should have been in when it was left by the publisher
     FINE("Fine"), //the book is "as new", but allowing for the normal effects of time on an unused book that has been protected

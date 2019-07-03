@@ -1,5 +1,13 @@
 package ro.sci.bookwormscommunity.web.dto;
 
+/**
+ * POJO class who's instances will be used as Data Transfer Object between the client and the server.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 public class MessageDto {
 
     private String content;
@@ -18,5 +26,4 @@ public class MessageDto {
     public void setContent(String content) {
         this.content = content;
     }
-
 }

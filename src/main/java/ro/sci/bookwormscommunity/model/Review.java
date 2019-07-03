@@ -3,10 +3,19 @@ package ro.sci.bookwormscommunity.model;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Base64;
 import java.util.Date;
 
+/**
+ * POJO class representing the review given by users to a any particular book.
+ * <p>
+ * It has two important parts: the rating which is a number between 1 and 5, and the comment.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @Entity
 public class Review {
 
@@ -38,6 +47,10 @@ public class Review {
 
     private long userId;
 
+    public Review() {
+        this.created = new Date();
+    }
+
     public long getUserId() {
         return userId;
     }
@@ -50,12 +63,12 @@ public class Review {
         return userPhoto;
     }
 
-    public String getUserPhotoAsString() {
-        return Base64.getEncoder().encodeToString(this.userPhoto);
-    }
-
     public void setUserPhoto(byte[] userPhoto) {
         this.userPhoto = userPhoto;
+    }
+
+    public String getUserPhotoAsString() {
+        return Base64.getEncoder().encodeToString(this.userPhoto);
     }
 
     public boolean isEdited() {
@@ -72,10 +85,6 @@ public class Review {
 
     public void setEditedBy(String editedBy) {
         this.editedBy = editedBy;
-    }
-
-    public Review(){
-        this.created = new Date();
     }
 
     public Long getId() {

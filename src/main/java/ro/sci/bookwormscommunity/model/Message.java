@@ -4,6 +4,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * POJO class representing the messages send between two users engaged in a Conversation.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @Entity
 @Table(name = "messages")
 public class Message {

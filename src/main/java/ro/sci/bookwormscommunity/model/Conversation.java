@@ -3,6 +3,14 @@ package ro.sci.bookwormscommunity.model;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * POJO class representing the conversation between two users.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @Entity
 public class Conversation {
 

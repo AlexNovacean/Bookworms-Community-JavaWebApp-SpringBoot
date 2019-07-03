@@ -74,7 +74,7 @@
             <h3 th:if="${booksOfAuthors.isEmpty() && booksOfType.isEmpty() && booksWithName.isEmpty()}">No
                 Results...</h3>
             <h6 th:if="${not booksWithName.isEmpty()}">The name of the following books matches your search: </h6>
-            <table class="table table-striped table-hover" th:if="${not booksWithName.isEmpty()}">
+            <table style="text-align: center" class="table table-striped table-hover" th:if="${not booksWithName.isEmpty()}">
                 <thead>
                 <tr class="table-primary">
                     <th>Cover</th>
@@ -103,9 +103,9 @@
                         <td th:text="${book.type}"></td>
                         <td th:text="${book.language}"></td>
                         <td th:text="${book.condition}"></td>
-                        <td th:text="${book.bookRent} ? 'YES' : 'NO'"></td>
+                        <td th:text="${book.bookRent} ? 'Yes' : 'No'"></td>
                         <td th:text="${book.bookRent} ? ${book.rentPrice} : ' '"></td>
-                        <td th:text="${book.bookSale} ? 'YES' : 'NO'"></td>
+                        <td th:text="${book.bookSale} ? 'Yes' : 'No'"></td>
                         <td th:text="${book.bookSale} ? ${book.sellPrice} : ' '"></td>
                         <td>
                             <th:block th:switch="${book.rating}">
@@ -123,7 +123,7 @@
             </table>
             <br>
             <h6 th:if="${not booksOfAuthors.isEmpty()}">The Author of the following books matches your search: </h6>
-            <table class="table table-striped table-hover" th:if="${not booksOfAuthors.isEmpty()}">
+            <table style="text-align: center" class="table table-striped table-hover" th:if="${not booksOfAuthors.isEmpty()}">
                 <thead>
                 <tr class="table-primary">
                     <th>Cover</th>
@@ -152,9 +152,9 @@
                         <td th:text="${book.type}"></td>
                         <td th:text="${book.language}"></td>
                         <td th:text="${book.condition}"></td>
-                        <td th:text="${book.bookRent} ? 'YES' : 'NO'"></td>
+                        <td th:text="${book.bookRent} ? 'Yes' : 'No'"></td>
                         <td th:text="${book.bookRent} ? ${book.rentPrice} : ' '"></td>
-                        <td th:text="${book.bookSale} ? 'YES' : 'NO'"></td>
+                        <td th:text="${book.bookSale} ? 'Yes' : 'No'"></td>
                         <td th:text="${book.bookSale} ? ${book.sellPrice} : ' '"></td>
                         <td>
                             <th:block th:switch="${book.rating}">
@@ -172,7 +172,7 @@
             </table>
             <br>
             <h6 th:if="${not booksOfType.isEmpty()}">The Type of the following books matches your search: </h6>
-            <table class="table table-striped table-hover" th:if="${not booksOfType.isEmpty()}">
+            <table style="text-align: center" class="table table-striped table-hover" th:if="${not booksOfType.isEmpty()}">
                 <thead>
                 <tr class="table-primary">
                     <th>Cover</th>
@@ -201,9 +201,9 @@
                         <td th:text="${book.type}"></td>
                         <td th:text="${book.language}"></td>
                         <td th:text="${book.condition}"></td>
-                        <td th:text="${book.bookRent} ? 'YES' : 'NO'"></td>
+                        <td th:text="${book.bookRent} ? 'Yes' : 'No'"></td>
                         <td th:text="${book.bookRent} ? ${book.rentPrice} : ' '"></td>
-                        <td th:text="${book.bookSale} ? 'YES' : 'NO'"></td>
+                        <td th:text="${book.bookSale} ? 'Yes' : 'No'"></td>
                         <td th:text="${book.bookSale} ? ${book.sellPrice} : ' '"></td>
                         <td>
                             <th:block th:switch="${book.rating}">

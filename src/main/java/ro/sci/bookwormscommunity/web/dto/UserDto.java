@@ -10,9 +10,15 @@ import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.Base64;
 
-@FieldMatch.List({
-        @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
-})
+/**
+ * POJO class who's instances will be used as Data Transfer Object between the client and the server.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
+@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 public class UserDto {
 
     private long id;
@@ -113,6 +119,13 @@ public class UserDto {
         this.photo = photo;
     }
 
+    /**
+     * Returns the bytes array of the updated {@link ro.sci.bookwormscommunity.model.User} object.
+     *
+     * @param image the current byte array of the updated photo.
+     * @return if a new image file is provided in the updated process, that file's byte array will be returned, otherwise the old byte array of the updated user will be returned.
+     * @throws IOException if an error occurs while retrieving the bytes array of the updated book's cover photo
+     */
     public byte[] returnUpdatePhoto(byte[] image) throws IOException {
         if (!photo.isEmpty()) {
             return photo.getBytes();
@@ -120,6 +133,12 @@ public class UserDto {
         return image;
     }
 
+    /**
+     * Returns the byte array of the current photo file as an {@link Base64} encoded String.
+     *
+     * @return a {@link Base64} encoded string of the object's photo file field.
+     * @throws IOException if an error occurs while retrieving the bytes array of the photo file.
+     */
     public String returnPhotoAsString() throws IOException {
         return Base64.getEncoder().encodeToString(photo.getBytes());
     }

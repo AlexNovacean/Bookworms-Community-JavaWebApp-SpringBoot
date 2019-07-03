@@ -7,12 +7,28 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import ro.sci.bookwormscommunity.model.User;
 
+/**
+ * Implementation for the {@link BanMailService}.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ * @see BanMailService
+ * @see JavaMailSender
+ */
 @Service
 public class BanMailServiceImpl implements BanMailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
 
+    /**
+     * Method used to send an e-mail to a given user when the user is banned.
+     *
+     * @param user {@link User} instance, the user which will receive the email.
+     * @throws MailException if the e-mail fails to be delivered.
+     */
     @Override
     public void sendAccountDisabledMail(User user) throws MailException {
         SimpleMailMessage mailMessage = new SimpleMailMessage();

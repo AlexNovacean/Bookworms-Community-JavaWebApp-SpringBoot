@@ -7,6 +7,14 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * POJO class representing the users of the application.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
@@ -88,10 +96,6 @@ public class User {
         this.photo = photo;
     }
 
-    public String getImageAsString() {
-        return Base64.getEncoder().encodeToString(this.photo);
-    }
-
     public Long getId() {
         return id;
     }
@@ -154,5 +158,14 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    /**
+     * Encodes the {@link User} image field's byte array with the {@link Base64} encoder and returns it as a String.
+     *
+     * @return a the {@link User}'s image field as a String encoded with the {@link Base64} encode.
+     */
+    public String getImageAsString() {
+        return Base64.getEncoder().encodeToString(this.photo);
     }
 }

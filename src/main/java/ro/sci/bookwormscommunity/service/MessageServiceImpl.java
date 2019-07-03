@@ -11,21 +11,46 @@ import ro.sci.bookwormscommunity.web.dto.MessageDto;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Implementation for the {@link MessageService}.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ * @see MessageService
+ */
 @Service
 public class MessageServiceImpl implements MessageService {
 
     @Autowired
     ConversationService conversationService;
+
     @Autowired
     UserService userService;
+
     @Autowired
     private MessageRepository messageRepository;
 
+    /**
+     * Returns all the messages that have been sent within a specific conversation.
+     *
+     * @param conversationId the conversation identifier
+     * @return a list of {@link Message} objects.
+     */
     @Override
     public List<Message> getUserMessages(long conversationId) {
         return messageRepository.getUserMessages(conversationId);
     }
 
+    /**
+     * Save the new submitted message and retrieves all the messages including the new one.
+     *
+     * @param conversationId conversation identifier
+     * @param messageDto     Data Transfer Object containing the message content.
+     * @param principal      {@link Principal} object which stores the currently logged in user.
+     * @return a list of all the {@link Message} objects which correspond with provided conversation Id.
+     */
     @Override
     public List<Message> saveAndRetrieve(long conversationId, MessageDto messageDto, Principal principal) {
         Conversation conversation = conversationService.findById(conversationId);

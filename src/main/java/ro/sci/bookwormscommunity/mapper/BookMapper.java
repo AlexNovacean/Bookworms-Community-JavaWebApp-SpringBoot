@@ -7,11 +7,26 @@ import ro.sci.bookwormscommunity.web.dto.BookDto;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+/**
+ * Serves as a mapper for the the {@link Book} class
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 public final class BookMapper {
 
     private BookMapper() {
     }
 
+    /**
+     * Maps a {@link Book} object to a {@link BookDto} object
+     *
+     * @param book {@link Book} instance
+     * @return {@link BookDto} instance
+     * @throws IOException if the {@link MockMultipartFile} object cannot be build
+     */
     public static BookDto mapBookToBookDto(Book book) throws IOException {
         BookDto bookDto = new BookDto();
         bookDto.setUser(book.getUser());
@@ -31,7 +46,14 @@ public final class BookMapper {
         return bookDto;
     }
 
-    public static Book mapBookDtoToBook(BookDto bookDto) throws Exception {
+    /**
+     * Maps a {@link BookDto} object to a {@link Book} object
+     *
+     * @param bookDto {@link BookDto} instance
+     * @return {@link Book} instance
+     * @throws IOException if {@link BookDto#returnPhoto()} fails to return the file
+     */
+    public static Book mapBookDtoToBook(BookDto bookDto) throws IOException {
         Book book = new Book();
         book.setBookName(bookDto.getBookName());
         book.setAuthorName(bookDto.getAuthorName());

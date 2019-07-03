@@ -5,6 +5,14 @@ import ro.sci.bookwormscommunity.model.Review;
 
 import java.util.List;
 
+/**
+ * Service that handles the reviews of the books.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 public interface ReviewService {
     void saveReview(Review review);
 
@@ -13,7 +21,7 @@ public interface ReviewService {
     Review getReviewById(long id);
 
     @Transactional
-    void updateReview(long id, Review review);
+    void updateReview(long reviewId, Review editedReview);
 
     void deleteReviewById(long id);
 }

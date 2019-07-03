@@ -14,6 +14,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+/**
+ * Main Class, the starting point of this java web application.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @SpringBootApplication
 public class BookwormsCommunityApplication {
 

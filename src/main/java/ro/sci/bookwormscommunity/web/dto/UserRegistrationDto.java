@@ -10,8 +10,17 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 
+/**
+ * POJO class who's instances will be used as Data Transfer Object between the client and the server.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @FieldMatch.List({
         @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),
         @FieldMatch(first = "email", second = "confirmEmail", message = "The email fields must match")
@@ -50,21 +59,8 @@ public class UserRegistrationDto {
     @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB.")
     private MultipartFile image;
 
-    public MultipartFile getImage() {
-        return image;
+    public UserRegistrationDto() {
     }
-
-    public void setImage(MultipartFile image) {
-        this.image = image;
-    }
-
-    public MultipartFile returnImage() throws Exception {
-        if (image.isEmpty()) {
-            return new MockMultipartFile("default-picture.png", new FileInputStream(new File("src/main/resources/static/images/default-picture.png")));
-        }
-        return image;
-    }
-    public UserRegistrationDto(){}
 
     public UserRegistrationDto(@NotEmpty(message = "Plese provice your First Name") String firstName, @NotEmpty(message = "Please provide your Last Name") String lastName, @NotEmpty(message = "Please provide a Nickname") @Size(min = 4, max = 32, message = "Nickname size must be between 4 and 32") String nickName, @NotEmpty(message = "Please provided the name of the city you live in") String location, @Email(message = "Please provide a valid email address") @NotEmpty(message = "Please provide an email address") String email, @Email(message = "Please confirm you email") String confirmEmail) {
         this.firstName = firstName;
@@ -75,6 +71,26 @@ public class UserRegistrationDto {
         this.confirmEmail = confirmEmail;
     }
 
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    /**
+     * Returns a {@link MultipartFile} object that represents the user profile photo.
+     *
+     * @return if a photo file was provided it returns that file, otherwise it returns a default photo.
+     * @throws IOException if an error occurs while retrieving the default image file.
+     */
+    public MultipartFile returnImage() throws IOException {
+        if (image.isEmpty()) {
+            return new MockMultipartFile("default-picture.png", new FileInputStream(new File("src/main/resources/static/images/default-picture.png")));
+        }
+        return image;
+    }
 
     public String getFirstName() {
         return firstName;

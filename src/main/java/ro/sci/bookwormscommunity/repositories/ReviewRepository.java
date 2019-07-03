@@ -8,6 +8,17 @@ import ro.sci.bookwormscommunity.model.Review;
 
 import java.util.List;
 
+/**
+ * Repository of the {@link Review} class.
+ * <p>
+ * Handles the DB connection and all the operations regarding the DB (create, update, delete, etc.).
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ * @see JpaRepository
+ */
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Transactional
@@ -16,5 +27,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "WHERE " +
             "r.book.id = :bookId " +
             "ORDER BY r.created")
-    List<Review> getBookReviews(@Param("bookId")long bookId);
+    List<Review> getBookReviews(@Param("bookId") long bookId);
 }

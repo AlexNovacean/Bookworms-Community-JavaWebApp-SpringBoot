@@ -10,6 +10,14 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * Custom validation annotation, used to check if two fields of type {@link String} are equal, using the {@link FieldMatchValidator}.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @Target({
         TYPE,
         ANNOTATION_TYPE

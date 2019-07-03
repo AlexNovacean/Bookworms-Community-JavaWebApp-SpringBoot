@@ -8,6 +8,17 @@ import ro.sci.bookwormscommunity.model.Conversation;
 
 import java.util.List;
 
+/**
+ * Repository of the {@link Conversation} class.
+ * <p>
+ * Handles the DB connection and all the operations regarding the DB (create, update, delete, etc.).
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ * @see JpaRepository
+ */
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
 
     @Transactional
@@ -19,7 +30,7 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
             "c.toUser.id IN (:userIdOne, :userIdTwo) " +
             "AND " +
             "c.conversationTopic = :bookName")
-    Conversation getConversation(@Param("userIdOne") long userIdOne, @Param("userIdTwo") long userIdTwo, @Param("bookName")String bookName);
+    Conversation getConversation(@Param("userIdOne") long userIdOne, @Param("userIdTwo") long userIdTwo, @Param("bookName") String bookName);
 
     @Transactional
     @Query("SELECT c " +

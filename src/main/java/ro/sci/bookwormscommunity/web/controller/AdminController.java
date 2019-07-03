@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.BookService;
@@ -18,6 +19,14 @@ import ro.sci.bookwormscommunity.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Controller that handles the mapping for the Administrator(ADMIN) actions.
+ *
+ * @author Alex
+ * @author Ionut
+ * @author Radu
+ * @author Sorin
+ */
 @Controller
 public class AdminController {
 
@@ -29,6 +38,13 @@ public class AdminController {
     @Autowired
     private BookService bookService;
 
+    /**
+     * Handles the {@link RequestMethod#GET} used to promote an user to moderator.
+     *
+     * @param id    identifier for the user that will be promoted.
+     * @param model {@link Model} used to add attributes that requires to be returned to the View.
+     * @return the user.html view.
+     */
     @GetMapping("/user/{id}/promote")
     public String promote(@PathVariable("id") long id, Model model) {
         User user = userService.findById(id);
@@ -37,8 +53,13 @@ public class AdminController {
         return "redirect:/user/" + id + "?promoted";
     }
 
+    /**
+     * Handles the {@link RequestMethod#GET} method used to download a list of all the existing users as a CSV file.
+     *
+     * @param response {@link HttpServletResponse} instance used to send the CSV file to the client
+     */
     @GetMapping("/export-users")
-    public void exportCSVUsers(HttpServletResponse response) throws Exception {
+    public void exportCSVUsers(HttpServletResponse response) {
 
         String fileName = "users.csv";
 
@@ -46,30 +67,42 @@ public class AdminController {
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + fileName + "\"");
 
-        StatefulBeanToCsv<User> writer = new StatefulBeanToCsvBuilder<User>(response.getWriter())
-                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
-                .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
-                .withOrderedResults(false)
-                .build();
+        try {
+            StatefulBeanToCsv<User> writer = new StatefulBeanToCsvBuilder<User>(response.getWriter())
+                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                    .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
+                    .withOrderedResults(false)
+                    .build();
 
-        writer.write(userService.getAllUsers());
+            writer.write(userService.getAllUsers());
+        } catch (Exception e) {
+            logger.error("An error occurred while creating the CSV file: ", e);
+        }
     }
 
+    /**
+     * Handles the {@link RequestMethod#GET} method used to download a list of all the existing books as a CSV file.
+     *
+     * @param response {@link HttpServletResponse} instance used to send the CSV file to the client
+     */
     @GetMapping("/export-books")
-    public void exportCSVBooks(HttpServletResponse response) throws Exception {
+    public void exportCSVBooks(HttpServletResponse response) {
 
         String fileName = "books.csv";
 
         response.setContentType("text/csv");
         response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + fileName + "\"");
+        try {
+            StatefulBeanToCsv<Book> writer = new StatefulBeanToCsvBuilder<Book>(response.getWriter())
+                    .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                    .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
+                    .withOrderedResults(false)
+                    .build();
 
-        StatefulBeanToCsv<Book> writer = new StatefulBeanToCsvBuilder<Book>(response.getWriter())
-                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
-                .withSeparator(CSVWriter.DEFAULT_SEPARATOR)
-                .withOrderedResults(false)
-                .build();
-
-        writer.write(bookService.getAllBooks());
+            writer.write(bookService.getAllBooks());
+        } catch (Exception e) {
+            logger.error("An error occurred while creating the CSV file: ", e);
+        }
     }
 }
