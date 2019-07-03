@@ -143,7 +143,7 @@ public class UserController {
         if (!principal.getName().equals(userDto.getEmail()) || !userDto.getPassword().isEmpty()) {
             return "redirect:/logout";
         }
-        return "redirect:/user";
+        return "redirect:/user?updated";
     }
 
     /**

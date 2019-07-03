@@ -1,11 +1,12 @@
 <!doctypeHTML>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add Book to the Community</title> <!-- Page title -->
-    <link href="static/css/style.css" media="all" rel="stylesheet" th:href="@{../css/style.css}" type="text/css">
-    <link href="static/css/rating.css" media="all" rel="stylesheet" th:href="@{../css/rating.css}" type="text/css">
+    <link href="/static/css/style.css" media="all" rel="stylesheet" th:href="@{../css/style.css}" type="text/css">
+    <link href="/static/css/rating.css" media="all" rel="stylesheet" th:href="@{../css/rating.css}" type="text/css">
     <meta content-type="width=device-width initial-scale=1" name="viewport">
     <meta charset="utf-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +29,7 @@
 </head>
 <body>
 <div class="card img-fluid" style="width:1600px">
-    <img class="card-img-top" src="static/images/header.jpg" style="max-width:100%"
+    <img class="card-img-top" src="/static/images/header.jpg" style="max-width:100%"
          th:src="@{../images/header.jpg}">
     <div class="card-img-overlay">
         <div class="Header">
@@ -249,7 +250,7 @@
                 <h5><label for="bookDescription">Book description</label></h5>
                 <textarea class="form-control z-depth-1" id="bookDescription"
                           placeholder="Write a description (up to 3000 characters) ..."
-                          rows="3" th:field="*{description}"/></textarea>
+                          rows="3" th:field="*{description}"></textarea>
             </div>
             <p class="contentR" th:errors="*{description}" th:if="${#fields.hasErrors('description')}">Description
                 Error</p>
@@ -289,7 +290,7 @@
 <!--Footer -->
 <footer id="footer">
     <div class="card img-fluid" style="width:1600px">
-        <img class="card-img-top" src="static/images/footer.jpg" style="width:100%"
+        <img class="card-img-top" src="/static/images/footer.jpg" style="width:100%"
              th:src="@{~/images/footer.jpg}">
         <div class="card-img-overlay">
             <div class="text-right" style="margin-bottom:0">

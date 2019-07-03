@@ -1,11 +1,12 @@
 <!doctypeHTML>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Bookworms Comunity</title><!-- Page title -->
-    <link href="static/css/style.css" media="all" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
-    <link href="static/css/rating.css" media="all" rel="stylesheet" th:href="@{~/css/rating.css}" type="text/css">
+    <link href="/static/css/style.css" media="all" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
+    <link href="/static/css/rating.css" media="all" rel="stylesheet" th:href="@{~/css/rating.css}" type="text/css">
     <meta content-type="width=device-width initial-scale=1" name="viewport">
     <meta charset="utf-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +18,7 @@
 </head>
 <body>
 <div class="card img-fluid" style="width:1600px">
-    <img class="card-img-top" src="static/images/header.jpg" style="max-width:100%" th:src="@{~/images/header.jpg}">
+    <img class="card-img-top" src="/static/images/header.jpg" style="max-width:100%" th:src="@{~/images/header.jpg}">
     <div class="card-img-overlay">
         <div class="Header">
             <h1>Bookworms Community</h1><!-- Heather title -->
@@ -80,7 +81,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <h3>Top 10 Rated Books</h3>
-                <table class="table">
+                <table style="text-align: center" class="table">
                     <thead>
                     <tr>
                         <th>Cover</th>
@@ -115,14 +116,13 @@
             </div>
             <div class="col-sm-6">
                 <h3>Latest 10 Books Added</h3>
-                <table class="table">
-                    <tr>
+                <table style="text-align: center" class="table">
                         <thead>
                         <tr>
                             <th>Cover</th>
                             <th>Book</th>
                             <th>Author</th>
-                            <th>Date</th>
+                            <th>Added On</th>
                         </tr>
                         </thead>
                         <tbody th:each="book : ${latestBooks}">
@@ -135,7 +135,7 @@
                             <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
                                     th:text="${book.bookName}"></b></a></td>
                             <td th:text="${book.authorName}"></td>
-                            <td th:text="${book.addDate}"></td>
+                            <td th:text="${#dates.format(book.addDate, 'dd MMM yyy')} + ' at ' + ${#dates.format(book.addDate, 'HH:mm')}"></td>
                         </tr>
                         </tbody>
                 </table>
@@ -146,7 +146,7 @@
 <!--Footer -->
 <footer id="footer">
     <div class="card img-fluid" style="width:1600px">
-        <img class="card-img-top" src="static/images/footer.jpg" style="width:100%"
+        <img class="card-img-top" src="/static/images/footer.jpg" style="width:100%"
              th:src="@{~/images/footer.jpg}">
         <div class="card-img-overlay">
             <div class="text-right" style="margin-bottom:0">

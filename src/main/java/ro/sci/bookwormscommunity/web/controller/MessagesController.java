@@ -68,6 +68,7 @@ public class MessagesController {
         List<Message> texts = messageService.getUserMessages(conversation.getId());
         model.addAttribute("texts", texts);
         model.addAttribute("conv", conversationService.findById(conversation.getId()));
+        model.addAttribute("principal",principal);
         return "texts";
     }
 
@@ -109,7 +110,8 @@ public class MessagesController {
             forViewId = texts.get(0).getFromUser().getId();
         }
         model.addAttribute("texts", texts);
-        return "redirect:/messages/" + forViewId + "?bookName=" + conversation.getConversationTopic();
+        model.addAttribute("principal",principal);
+        return "redirect:/messages/" + forViewId + "?bookName=" + conversation.getConversationTopic() + "#lastmsg";
 
     }
 

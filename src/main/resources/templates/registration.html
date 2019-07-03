@@ -1,9 +1,10 @@
 <!doctypeHTML>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Register in our Community</title> <!-- Page title -->
-    <link href="static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
+    <link href="/static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
     <meta content-type="width=device-width initial-scale=1" name="viewport">
     <meta charset="utf-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -14,143 +15,160 @@
 </head>
 <body>
 <section class="login-block">
-<div class="container register">
-    <div class="row">
-        <div class="col-md-5">
-            <div class="book" style="width:450px">
-                <img alt="Book image" class="bookImage" src="static/images/Bookworms.jpg" th:src="@{~/images/Bookworms.jpg}">
+    <div class="container register">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="book" style="width:450px">
+                    <img alt="Book image" class="bookImage" src="/static/images/Bookworms.jpg"
+                         th:src="@{~/images/Bookworms.jpg}">
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <br>
-            <form enctype="multipart/form-data" method="post" th:action="@{/registration}" th:object="${user}">
-                <table style="max-width: 800px; margin: auto">
-                    <tr>
-                        <td class="alert alert-danger text-center" th:each="error : ${#fields.errors('global')}"
-                            th:if="${#fields.hasGlobalErrors()}" th:text="${error}">Validation Error!</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}">First Name Error!</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">First Name</span>
+            <div class="col-md-6">
+                <br>
+                <form enctype="multipart/form-data" method="post" th:action="@{/registration}" th:object="${user}">
+                    <table style="max-width: 800px; margin: auto">
+                        <th:block th:each="error : ${#fields.errors('global')}" th:if="${#fields.hasGlobalErrors()}">
+                            <tr>
+                                <td class="alert alert-danger text-center" th:text="${error}">Validation Error!</td>
+                            </tr>
+                        </th:block>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}">
+                                    First Name Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">First Name</span>
+                                    </div>
+                                    <input class="form-control" placeholder="First Name" th:field="*{firstName}"
+                                           type="text"/>
                                 </div>
-                                <input class="form-control" placeholder="First Name" th:field="*{firstName}"
-                                       type="text"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}">Last Name Error!</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Last Name</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}">
+                                    Last Name Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Last Name</span>
+                                    </div>
+                                    <input class="form-control" placeholder="Last Name" th:field="*{lastName}"
+                                           type="text"/>
                                 </div>
-                                <input class="form-control" placeholder="Last Name" th:field="*{lastName}" type="text"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{nickName}" th:if="${#fields.hasErrors('nickName')}">Nick Name Error!</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Nick Name</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{nickName}" th:if="${#fields.hasErrors('nickName')}">
+                                    Nick Name Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nick Name</span>
+                                    </div>
+                                    <input class="form-control" placeholder="Nick Name" th:field="*{nickName}"
+                                           type="text"/>
                                 </div>
-                                <input class="form-control" placeholder="Nick Name" th:field="*{nickName}" type="text"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{location}" th:if="${#fields.hasErrors('location')}">Location Error!</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Location</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{location}" th:if="${#fields.hasErrors('location')}">
+                                    Location Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Location</span>
+                                    </div>
+                                    <input class="form-control" placeholder="City" th:field="*{location}" type="text"/>
                                 </div>
-                                <input class="form-control" placeholder="City" th:field="*{location}" type="text"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">E-mail Error!</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">E-mail</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">E-mail
+                                    Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">E-mail</span>
+                                    </div>
+                                    <input class="form-control" placeholder="E-mail address" th:field="*{email}"
+                                           type="text"/>
                                 </div>
-                                <input class="form-control" placeholder="E-mail address" th:field="*{email}"
-                                       type="text"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{confirmEmail}" th:if="${#fields.hasErrors('confirmEmail')}">Confirm E-mail Error!</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Confirm e-mail</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{confirmEmail}"
+                                   th:if="${#fields.hasErrors('confirmEmail')}">Confirm E-mail Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Confirm e-mail</span>
+                                    </div>
+                                    <input class="form-control" placeholder="E-mail address" th:field="*{confirmEmail}"
+                                           type="text"/>
                                 </div>
-                                <input class="form-control" placeholder="E-mail address" th:field="*{confirmEmail}"
-                                       type="text"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">Password Mismatch!</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Password</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">
+                                    Password Mismatch!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Password</span>
+                                    </div>
+                                    <input class="form-control" placeholder="Password" th:field="*{password}"
+                                           type="password"/>
                                 </div>
-                                <input class="form-control" placeholder="Password" th:field="*{password}"
-                                       type="password"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{confirmPassword}" th:if="${#fields.hasErrors('confirmPassword')}">Password Mismatch!</p>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Confirm password</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{confirmPassword}"
+                                   th:if="${#fields.hasErrors('confirmPassword')}">Password Mismatch!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Confirm password</span>
+                                    </div>
+                                    <input class="form-control" placeholder="Confirm Password"
+                                           th:field="*{confirmPassword}"
+                                           type="password"/>
                                 </div>
-                                <input class="form-control" placeholder="Confirm Password" th:field="*{confirmPassword}"
-                                       type="password"/>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p class="contentR" th:errors="*{image}" th:if="${#fields.hasErrors('image')}">Image Error</p>
-                            <div class="input-group mb-3">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{image}" th:if="${#fields.hasErrors('image')}">Image
+                                    Error</p>
+                                <div class="input-group mb-3">
                                     <div class="custom-file">
-                                        <input type="file" th:field="*{image}" class="custom-file-input" id="customFile">
+                                        <input class="custom-file-input" id="customFile" th:field="*{image}"
+                                               type="file">
                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
-                                <script>
-                                    //The name of the file appear on select
-                                    $(".custom-file-input").on("change", function() {
-                                      var fileName = $(this).val().split("\\").pop();
-                                      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-                                    });
-                                 </script>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a th:href="@{/login}" style="float:left" button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Already registered?">Login here</a>
-                            <button class="btn btn-success" style="float:right" type="submit">Register</button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+                                    <script>
+                                        //The name of the file appear on select
+                                        $(".custom-file-input").on("change", function () {
+                                            var fileName = $(this).val().split("\\").pop();
+                                            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                                        });
+                                    </script>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a button class="btn btn-info" data-placement="bottom" data-toggle="tooltip"
+                                   style="float:left" th:href="@{/login}" title="Already registered?">Login
+                                    here</a>
+                                <button class="btn btn-success" style="float:right" type="submit">Register</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </section>
 <!--Footer -->
 <div id="footer">

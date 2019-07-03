@@ -1,9 +1,10 @@
 <!doctypeHTML>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Update your profile</title> <!-- Page title -->
-    <link href="static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
+    <link href="/static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
     <meta content-type="width=device-width initial-scale=1" name="viewport">
     <meta charset="utf-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -153,7 +154,8 @@
                         </tr>
                         <tr>
                             <td>
-                                <button class="btn btn-primary" style="float:right" type="submit">Edit Profile</button>
+                                <button class="btn btn-primary" style="float:right" type="submit">Update Profile
+                                </button>
                                 <a button class="btn btn-info" data-placement="bottom" data-toggle="tooltip"
                                    style="float:left" th:href="@{/user}"
                                    title="No changes? Here is your way back!">Your Profile</a>

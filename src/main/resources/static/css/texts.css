@@ -1,8 +1,53 @@
-.fromUser{
-color:blue;
-
+.cutia {
+    border: 2px solid;
+    border-radius: 25px;
+    padding: 10px;
+    font-family: Helvetica, Times, Verdana, sans-serif;
 }
-.toUser{
+.normal{
+    border-color: #2b7f99;
+    background-image: linear-gradient(rgba(44, 156, 182, 0.6), #f6f6f6);
+    margin: 10px 400px 10px 0;
+}
 
-color:green;
+.darker {
+    text-align:right;
+    border-color: #56ad4e;
+    background-image: linear-gradient(rgba(102, 205, 84, 0.6), #f6f6f6);
+    margin: 10px 0 10px 400px;
+}
+
+.cutia::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.poza {
+    max-width: 60px;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.pozaA{
+    float: left;
+    margin-right: 20px;
+}
+
+.pozaB {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+
+.time{
+    color: #616161;
+}
+
+.timeR{
+    float: right;
+}
+
+.timeL {
+    float: left;
 }

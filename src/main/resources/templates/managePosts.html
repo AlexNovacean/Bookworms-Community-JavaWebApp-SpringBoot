@@ -1,10 +1,11 @@
 <!doctypeHTML>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Comments editting</title> <!-- Page title -->
-    <link href="static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
-    <link href="static/css/rating.css" media="all" rel="stylesheet" th:href="@{~/css/rating.css}" type="text/css">
+    <link href="/static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
+    <link href="/static/css/rating.css" media="all" rel="stylesheet" th:href="@{~/css/rating.css}" type="text/css">
     <meta content-type="width=device-width initial-scale=1" name="viewport">
     <meta charset="utf-8">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -20,24 +21,24 @@
             <br>
             <form method="post" th:action="@{/managePosts/{id}(id=${review.id})}" th:object="${review}">
                 <div class="manage-post">
-                    <b>
-                        <p th:text="'Posted by ' + ${review.userNickname} + ' on ' + ${#dates.format(review.created,'dd-MMM HH:mm')}"></p>
-                    </b>
+                    <p>
+                        <b th:text="'Posted by ' + ${review.userNickname} + ' on ' + ${#dates.format(review.created,'dd-MMM HH:mm')}"></b>
+                    </p>
                     <div class="Rating">
-                        <tblock th:switch="${review.rating}">
+                        <th:block th:switch="${review.rating}">
                             <td th:case="5">Rating: <span class="stars-container stars-100">★★★★★</span></td>
                             <td th:case="4">Rating: <span class="stars-container stars-80">★★★★★</span></td>
                             <td th:case="3">Rating: <span class="stars-container stars-60">★★★★★</span></td>
                             <td th:case="2">Rating: <span class="stars-container stars-40">★★★★★</span></td>
                             <td th:case="1">Rating: <span class="stars-container stars-20">★★★★★</span></td>
                             <td th:case="0">Rating: <span class="stars-container stars-0">★★★★★</span></td>
-                        </tblock>
+                        </th:block>
                     </div>
                     <br>
                     <div class="form-group shadow-textarea">
                         <h5><label for="bookDescription">Comment</label></h5>
                         <textarea class="form-control z-depth-1" id="bookDescription" rows="3"
-                                  th:field="*{comment}"/></textarea>
+                                  th:field="*{comment}"></textarea>
                     </div>
                     <p>
                         <button class="btn btn-success" type="submit">Save Changes</button>

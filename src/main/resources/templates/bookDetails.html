@@ -1,5 +1,6 @@
 <!doctypeHTML>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -17,7 +18,7 @@
 </head>
 <body>
 <div class="card img-fluid" style="width:1600px">
-    <img class="card-img-top" src="static/images/header.jpg" style="max-width:100%" th:src="@{~/images/header.jpg}">
+    <img class="card-img-top" src="/static/images/header.jpg" style="max-width:100%" th:src="@{~/images/header.jpg}">
     <div class="card-img-overlay">
         <div class="Header">
             <h1>Bookworms Community</h1><!-- Heather title -->
@@ -104,21 +105,22 @@
                 <div class="book-body">
                     <h6 class="book details">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Book's Name: <span><b th:text="${book.bookName}"/></span></li>
-                            <li class="list-group-item">Book's Author: <span><b th:text="${book.authorName}"/></span>
+                            <li class="list-group-item">Book's Name: <span><b th:text="${book.bookName}"></b></span>
                             </li>
-                            <li class="list-group-item">Book Type: <span><b th:text="${book.type}"/></span></li>
-                            <li class="list-group-item">Language: <span><b th:text="${book.language}"/></span></li>
+                            <li class="list-group-item">Book's Author: <span><b th:text="${book.authorName}"></b>/span>
+                            </li>
+                            <li class="list-group-item">Book Type: <span><b th:text="${book.type}"></b>/span></li>
+                            <li class="list-group-item">Language: <span><b th:text="${book.language}"></b>/span></li>
                             <li class="list-group-item">Number of pages: <span><b
-                                    th:text="${book.numberOfPages}"/></span>
+                                    th:text="${book.numberOfPages}"></b></span>
                             </li>
-                            <li class="list-group-item">Condition: <span><b th:text="${book.condition}"/></span></li>
+                            <li class="list-group-item">Condition: <span><b th:text="${book.condition}"></b></span></li>
                             <li class="list-group-item" th:if="${book.bookRent}">Rent for <b
-                                    th:text="${book.rentPrice}+' ' +'RON'"/></li>
+                                    th:text="${book.rentPrice}+' ' +'RON'"></b></li>
                             <li class="list-group-item" th:if="${book.bookSale}">Buy for <b
-                                    th:text="${book.sellPrice} +' ' +'RON'"/></li>
+                                    th:text="${book.sellPrice} +' ' +'RON'"></b></li>
                             <li class="list-group-item">Description: <p
-                                    data-th-utext="${#strings.replace(#strings.escapeXml(book.description),'&#10;','&lt;br&gt;')}"/>
+                                    data-th-utext="${#strings.replace(#strings.escapeXml(book.description),'&#10;','&lt;br&gt;')}"></p>
                             </li>
                         </ul>
                     </h6>
@@ -221,7 +223,10 @@
                             </div>
                             </p>
                             <div class="clearfix"></div>
-                            <p th:text="${review.comment}"></p>
+                            <p data-th-utext="${#strings.replace(#strings.escapeXml(review.comment),'&#10;','&lt;br&gt;')}"></p>
+                            <div>
+                                <i style="color: rgba(209,64,6,0.7); font-size: small; font-family: Helvetica, Arial, sans-serif"
+                                   th:if="${review.edited}" th:text="'Edited by ' + ${review.editedBy} + '.'"></i></div>
                             <p>
                                 <button class="float-right btn btn-outline-primary ml-2"
                                         sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
