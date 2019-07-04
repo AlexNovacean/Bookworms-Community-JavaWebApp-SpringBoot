@@ -134,4 +134,16 @@ public class Review {
     public void setBook(Book book) {
         this.book = book;
     }
+
+    public Review(long id) {
+        this();
+        this.id = id;
+    }
+
+    public Review(long id,String comment,boolean edited, String editedBy){
+        this(id);
+        this.comment = comment;
+        this.edited = edited;
+        this.editedBy = editedBy;
+    }
 }
