@@ -8,7 +8,6 @@ import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.MessageRepository;
 import ro.sci.bookwormscommunity.web.dto.MessageDto;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -25,9 +24,6 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     ConversationService conversationService;
-
-    @Autowired
-    UserService userService;
 
     @Autowired
     private MessageRepository messageRepository;
@@ -48,15 +44,14 @@ public class MessageServiceImpl implements MessageService {
      *
      * @param conversationId conversation identifier
      * @param messageDto     Data Transfer Object containing the message content.
-     * @param principal      {@link Principal} object which stores the currently logged in user.
+     * @param fromUser       the user send the message.
      * @return a list of all the {@link Message} objects which correspond with provided conversation Id.
      */
     @Override
-    public List<Message> saveAndRetrieve(long conversationId, MessageDto messageDto, Principal principal) {
+    public List<Message> saveAndRetrieve(long conversationId, MessageDto messageDto, User fromUser) {
         Conversation conversation = conversationService.findById(conversationId);
 
         User toUser;
-        User fromUser = userService.findByEmail(principal.getName());
         if (conversation.getFromUser().getEmail().equals(fromUser.getEmail())) {
             toUser = conversation.getToUser();
         } else {

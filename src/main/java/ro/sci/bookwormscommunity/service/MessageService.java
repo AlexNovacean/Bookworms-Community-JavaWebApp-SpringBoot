@@ -1,9 +1,9 @@
 package ro.sci.bookwormscommunity.service;
 
 import ro.sci.bookwormscommunity.model.Message;
+import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.web.dto.MessageDto;
 
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -17,5 +17,5 @@ import java.util.List;
 public interface MessageService {
     List<Message> getUserMessages(long conversationId);
 
-    List<Message> saveAndRetrieve(long conversationId, MessageDto messageDto, Principal principal);
+    List<Message> saveAndRetrieve(long conversationId, MessageDto messageDto, User fromUser);
 }

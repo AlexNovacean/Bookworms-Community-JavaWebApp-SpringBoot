@@ -100,9 +100,9 @@ public class MessagesController {
      */
     @PostMapping("/messages/{id}")
     public String sendMessage(@PathVariable("id") long id, Model model, @ModelAttribute("msg") MessageDto messageDto, Principal principal) {
-        List<Message> texts = messageService.saveAndRetrieve(id, messageDto, principal);
-        Conversation conversation = conversationService.findById(id);
         User user = userService.findByEmail(principal.getName());
+        List<Message> texts = messageService.saveAndRetrieve(id, messageDto, user);
+        Conversation conversation = conversationService.findById(id);
         long forViewId;
         if (!texts.get(0).getToUser().getId().equals(user.getId())) {
             forViewId = texts.get(0).getToUser().getId();
