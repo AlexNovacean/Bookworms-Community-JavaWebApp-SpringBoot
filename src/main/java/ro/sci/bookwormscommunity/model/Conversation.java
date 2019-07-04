@@ -34,6 +34,11 @@ public class Conversation {
     public Conversation() {
     }
 
+    public Conversation(long id) {
+        this();
+        this.id = id;
+    }
+
     public Conversation(User toUser, User fromUser, String conversationTopic) {
         this.toUser = toUser;
         this.fromUser = fromUser;
