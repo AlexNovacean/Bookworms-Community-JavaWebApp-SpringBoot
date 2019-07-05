@@ -259,7 +259,7 @@
             <br>
             <div class="row row-no-gutters">
                 <div class="col-md-3">
-                    <button class="btn btn-success" type="submit"><b>Edit Book</b></button>
+                    <button class="btn btn-success" type="submit"><b>Update Book</b></button>
                 </div>
                 <div class="col-md-6">
                     <div class="custom-file mb-3">
@@ -267,16 +267,13 @@
                                type="file">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
-                    <p class="contentR" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Image Error! Image
-                        might be to big!</p>
+                    <p class="contentR" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Image Error!</p>
                     <script>
                         // Following code is for the name of the file appear on select
                         $(".custom-file-input").on("change", function () {
                             var fileName = $(this).val().split("\\").pop();
                             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
                         });
-
-
                     </script>
                 </div>
             </div>

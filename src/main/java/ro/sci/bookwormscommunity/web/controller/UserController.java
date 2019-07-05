@@ -3,7 +3,6 @@ package ro.sci.bookwormscommunity.web.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import ro.sci.bookwormscommunity.mapper.UserMapper;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.User;
-import ro.sci.bookwormscommunity.service.BanMailService;
 import ro.sci.bookwormscommunity.service.BookService;
 import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.UserDto;
@@ -42,9 +40,6 @@ public class UserController {
 
     @Autowired
     private BookService bookService;
-
-    @Autowired
-    private BanMailService mailService;
 
     /**
      * Initializes the user {@link ModelAttribute} with a new instance of the {@link UserDto}.
@@ -144,27 +139,6 @@ public class UserController {
             return "redirect:/logout";
         }
         return "redirect:/user?updated";
-    }
-
-    /**
-     * Handles the {@link RequestMethod#GET} method used to disabled a specific user's account.
-     *
-     * @param id identifier for the user who's account will be disbled.
-     * @return the name of the view where the banned's user information is displayed.
-     */
-    @GetMapping("/user/ban/{id}")
-    public String banUser(@PathVariable("id") long id) {
-        User user = userService.findById(id);
-
-        userService.banUser(id);
-
-        try {
-            mailService.sendAccountDisabledMail(user);
-        } catch (MailException e) {
-            logger.error("Error Sending the Ban Mail: {e}", e);
-        }
-
-        return "redirect:/user/" + id + "?banned";
     }
 }
 

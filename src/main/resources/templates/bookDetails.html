@@ -107,16 +107,16 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Book's Name: <span><b th:text="${book.bookName}"></b></span>
                             </li>
-                            <li class="list-group-item">Book's Author: <span><b th:text="${book.authorName}"></b>/span>
+                            <li class="list-group-item">Book's Author: <span><b th:text="${book.authorName}"></b></span>
                             </li>
-                            <li class="list-group-item">Book Type: <span><b th:text="${book.type}"></b>/span></li>
-                            <li class="list-group-item">Language: <span><b th:text="${book.language}"></b>/span></li>
+                            <li class="list-group-item">Book Type: <span><b th:text="${book.type}"></b></span></li>
+                            <li class="list-group-item">Language: <span><b th:text="${book.language}"></b></span></li>
                             <li class="list-group-item">Number of pages: <span><b
                                     th:text="${book.numberOfPages}"></b></span>
                             </li>
                             <li class="list-group-item">Condition: <span><b th:text="${book.condition}"></b></span></li>
                             <li class="list-group-item" th:if="${book.bookRent}">Rent for <b
-                                    th:text="${book.rentPrice}+' ' +'RON'"></b></li>
+                                    th:text="${book.rentPrice}+' ' +'RON/day'"></b></li>
                             <li class="list-group-item" th:if="${book.bookSale}">Buy for <b
                                     th:text="${book.sellPrice} +' ' +'RON'"></b></li>
                             <li class="list-group-item">Description: <p
