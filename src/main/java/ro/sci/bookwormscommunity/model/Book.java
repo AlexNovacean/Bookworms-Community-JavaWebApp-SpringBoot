@@ -3,6 +3,10 @@ package ro.sci.bookwormscommunity.model;
 import com.opencsv.bean.CsvBindByName;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -22,58 +26,77 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @CsvBindByName(column = "Book Id")
     private Long id;
-
     @CsvBindByName(column = "Book Name")
     private String bookName;
-
     @CsvBindByName(column = "Book Author")
     private String authorName;
-
     @CsvBindByName(column = "Number of Pages")
     private int numberOfPages;
-
     @CsvBindByName(column = "Book Type")
     private String type;
-
     @CsvBindByName(column = "Book Language")
     private String language;
-
     @Column(length = 3000)
     private String description;
-
     @CsvBindByName(column = "Book Condition")
     private String condition;
-
     @CsvBindByName(column = "Book Rent")
     private boolean bookRent;
-
     @CsvBindByName(column = "Book Sale")
     private boolean bookSale;
-
     @CsvBindByName(column = "Sell Price")
     @Column(columnDefinition = "int default 0")
     private int sellPrice;
-
     @CsvBindByName(column = "Rent Price")
     @Column(columnDefinition = "int default 0")
     private int rentPrice;
-
     @Lob
     private byte[] image;
-
     @ManyToOne
     private User user;
-
     @Column(columnDefinition = "int default 0")
     private int rating;
-
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
-
     private Date addDate;
 
     public Book() {
         this.addDate = new Date();
+    }
+
+    public Book(long id) throws IOException {
+        this();
+        Path path = Paths.get("src/main/resources/static/images/book.png");
+        this.id = id;
+        this.image = Files.readAllBytes(path);
+    }
+
+    public Book(String bookName, String authorName, String type, boolean bookRent, boolean bookSale, int rating) {
+        this();
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.type = type;
+        this.bookRent = bookRent;
+        this.bookSale = bookSale;
+        this.rating = rating;
+    }
+
+    public Book(long id, String bookName, String authorName, int numberOfPages, String type, String language, String description, String condition, boolean bookRent, boolean bookSale, int sellPrice, int rentPrice, User user) throws IOException {
+        Path path = Paths.get("src/main/resources/static/images/book.png");
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.numberOfPages = numberOfPages;
+        this.type = type;
+        this.language = language;
+        this.description = description;
+        this.condition = condition;
+        this.bookRent = bookRent;
+        this.bookSale = bookSale;
+        this.sellPrice = sellPrice;
+        this.rentPrice = rentPrice;
+        this.image = Files.readAllBytes(path);
+        this.user = user;
+        this.id = id;
     }
 
     public Date getAddDate() {

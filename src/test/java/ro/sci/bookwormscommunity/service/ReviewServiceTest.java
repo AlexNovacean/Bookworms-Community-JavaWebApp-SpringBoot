@@ -59,7 +59,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void getBookReviews() {
+    public void getBookReviews() throws Exception {
         when(reviewRepository.getBookReviews(anyLong())).thenReturn(new ArrayList<>(Arrays.asList(new Review(1), new Review(2), new Review(3))));
 
         List<Review> reviews = reviewService.getBookReviews(1);
@@ -70,7 +70,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void getReviewById() {
+    public void getReviewById() throws Exception {
 
         Optional<Review> review = Optional.of(new Review(1));
         when(reviewRepository.findById(1L)).thenReturn(review);
@@ -108,7 +108,7 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void deleteReviewById() {
+    public void deleteReviewById() throws Exception {
         List<Review> reviews = new ArrayList<>(Arrays.asList(new Review(1), new Review(2), new Review(3)));
 
         doAnswer((InvocationOnMock invocation) -> {

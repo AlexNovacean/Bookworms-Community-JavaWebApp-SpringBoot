@@ -3,6 +3,10 @@ package ro.sci.bookwormscommunity.model;
 import com.opencsv.bean.CsvBindByName;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
@@ -62,6 +66,14 @@ public class User {
     private List<Book> books;
 
     public User() {
+    }
+
+    public User(long id, String email) throws IOException {
+        this();
+        Path path = Paths.get("src/main/resources/static/images/default-picture.png");
+        this.id = id;
+        this.email = email;
+        this.photo = Files.readAllBytes(path);
     }
 
     public User(String firstName, String lastName, String email, String nickname, String location) {

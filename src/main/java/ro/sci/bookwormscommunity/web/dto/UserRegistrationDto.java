@@ -62,13 +62,12 @@ public class UserRegistrationDto {
     public UserRegistrationDto() {
     }
 
-    public UserRegistrationDto(@NotEmpty(message = "Plese provice your First Name") String firstName, @NotEmpty(message = "Please provide your Last Name") String lastName, @NotEmpty(message = "Please provide a Nickname") @Size(min = 4, max = 32, message = "Nickname size must be between 4 and 32") String nickName, @NotEmpty(message = "Please provided the name of the city you live in") String location, @Email(message = "Please provide a valid email address") @NotEmpty(message = "Please provide an email address") String email, @Email(message = "Please confirm you email") String confirmEmail) {
+    public UserRegistrationDto(String firstName, String lastName, String nickName, String location, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickName = nickName;
         this.location = location;
         this.email = email;
-        this.confirmEmail = confirmEmail;
     }
 
     public MultipartFile getImage() {

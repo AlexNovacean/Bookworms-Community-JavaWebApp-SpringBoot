@@ -118,11 +118,11 @@ public class BookController {
      * @return the name of the view for adding a book in case a validation error occurs, the name of the redirect view otherwise
      */
     @PostMapping("/addBook")
-    public String addBook(@ModelAttribute("book") @Valid BookDto bookDto, BindingResult result, Principal principal, @ModelAttribute("searchWord") Word searchWord) {
+    public String addBook(@ModelAttribute("book") @Valid BookDto bookDto, BindingResult result, Principal principal, @ModelAttribute("searchWord") Word searchWord,Model model) {
         User user = userService.findByEmail(principal.getName());
         bookDto.setUser(user);
         if (result.hasErrors()) {
-
+            model.addAttribute("conditions",BookCondition.values());
             return "addBook";
         }
         try {

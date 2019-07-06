@@ -3,6 +3,10 @@ package ro.sci.bookwormscommunity.model;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Date;
 
@@ -49,6 +53,20 @@ public class Review {
 
     public Review() {
         this.created = new Date();
+    }
+
+    public Review(long id) throws IOException {
+        this();
+        Path path = Paths.get("src/main/resources/static/images/book.png");
+        this.id = id;
+        this.userPhoto = Files.readAllBytes(path);
+    }
+
+    public Review(long id, String comment, boolean edited, String editedBy) {
+        this.id = id;
+        this.comment = comment;
+        this.edited = edited;
+        this.editedBy = editedBy;
     }
 
     public long getUserId() {
@@ -133,17 +151,5 @@ public class Review {
 
     public void setBook(Book book) {
         this.book = book;
-    }
-
-    public Review(long id) {
-        this();
-        this.id = id;
-    }
-
-    public Review(long id,String comment,boolean edited, String editedBy){
-        this(id);
-        this.comment = comment;
-        this.edited = edited;
-        this.editedBy = editedBy;
     }
 }
