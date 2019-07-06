@@ -2,12 +2,18 @@ package ro.sci.bookwormscommunity.web.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.invocation.InvocationOnMock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ro.sci.bookwormscommunity.config.WebSecurityConfig;
 import ro.sci.bookwormscommunity.model.Book;
 import ro.sci.bookwormscommunity.model.BookCondition;
 import ro.sci.bookwormscommunity.model.Review;
@@ -15,7 +21,12 @@ import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.BookService;
 import ro.sci.bookwormscommunity.service.ReviewService;
 import ro.sci.bookwormscommunity.service.UserService;
+import ro.sci.bookwormscommunity.web.dto.BookDto;
 
+import java.io.ByteArrayInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,12 +35,14 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(BookController.class)
+@Import(WebSecurityConfig.class)
 public class BookControllerTest {
 
     @Autowired
@@ -45,9 +58,11 @@ public class BookControllerTest {
     private ReviewService reviewService;
 
     @Test
-    public void anyRequestWhileNotAuthenticated_shouldReturn401Unauthorized() throws Exception {
+    @WithAnonymousUser
+    public void anyRequestWhileNotAuthenticated_shouldRedirectToLogin() throws Exception {
         mockMvc.perform(get("/communityBooks"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("http://localhost/login"));
 
         verifyNoMoreInteractions(bookService);
         verifyNoMoreInteractions(reviewService);
@@ -123,7 +138,6 @@ public class BookControllerTest {
         verifyNoMoreInteractions(reviewService);
         verifyNoMoreInteractions(userService);
     }
-
 
     @Test
     @WithMockUser
@@ -264,35 +278,133 @@ public class BookControllerTest {
         verifyNoMoreInteractions(reviewService);
     }
 
-//    @Test
-//    @WithMockUser
-//    public void addBookWithInvalidAttributes_shouldReturnAddBookForm() throws Exception {
-//        BookDto bookDto = new BookDto();
-//        bookDto.setBookName("A");
-//        bookDto.setAuthorName("A");
-//        bookDto.setNumberOfPages(19);
-//        bookDto.setType("");
-//        bookDto.setLanguage("");
-//        bookDto.setDescription("");
-//        mockMvc.perform(post("/addBook")
-//                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-//                .flashAttr("book", bookDto)
-//        )
-//                .andExpect(status().isOk())
-//                .andExpect(view().name("addBook"))
-//                .andExpect(model().attributeHasFieldErrors("book", "bookName"))
-//                .andExpect(model().attributeHasFieldErrors("book", "authorName"))
-//                .andExpect(model().attributeHasFieldErrors("book", "numberOfPages"))
-//                .andExpect(model().attributeHasFieldErrors("book", "type"))
-//                .andExpect(model().attributeHasFieldErrors("book", "language"))
-//                .andExpect(model().attributeHasFieldErrors("book", "description"));
-//
-//        verifyNoMoreInteractions(bookService);
-//        verifyNoMoreInteractions(reviewService);
-//        verifyNoMoreInteractions(userService);
-//    }
+    @Test
+    @WithMockUser
+    public void addBookWithInvalidAttributes_shouldReturnAddBookForm() throws Exception {
+        User user = new User(1, "test@mail.com");
+        MockMultipartFile emptyFile = new MockMultipartFile("photo", new byte[0]);
 
-//    @Test
-//    public void updateBook() {
-//    }
+        when(userService.findByEmail(anyString())).thenReturn(user);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/addBook")
+                .file(emptyFile)
+                .param("bookName", "A")
+                .param("authorName", "A")
+                .param("numberOfPages", "19")
+                .param("type", "")
+                .param("language", "")
+                .param("description", "")
+        )
+                .andExpect(status().isOk())
+                .andExpect(view().name("addBook"))
+                .andExpect(model().attributeHasFieldErrors("book", "bookName"))
+                .andExpect(model().attributeHasFieldErrors("book", "authorName"))
+                .andExpect(model().attributeHasFieldErrors("book", "numberOfPages"))
+                .andExpect(model().attributeHasFieldErrors("book", "type"))
+                .andExpect(model().attributeHasFieldErrors("book", "language"))
+                .andExpect(model().attributeHasFieldErrors("book", "description"))
+                .andExpect(model().attribute("conditions", BookCondition.values()));
+
+        verify(userService, times(1)).findByEmail(anyString());
+        verifyNoMoreInteractions(userService);
+        verifyNoMoreInteractions(bookService);
+        verifyNoMoreInteractions(reviewService);
+    }
+
+    @Test
+    @WithMockUser
+    public void addBookWithValidAttributes_shouldSaveBook() throws Exception {
+        User user = new User(1, "test@mail.com");
+        Path path = Paths.get("src/main/resources/static/images/book.png");
+        MockMultipartFile file = new MockMultipartFile("photo", "book.png", "image/png", new ByteArrayInputStream(Files.readAllBytes(path)));
+        List<BookDto> savedBooks = new ArrayList<>();
+
+        when(userService.findByEmail(anyString())).thenReturn(user);
+        doAnswer((InvocationOnMock invocation) -> {
+            Object[] arguments = invocation.getArguments();
+
+            BookDto bookDto = (BookDto) arguments[0];
+            savedBooks.add(bookDto);
+            return null;
+        }).when(bookService).saveBook(any(BookDto.class));
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/addBook")
+                .file(file)
+                .param("bookName", "Book")
+                .param("authorName", "Author")
+                .param("numberOfPages", "20")
+                .param("type", "Type")
+                .param("language", "Language")
+                .param("description", "Description")
+        )
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("/addBook?success"))
+                .andExpect(view().name("redirect:/addBook?success"));
+
+        verify(userService, times(1)).findByEmail(anyString());
+        verifyNoMoreInteractions(userService);
+        verify(bookService, times(1)).saveBook(any(BookDto.class));
+        verifyNoMoreInteractions(bookService);
+
+        assertNotNull(savedBooks);
+        assertEquals("Book", savedBooks.get(0).getBookName());
+        assertEquals("Author", savedBooks.get(0).getAuthorName());
+        assertEquals("Type", savedBooks.get(0).getType());
+        assertEquals("20", savedBooks.get(0).getNumberOfPages().toString());
+        assertEquals("Language", savedBooks.get(0).getLanguage());
+        assertEquals("Description", savedBooks.get(0).getDescription());
+        assertFalse(savedBooks.get(0).isBookRent());
+        assertFalse(savedBooks.get(0).isBookSale());
+        assertEquals("0", savedBooks.get(0).getRentPrice().toString());
+        assertEquals("0", savedBooks.get(0).getSellPrice().toString());
+        assertEquals(file, savedBooks.get(0).getPhoto());
+    }
+
+    @Test
+    @WithMockUser
+    public void updateBook() throws Exception {
+        User user = new User(1, "test@mail.com");
+        Book book = new Book(1L);
+        MockMultipartFile emptyFile = new MockMultipartFile("photo", new byte[0]);
+
+        when(userService.findByEmail(anyString())).thenReturn(user);
+        when(bookService.getBookById(anyLong())).thenReturn(book);
+        doAnswer((InvocationOnMock invocation) -> {
+            Object[] arguments = invocation.getArguments();
+            BookDto bookDto = (BookDto) arguments[1];
+            book.setBookName(bookDto.getBookName());
+            book.setAuthorName(bookDto.getAuthorName());
+            book.setType(bookDto.getType());
+            book.setLanguage(bookDto.getLanguage());
+            book.setDescription(bookDto.getDescription());
+            book.setNumberOfPages(bookDto.getNumberOfPages());
+            return null;
+        }).when(bookService).updateBook(anyLong(),any(BookDto.class));
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/updateBook/{id}",1L)
+                .file(emptyFile)
+                .param("bookName", "Book")
+                .param("authorName", "Author")
+                .param("numberOfPages", "20")
+                .param("type", "Type")
+                .param("language", "Language")
+                .param("description", "Description")
+        )
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("/bookDetails/1"))
+                .andExpect(view().name("redirect:/bookDetails/1"));
+
+        verify(userService, times(1)).findByEmail(anyString());
+        verifyNoMoreInteractions(userService);
+        verify(bookService,times(1)).getBookById(anyLong());
+        verify(bookService,times(1)).updateBook(anyLong(),any(BookDto.class));
+        verifyNoMoreInteractions(bookService);
+
+        assertEquals("Book", book.getBookName());
+        assertEquals("Author", book.getAuthorName());
+        assertEquals("Type", book.getType());
+        assertEquals(20, book.getNumberOfPages());
+        assertEquals("Language", book.getLanguage());
+        assertEquals("Description",book.getDescription());
+    }
 }

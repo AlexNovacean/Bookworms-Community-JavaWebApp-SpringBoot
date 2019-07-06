@@ -68,6 +68,8 @@ public class User {
     public User() {
     }
 
+
+    //Constructor used to perform unit tests
     public User(long id, String email) throws IOException {
         this();
         Path path = Paths.get("src/main/resources/static/images/default-picture.png");
