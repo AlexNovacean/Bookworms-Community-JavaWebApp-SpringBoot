@@ -77,7 +77,7 @@ public class BookServiceImpl implements BookService {
     /**
      * Updates the field or fields of the {@link Book} object identified with the provided id, with the field or field from the provided {@link BookDto}
      *
-     * @param id      identifier for the book which will be updated.
+     * @param id identifier for the book which will be updated.
      * @param bookDto {@link BookDto} instance containing the new values for the book object that will be updated.
      * @throws IOException if an error occurs while mapping the BookDto image file to the Book photo byte array.
      */
