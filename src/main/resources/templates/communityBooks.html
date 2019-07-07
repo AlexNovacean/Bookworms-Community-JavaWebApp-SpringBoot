@@ -95,8 +95,7 @@
                 <tbody th:each="book : ${books}">
                 <th:block>
                     <tr class="table-info">
-                        <td><img alt="Book Cover Photo" style="max-height: 80px; max-width: 40px"
-                                 th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></td>
+                        <td><a th:href="@{/bookDetails/{id}(id=${book.id})}"><img alt="Book Cover Photo" style="max-height: 80px; max-width: 40px" th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></a></td>
                         <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
                                 th:text="${book.bookName}"></b></a></td>
                         <td th:text="${book.authorName}"></td>

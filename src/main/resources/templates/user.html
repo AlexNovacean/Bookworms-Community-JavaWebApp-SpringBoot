@@ -30,7 +30,8 @@
                 <div class="user-details-body">
                     <h6 class="user-details">
                         <p style="color: green;" th:if="${param.updated}">Profile Updated!</p>
-                        <p style="color: orange" th:if="${param.banned}">User Banned!</p>
+                        <p style="color: orange" th:if="${param.banned} AND ${not user.enabled}">User Banned!</p>
+                        <p style="color: orange" th:if="${param.banned} AND ${user.enabled}">User Unbanned!</p>
                         <p style="color: orange" th:if="${param.promoted}">User Promoted!</p>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">First Name: <span><b th:text="${user.firstName}"></b></span>
@@ -55,9 +56,14 @@
                            sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/export-books}"
                            th:if="${user.email.equals(principal.name)}">Download Books CSV</a>
                         <button class="btn btn-danger" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
-                                th:if="${not user.email.equals(principal.name)}"
+                                th:if="${not user.email.equals(principal.name)} AND ${user.enabled}"
                                 th:onclick="|window.location.href='/user/ban/${user.id}'|">Ban User
                         </button>
+                        <button class="btn btn-danger" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
+                                th:if="${not user.email.equals(principal.name)} AND ${not user.enabled}"
+                                th:onclick="|window.location.href='/user/ban/${user.id}'|">Unban User
+                        </button>
+
                         <button class="btn btn-danger" sec:authorize="hasRole('ROLE_ADMIN')"
                                 th:if="${not user.email.equals(principal.name)}"
                                 th:onclick="|window.location.href='/user/${user.id}/promote'|">Promote User
@@ -84,8 +90,8 @@
             <tbody>
             <th:block th:each="book : ${books}">
                 <tr class="table-warning">
-                    <td><img style="max-width: 40px; max-height: 80px"
-                             th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></td>
+                    <td><a th:href="@{/bookDetails/{id}(id=${book.id})}">
+                        <img style="max-width: 40px; max-height: 80px" th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></a></td>
                     <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
                             data-placement="bottom" data-toggle="tooltip" th:text="${book.bookName}"
                             title="Book Details"></b></a></td>
