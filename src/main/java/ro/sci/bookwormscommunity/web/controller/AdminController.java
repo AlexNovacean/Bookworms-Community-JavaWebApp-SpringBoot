@@ -47,14 +47,11 @@ public class AdminController {
      * Handles the {@link RequestMethod#GET} used to promote an user to moderator.
      *
      * @param id    identifier for the user that will be promoted.
-     * @param model {@link Model} used to add attributes that requires to be returned to the View.
      * @return the user.html view.
      */
     @GetMapping("/user/{id}/promote")
-    public String promote(@PathVariable("id") long id, Model model) {
-        User user = userService.findById(id);
+    public String promote(@PathVariable("id") long id) {
         userService.promoteUser(id);
-        model.addAttribute("user", user);
         return "redirect:/user/" + id + "?promoted";
     }
 

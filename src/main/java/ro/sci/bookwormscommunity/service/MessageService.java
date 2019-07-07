@@ -17,5 +17,5 @@ import java.util.List;
 public interface MessageService {
     List<Message> getUserMessages(long conversationId);
 
-    List<Message> saveAndRetrieve(long conversationId, MessageDto messageDto, User fromUser);
+    void saveMessage(long conversationId, MessageDto messageDto, User fromUser);
 }

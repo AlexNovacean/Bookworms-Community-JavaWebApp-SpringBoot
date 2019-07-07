@@ -55,7 +55,7 @@ public class MessageServiceTest {
     }
 
     @Test
-    public void saveAndRetrieve() {
+    public void saveMessage() {
         List<Message> messages = new ArrayList<>();
         User toUser = new User();
         toUser.setEmail("toUser@mail.com");
@@ -63,7 +63,6 @@ public class MessageServiceTest {
         fromUser.setEmail("fromUser@mail.com");
         Conversation conversation = new Conversation(toUser, fromUser, "Topic");
         when(conversationService.findById(anyLong())).thenReturn(conversation);
-        when(messageRepository.getUserMessages(anyLong())).thenReturn(messages);
         doAnswer((InvocationOnMock invocation) -> {
             Object[] arguments = invocation.getArguments();
             Message message = (Message) arguments[0];
@@ -71,15 +70,14 @@ public class MessageServiceTest {
             return null;
         }).when(messageRepository).save(any(Message.class));
 
-        List<Message> result = messageService.saveAndRetrieve(1, new MessageDto("Content"), fromUser);
+        messageService.saveMessage(1, new MessageDto("Content"), fromUser);
 
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertTrue(result.stream().anyMatch(m -> m.getConversation().equals(conversation)));
-        assertTrue(result.stream().anyMatch(m -> m.getContent().equals("Content")));
-        assertTrue(result.stream().anyMatch(m -> m.getToUser().equals(toUser)));
-        assertTrue(result.stream().anyMatch(m -> m.getFromUser().equals(fromUser)));
-        verify(messageRepository, times(1)).getUserMessages(anyLong());
+        assertNotNull(messages);
+        assertEquals(1, messages.size());
+        assertTrue(messages.stream().anyMatch(m -> m.getConversation().equals(conversation)));
+        assertTrue(messages.stream().anyMatch(m -> m.getContent().equals("Content")));
+        assertTrue(messages.stream().anyMatch(m -> m.getToUser().equals(toUser)));
+        assertTrue(messages.stream().anyMatch(m -> m.getFromUser().equals(fromUser)));
         verify(messageRepository, times(1)).save(any(Message.class));
         verify(conversationService, times(1)).findById(anyLong());
     }

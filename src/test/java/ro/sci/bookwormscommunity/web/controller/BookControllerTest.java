@@ -37,6 +37,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -288,6 +289,7 @@ public class BookControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/addBook")
                 .file(emptyFile)
+                .with(csrf())
                 .param("bookName", "A")
                 .param("authorName", "A")
                 .param("numberOfPages", "19")
@@ -330,6 +332,7 @@ public class BookControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/addBook")
                 .file(file)
+                .with(csrf())
                 .param("bookName", "Book")
                 .param("authorName", "Author")
                 .param("numberOfPages", "20")
@@ -379,10 +382,11 @@ public class BookControllerTest {
             book.setDescription(bookDto.getDescription());
             book.setNumberOfPages(bookDto.getNumberOfPages());
             return null;
-        }).when(bookService).updateBook(anyLong(),any(BookDto.class));
+        }).when(bookService).updateBook(anyLong(), any(BookDto.class));
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/updateBook/{id}",1L)
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/updateBook/{id}", 1L)
                 .file(emptyFile)
+                .with(csrf())
                 .param("bookName", "Book")
                 .param("authorName", "Author")
                 .param("numberOfPages", "20")
@@ -396,8 +400,8 @@ public class BookControllerTest {
 
         verify(userService, times(1)).findByEmail(anyString());
         verifyNoMoreInteractions(userService);
-        verify(bookService,times(1)).getBookById(anyLong());
-        verify(bookService,times(1)).updateBook(anyLong(),any(BookDto.class));
+        verify(bookService, times(1)).getBookById(anyLong());
+        verify(bookService, times(1)).updateBook(anyLong(), any(BookDto.class));
         verifyNoMoreInteractions(bookService);
 
         assertEquals("Book", book.getBookName());
@@ -405,6 +409,6 @@ public class BookControllerTest {
         assertEquals("Type", book.getType());
         assertEquals(20, book.getNumberOfPages());
         assertEquals("Language", book.getLanguage());
-        assertEquals("Description",book.getDescription());
+        assertEquals("Description", book.getDescription());
     }
 }

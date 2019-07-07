@@ -48,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
      * @return a list of all the {@link Message} objects which correspond with provided conversation Id.
      */
     @Override
-    public List<Message> saveAndRetrieve(long conversationId, MessageDto messageDto, User fromUser) {
+    public void saveMessage(long conversationId, MessageDto messageDto, User fromUser) {
         Conversation conversation = conversationService.findById(conversationId);
 
         User toUser;
@@ -61,6 +61,5 @@ public class MessageServiceImpl implements MessageService {
         Message message = new Message(messageDto.getContent(), toUser, fromUser);
         message.setConversation(conversation);
         messageRepository.save(message);
-        return messageRepository.getUserMessages(conversationId);
     }
 }

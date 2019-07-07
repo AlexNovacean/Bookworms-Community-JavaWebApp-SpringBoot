@@ -68,7 +68,6 @@ public class User {
     public User() {
     }
 
-
     //Constructor used to perform unit tests
     public User(long id, String email) throws IOException {
         this();
@@ -76,6 +75,16 @@ public class User {
         this.id = id;
         this.email = email;
         this.photo = Files.readAllBytes(path);
+    }
+
+    public User(long id, String firstName, String lastName, String nickname, String email, String location, boolean enabled) {
+        this.id = id;
+        this.firstName = firstName;
+        this.location = location;
+        this.lastName = lastName;
+        this.nickname = nickname;
+        this.email = email;
+        this.enabled = enabled;
     }
 
     public User(String firstName, String lastName, String email, String nickname, String location) {

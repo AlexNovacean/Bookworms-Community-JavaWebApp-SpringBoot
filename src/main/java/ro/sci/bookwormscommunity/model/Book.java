@@ -71,14 +71,19 @@ public class Book {
         this.image = Files.readAllBytes(path);
     }
 
-    public Book(String bookName, String authorName, String type, boolean bookRent, boolean bookSale, int rating) {
+    public Book(long id, String bookName, String authorName, int numberOfPages, String type, String language, String condition, boolean bookRent, boolean bookSale, int rentPrice, int sellPrice) {
         this();
+        this.id = id;
         this.bookName = bookName;
         this.authorName = authorName;
+        this.numberOfPages = numberOfPages;
         this.type = type;
+        this.language = language;
+        this.condition = condition;
         this.bookRent = bookRent;
         this.bookSale = bookSale;
-        this.rating = rating;
+        this.rentPrice = rentPrice;
+        this.sellPrice = sellPrice;
     }
 
     public Book(long id, String bookName, String authorName, int numberOfPages, String type, String language, String description, String condition, boolean bookRent, boolean bookSale, int sellPrice, int rentPrice, User user) throws IOException {

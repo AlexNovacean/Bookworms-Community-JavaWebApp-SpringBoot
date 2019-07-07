@@ -93,24 +93,21 @@ public class MessagesController {
      * Handles the {@link RequestMethod#POST} method used to send a messages.
      *
      * @param id         the identifier of the conversation within the messages are sent.
-     * @param model      {@link Model} used to add attributes that requires to be returned to the View.
      * @param messageDto {@link MessageDto} object that contains the content of the message that is being sent.
      * @param principal  {@link Principal} object which stores the currently logged in user.
      * @return the name of the view where the sent message is displayed.
      */
     @PostMapping("/messages/{id}")
-    public String sendMessage(@PathVariable("id") long id, Model model, @ModelAttribute("msg") MessageDto messageDto, Principal principal) {
+    public String sendMessage(@PathVariable("id") long id, @ModelAttribute("msg") MessageDto messageDto, Principal principal) {
         User user = userService.findByEmail(principal.getName());
-        List<Message> texts = messageService.saveAndRetrieve(id, messageDto, user);
+        messageService.saveMessage(id, messageDto, user);
         Conversation conversation = conversationService.findById(id);
         long forViewId;
-        if (!texts.get(0).getToUser().getId().equals(user.getId())) {
-            forViewId = texts.get(0).getToUser().getId();
+        if (!conversation.getToUser().getId().equals(user.getId())) {
+            forViewId = conversation.getToUser().getId();
         } else {
-            forViewId = texts.get(0).getFromUser().getId();
+            forViewId = conversation.getFromUser().getId();
         }
-        model.addAttribute("texts", texts);
-        model.addAttribute("principal",principal);
         return "redirect:/messages/" + forViewId + "?bookName=" + conversation.getConversationTopic() + "#lastmsg";
 
     }
