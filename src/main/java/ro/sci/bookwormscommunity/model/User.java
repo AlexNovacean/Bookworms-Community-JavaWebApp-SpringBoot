@@ -86,6 +86,25 @@ public class User {
         this.email = email;
     }
 
+    public User(Long id, String firstName, String lastName, String email, String nickname, String location) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.nickname = nickname;
+        this.location = location;
+    }
+
+    public User(Long id, String firstName, String lastName, String email, String password, String nickname, String location) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.location = location;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }

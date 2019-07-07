@@ -47,6 +47,18 @@ public class UserDto {
     @ValidPhoto(message = "Profile picture must be a .jpg/.jpeg/.png file and must not exceed 1MB.")
     private MultipartFile photo;
 
+    public UserDto() {
+    }
+
+    public UserDto(String firstName, String lastName, String nickname, String password, String email, String location) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nickname = nickname;
+        this.password = password;
+        this.email = email;
+        this.location = location;
+    }
+
     public long getId() {
         return id;
     }

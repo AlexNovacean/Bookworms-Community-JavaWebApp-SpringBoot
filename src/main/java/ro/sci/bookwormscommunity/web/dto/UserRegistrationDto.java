@@ -62,12 +62,13 @@ public class UserRegistrationDto {
     public UserRegistrationDto() {
     }
 
-    public UserRegistrationDto(String firstName, String lastName, String nickName, String location, String email) {
+    public UserRegistrationDto(String firstName, String lastName, String nickName, String location, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nickName = nickName;
         this.location = location;
         this.email = email;
+        this.password = password;
     }
 
     public MultipartFile getImage() {
