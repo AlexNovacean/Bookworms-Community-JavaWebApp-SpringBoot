@@ -35,5 +35,4 @@ public interface UserService extends UserDetailsService {
 
     @Transactional
     void promoteUser(long userId);
-
 }

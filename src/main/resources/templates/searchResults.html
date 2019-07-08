@@ -19,7 +19,7 @@
     <div class="card-img-overlay">
         <div class="Header">
             <h1>Bookworms Community</h1><!-- Heather title -->
-            <h6>The place were bookworms meet and wormnomnom!</h6>
+            <h6>The place where bookworms meet and wormnomnom!</h6>
         </div>
     </div>
 </div>
@@ -73,7 +73,7 @@
         <div class="row">
             <h3 th:if="${booksOfAuthors.isEmpty() && booksOfType.isEmpty() && booksWithName.isEmpty()}">No
                 Results...</h3>
-            <h6 th:if="${not booksWithName.isEmpty()}">The name of the following books matches your search: </h6>
+            <h6 th:if="${not booksWithName.isEmpty()}">The <b>name</b> of the following books matches your search: </h6>
             <table style="text-align: center" class="table table-striped table-hover" th:if="${not booksWithName.isEmpty()}">
                 <thead>
                 <tr class="table-primary">
@@ -94,8 +94,9 @@
                 <tbody th:each="book : ${booksWithName}">
                 <th:block>
                     <tr class="table-info">
-                        <td><img alt="Book Cover Photo" style="max-height: 80px; max-width: 40px"
-                                 th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></td>
+                        <td><a th:href="@{/bookDetails/{id}(id=${book.id})}">
+                            <img alt="Book Cover Photo" style="max-height: 80px; max-width: 40px"
+                                 th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></a></td>
                         <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
                                 th:text="${book.bookName}"></b></a></td>
                         <td th:text="${book.authorName}"></td>
@@ -122,7 +123,7 @@
                 </tbody>
             </table>
             <br>
-            <h6 th:if="${not booksOfAuthors.isEmpty()}">The Author of the following books matches your search: </h6>
+            <h6 th:if="${not booksOfAuthors.isEmpty()}">The <b>author</b> of the following books matches your search: </h6>
             <table style="text-align: center" class="table table-striped table-hover" th:if="${not booksOfAuthors.isEmpty()}">
                 <thead>
                 <tr class="table-primary">
@@ -143,8 +144,9 @@
                 <tbody th:each="book : ${booksOfAuthors}">
                 <th:block>
                     <tr class="table-info">
-                        <td><img alt="Book Cover Photo" style="max-height: 80px; max-width: 40px"
-                                 th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></td>
+                        <td><a th:href="@{/bookDetails/{id}(id=${book.id})}">
+                            <img alt="Book Cover Photo" style="max-height: 80px; max-width: 40px"
+                                 th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></a></td>
                         <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
                                 th:text="${book.bookName}"></b></a></td>
                         <td th:text="${book.authorName}"></td>
@@ -171,7 +173,7 @@
                 </tbody>
             </table>
             <br>
-            <h6 th:if="${not booksOfType.isEmpty()}">The Type of the following books matches your search: </h6>
+            <h6 th:if="${not booksOfType.isEmpty()}">The <b>type</b> of the following books matches your search: </h6>
             <table style="text-align: center" class="table table-striped table-hover" th:if="${not booksOfType.isEmpty()}">
                 <thead>
                 <tr class="table-primary">
@@ -192,8 +194,9 @@
                 <tbody th:each="book : ${booksOfType}">
                 <th:block>
                     <tr class="table-info">
-                        <td><img alt="Book Cover Photo" style="max-height: 80px; max-width: 40px"
-                                 th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></td>
+                        <td><a th:href="@{/bookDetails/{id}(id=${book.id})}">
+                            <img alt="Book Cover Photo" style="max-height: 80px; max-width: 40px"
+                                 th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></a></td>
                         <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
                                 th:text="${book.bookName}"></b></a></td>
                         <td th:text="${book.authorName}"></td>
