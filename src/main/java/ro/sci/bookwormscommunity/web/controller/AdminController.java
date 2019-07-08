@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,7 +45,7 @@ public class AdminController {
     /**
      * Handles the {@link RequestMethod#GET} used to promote an user to moderator.
      *
-     * @param id    identifier for the user that will be promoted.
+     * @param id identifier for the user that will be promoted.
      * @return the user.html view.
      */
     @GetMapping("/user/{id}/promote")

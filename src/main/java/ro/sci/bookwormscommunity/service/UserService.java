@@ -33,6 +33,7 @@ public interface UserService extends UserDetailsService {
     @Transactional
     void banUser(long id);
 
+    @Transactional
     void promoteUser(long userId);
 
 }

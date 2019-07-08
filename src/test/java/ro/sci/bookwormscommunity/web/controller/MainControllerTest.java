@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,7 +41,7 @@ public class MainControllerTest {
 
     @Test
     @WithMockUser
-    public void root() throws Exception {
+    public void root_withAuthenticatedUser_shouldReturnHomePage() throws Exception {
         User user = new User(1, "test@mail.com");
         List<Book> bookList = new ArrayList<>(Arrays.asList(new Book(1), new Book(2), new Book(3)));
 
@@ -48,7 +49,7 @@ public class MainControllerTest {
         when(bookService.getTop10RatedBooks()).thenReturn(bookList);
         when(bookService.getLatest10AddedBooks()).thenReturn(bookList);
 
-        mockMvc.perform(get(""))
+        mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("Home"))
                 .andExpect(model().attribute("user", user))
@@ -63,9 +64,27 @@ public class MainControllerTest {
     }
 
     @Test
-    @WithMockUser
+    public void root_withUnauthenticatedUser_shouldReturnHomePage() throws Exception {
+        List<Book> bookList = new ArrayList<>(Arrays.asList(new Book(1), new Book(2), new Book(3)));
+
+        when(bookService.getTop10RatedBooks()).thenReturn(bookList);
+        when(bookService.getLatest10AddedBooks()).thenReturn(bookList);
+
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("Home"))
+                .andExpect(model().attribute("topBooks", bookList))
+                .andExpect(model().attribute("latestBooks", bookList));
+
+        verify(bookService, times(1)).getTop10RatedBooks();
+        verify(bookService, times(1)).getLatest10AddedBooks();
+        verifyNoMoreInteractions(bookService);
+        verifyNoMoreInteractions(userService);
+    }
+
+    @Test
     public void login() throws Exception {
-        mockMvc.perform(get("/login/**"))
+        mockMvc.perform(get("/login"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"));
 

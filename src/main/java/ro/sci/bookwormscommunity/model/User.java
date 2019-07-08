@@ -77,8 +77,9 @@ public class User {
         this.photo = Files.readAllBytes(path);
     }
 
-    public User(long id, String firstName, String lastName, String nickname, String email, String location, boolean enabled) {
-        this.id = id;
+    //Constructor used to perform unit tests
+    public User(long id, String firstName, String lastName, String nickname, String email, String location, boolean enabled) throws IOException {
+        this(id, email);
         this.firstName = firstName;
         this.location = location;
         this.lastName = lastName;
@@ -87,6 +88,7 @@ public class User {
         this.enabled = enabled;
     }
 
+    //Constructor used in CreateAdmin class
     public User(String firstName, String lastName, String email, String nickname, String location) {
         this.nickname = nickname;
         this.location = location;
@@ -95,15 +97,7 @@ public class User {
         this.email = email;
     }
 
-    public User(Long id, String firstName, String lastName, String email, String nickname, String location) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.nickname = nickname;
-        this.location = location;
-    }
-
+    //Constructor used to perform unit tests
     public User(Long id, String firstName, String lastName, String email, String password, String nickname, String location) {
         this.id = id;
         this.firstName = firstName;

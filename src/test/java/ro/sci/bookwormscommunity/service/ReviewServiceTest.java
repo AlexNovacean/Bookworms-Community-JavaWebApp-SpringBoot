@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ro.sci.bookwormscommunity.model.Review;
 import ro.sci.bookwormscommunity.repositories.ReviewRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -82,8 +83,8 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void updateReview() {
-        List<Review> reviews = new ArrayList<Review>();
+    public void updateReview() throws IOException {
+        List<Review> reviews = new ArrayList<>();
         reviews.add(new Review(1, "Comment", false, null));
 
         when(reviewRepository.getOne(anyLong())).thenReturn(reviews.get(0));

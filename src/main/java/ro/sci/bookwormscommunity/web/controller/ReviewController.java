@@ -74,7 +74,7 @@ public class ReviewController {
     @GetMapping("/managePosts/{id}")
     public String managePosts(@PathVariable("id") long id, Model model) {
         Review review = reviewService.getReviewById(id);
-        model.addAttribute(review);
+        model.addAttribute("review",review);
         return "managePosts";
     }
 
