@@ -1,0 +1,183 @@
+<!doctypeHTML>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update your profile</title> <!-- Page title -->
+    <link href="/static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
+    <meta content-type="width=device-width initial-scale=1" name="viewport">
+    <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<section class="login-block">
+    <div class="container register">
+        <div class="row">
+            <div class="col-md-5">
+                <br>
+                <div class="image-user" style="width:450px">
+                    <img alt="User Image" class="userImage" style="max-width:450px; max-height:600px"
+                         th:src="'data:image/*;base64,' + ${userDto.returnPhotoAsString()}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <form autocomplete="off" enctype="multipart/form-data" method="post" th:action="@{/user/updateProfile}"
+                      th:object="${userDto}">
+                    <table style="max-width: 800px; margin: auto">
+                        <tr>
+                            <td class="alert alert-danger text-center" th:each="error : ${#fields.errors('global')}"
+                                th:if="${#fields.hasGlobalErrors()}" th:text="${error}">Validation Error!
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}">
+                                    First Name Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">First Name</span>
+                                    </div>
+                                    <input class="form-control" placeholder="First Name" th:field="*{firstName}"
+                                           type="text"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}">
+                                    Last Name Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Last Name</span>
+                                    </div>
+                                    <input class="form-control" placeholder="Last Name" th:field="*{lastName}"
+                                           type="text"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{nickname}" th:if="${#fields.hasErrors('nickname')}">
+                                    Nick Name Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nick Name</span>
+                                    </div>
+                                    <input class="form-control" placeholder="Nick Name" th:field="*{nickname}"
+                                           type="text"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{location}" th:if="${#fields.hasErrors('location')}">
+                                    Location Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Location</span>
+                                    </div>
+                                    <input class="form-control" placeholder="City" th:field="*{location}" type="text"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <script>
+                            function myFunction() {
+                                alert("You will have to log in again if either the e-mail or password are updated.");
+                            }
+                        </script>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">E-mail
+                                    Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">New E-mail</span>
+                                    </div>
+                                    <input autocomplete="off" class="form-control" onclick="myFunction()"
+                                           placeholder="E-mail address" th:field="*{email}"
+                                           type="text"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{password}" th:if="${#fields.hasErrors('password')}">
+                                    Password Mismatch!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">New Password(Optional)</span>
+                                    </div>
+                                    <input autocomplete="new-password" class="form-control" onclick="myFunction()"
+                                           placeholder="New Password" th:field="*{password}"
+                                           type="password"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{confirmPassword}"
+                                   th:if="${#fields.hasErrors('confirmPassword')}">Password Mismatch!</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Confirm password</span>
+                                    </div>
+                                    <input class="form-control" placeholder="Confirm Password"
+                                           th:field="*{confirmPassword}"
+                                           type="password"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="contentR" th:errors="*{photo}" th:if="${#fields.hasErrors('photo')}">Photo
+                                    Error!</p>
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input class="custom-file-input" id="customFile" th:field="*{photo}"
+                                               type="file">
+                                        <label class="custom-file-label" for="customFile">Update photo</label>
+                                    </div>
+                                    <script>
+                                        //The name of the file appear on select
+                                        $(".custom-file-input").on("change", function () {
+                                            var fileName = $(this).val().split("\\").pop();
+                                            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                                        });
+                                    </script>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="btn btn-primary" style="float:right" type="submit">Update Profile
+                                </button>
+                                <a button class="btn btn-info" data-placement="bottom" data-toggle="tooltip"
+                                   style="float:left" th:href="@{/user}"
+                                   title="No changes? Here is your way back!">Your Profile</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Footer -->
+<div id="footer">
+    <div class="card img-fluid" style="width:1600px">
+        <div class="card-img-overlay">
+            <div class="text-right" style="margin-bottom:0">
+                <h6>Bookworms Community</h6>
+                <p>&copy; Copyright AIRS 2019 All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

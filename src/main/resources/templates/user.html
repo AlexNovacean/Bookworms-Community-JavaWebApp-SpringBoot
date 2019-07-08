@@ -1,0 +1,137 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Profile</title> <!-- Page title -->
+    <link href="/static/css/style.css" rel="stylesheet" th:href="@{../css/style.css}" type="text/css">
+    <link href="/static/css/rating.css" media="all" rel="stylesheet" th:href="@{~/css/rating.css}" type="text/css">
+    <meta content-type="width=device-width initial-scale=1" name="viewport">
+    <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<section class="login-block">
+    <div class="container user-profile">
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <img alt="User Picture" class="user-image"
+                         th:src="'data:image/*;base64,' + ${user.getImageAsString()}">
+                </div>
+                <br>
+            </div>
+            <div class="col-md-8">
+                <div class="user-details-body">
+                    <h6 class="user-details">
+                        <p style="color: green;" th:if="${param.updated}">Profile Updated!</p>
+                        <p style="color: orange" th:if="${param.banned} AND ${not user.enabled}">User Banned!</p>
+                        <p style="color: orange" th:if="${param.banned} AND ${user.enabled}">User Unbanned!</p>
+                        <p style="color: orange" th:if="${param.promoted}">User Promoted!</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">First Name: <span><b th:text="${user.firstName}"></b></span>
+                            </li>
+                            <li class="list-group-item">Last Name: <span><b th:text="${user.lastName}"></b></span></li>
+                            <li class="list-group-item">Nickname: <span><b th:text="${user.nickname}"></b></span></li>
+                            <li class="list-group-item">E-mail: <span><b th:text="${user.email}"></b></span></li>
+                            <li class="list-group-item">Location: <span><b th:text="${user.location}"></b></span></li>
+                        </ul>
+                    </h6>
+                    <p>
+                        <a button class="btn btn-secondary" th:href="@{/}">Home Page</a>
+                        <a button class="btn btn-success" th:href="@{/addBook}"
+                           th:if="${user.email.equals(principal.name)}">Add Book</a>
+                        <a button class="btn btn-primary" sec:authorize="hasAnyRole('ROLE_USER','ROLE_MODERATOR')"
+                           th:href="@{/user/editProfile}"
+                           th:if="${user.email.equals(principal.name)}">Edit Profile</a>
+                        <a button class="btn btn-primary"
+                           sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/export-users}"
+                           th:if="${user.email.equals(principal.name)}">Download User CSV</a>
+                        <a button class="btn btn-primary"
+                           sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/export-books}"
+                           th:if="${user.email.equals(principal.name)}">Download Books CSV</a>
+                        <button class="btn btn-danger" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
+                                th:if="${not user.email.equals(principal.name)} AND ${user.enabled}"
+                                th:onclick="|window.location.href='/user/ban/${user.id}'|">Ban User
+                        </button>
+                        <button class="btn btn-danger" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_MODERATOR')"
+                                th:if="${not user.email.equals(principal.name)} AND ${not user.enabled}"
+                                th:onclick="|window.location.href='/user/ban/${user.id}'|">Unban User
+                        </button>
+
+                        <button class="btn btn-danger" sec:authorize="hasRole('ROLE_ADMIN')"
+                                th:if="${not user.email.equals(principal.name)}"
+                                th:onclick="|window.location.href='/user/${user.id}/promote'|">Promote User
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <table class="table table-striped table-hover" style="text-align: center">
+            <thead th:if="${not books.isEmpty()}">
+            <tr class="table-info">
+                <th>Cover Photo</th>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>For Rent</th>
+                <th>Rent Price</th>
+                <th>For Sale</th>
+                <th>Sale Price</th>
+                <th>Rating</th>
+                <th th:if="${user.email.equals(principal.name)}">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="book : ${books}">
+                <tr class="table-warning">
+                    <td><a th:href="@{/bookDetails/{id}(id=${book.id})}">
+                        <img style="max-width: 40px; max-height: 80px" th:src="'data:image/*;base64,' + ${book.getImageAsString()}"></a></td>
+                    <td><a style="color: #000;" th:href="@{/bookDetails/{id}(id=${book.id})}"><b
+                            data-placement="bottom" data-toggle="tooltip" th:text="${book.bookName}"
+                            title="Book Details"></b></a></td>
+                    <td th:text="${book.authorName}"></td>
+                    <td th:text="${book.bookRent} ? 'Yes' : 'No'"></td>
+                    <td th:text="${book.bookRent} ? ${book.rentPrice} : ' '"></td>
+                    <td th:text="${book.bookSale} ? 'Yes' : 'No'"></td>
+                    <td th:text="${book.bookSale} ? ${book.sellPrice} : ' '"></td>
+                    <td>
+                        <th:block th:switch="${book.rating}">
+                            <div th:case="5"><span class="stars-container stars-100">★★★★★</span></div>
+                            <div th:case="4"><span class="stars-container stars-80">★★★★★</span></div>
+                            <div th:case="3"><span class="stars-container stars-60">★★★★★</span></div>
+                            <div th:case="2"><span class="stars-container stars-40">★★★★★</span></div>
+                            <div th:case="1"><span class="stars-container stars-20">★★★★★</span></div>
+                            <div th:case="0"><span class="stars-container stars-0">★★★★★</span></div>
+                        </th:block>
+                    </td>
+                    <td th:if="${user.email.equals(principal.name)}"><a data-placement="bottom" data-toggle="tooltip"
+                                                                        th:href="@{/editBook/{id}(id=${book.id})}"
+                                                                        title="Edit Book"><i class="fa fa-edit"
+                                                                                             style="color: #000;"></i></a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <br>
+    </div>
+</section>
+<!--Footer -->
+<div id="footer">
+    <div class="card img-fluid" style="width:100%; height: 100px;">
+        <div class="card-img-overlay">
+            <div class="text-right" style="margin-bottom:0">
+                <h6>Bookworms Community</h6>
+                <p>&copy; Copyright AIRS 2019 All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctypeHTML>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your messages in the Community</title> <!-- Page title -->
+    <link href="/static/css/style.css" rel="stylesheet" th:href="@{~/css/style.css}" type="text/css">
+    <link href="/static/css/texts.css" rel="stylesheet" th:href="@{~/css/texts.css}" type="text/css">
+    <meta content-type="width=device-width initial-scale=1" name="viewport">
+    <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<section class="login-block">
+    <div class="container register">
+        <div class="container">
+            <div class="message-title">
+                <h2 class="text-center"
+                    th:text="'Conversation between ' + ${conv.getFromUser().nickname} + ' and ' + ${conv.getToUser().nickname}"></h2>
+                <a button class="btn btn-primary" th:href="@{/messages}">Go Back</a>
+            </div>
+            <div th:each="text : ${texts}">
+                <div class="cutia" th:classappend="${not text.fromUser.email.equals(principal.name)} ? normal : darker">
+                    <a th:href="@{/user/{id}(id=${text.fromUser.id})}"><img alt="Avatar"
+                                                                            class="poza"
+                                                                            style="width: 100%;"
+                                                                            th:classappend="${not text.fromUser.email.equals(principal.name)} ? pozaA : pozaB"
+                                                                            th:src="'data:image/*;base64,' + ${text.fromUser.getImageAsString()}"></a>
+                    <a style="color: #000000" th:href="@{/user/{id}(id=${text.fromUser.id})}"><b
+                            th:text="${text.fromUser.nickname}"></b></a>
+                    <div data-th-utext="${#strings.replace(#strings.escapeXml(text.content),'&#10;','&lt;br&gt;')}"
+                         style="padding-top: 10px"></div>
+                    <span class="time"
+                          th:classappend="${not text.fromUser.email.equals(principal.name)} ? timeR : timeL"
+                          th:text="'Sent on ' + ${#dates.format(text.sentDate, 'dd-MM-yyyy')} + ' at ' + ${#dates.format(text.sentDate, 'HH:mm')}"></span>
+                </div>
+            </div>
+            <form id="lastmsg" method="post" th:action="@{/messages/{id}(id=${conv.id})}">
+                <textarea class="form-control z-depth-1" cols="50" name="content" placeholder="Write your message here... "
+                          rows="5"></textarea>
+                <br>
+                <input button class="btn btn-info" type="submit" value="Send"></button>
+                <a button class="btn btn-primary" style="float:right" th:href="@{/messages}">Go Back</a>
+            </form>
+
+            <br>
+        </div>
+    </div>
+</section>
+<!--Footer -->
+<div id="footer">
+    <div class="card img-fluid" style="width:1600px">
+        <div class="card-img-overlay">
+            <div class="text-right" style="margin-bottom:0">
+                <h6>Bookworms Community</h6>
+                <p>&copy; Copyright AIRS 2019 All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
