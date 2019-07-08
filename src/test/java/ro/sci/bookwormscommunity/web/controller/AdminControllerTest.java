@@ -130,7 +130,7 @@ public class AdminControllerTest {
         List<Book> allBooks = new ArrayList<>();
         String expectedCsvContent = "BOOK AUTHOR,BOOK CONDITION,BOOK ID,BOOK LANGUAGE,BOOK NAME,BOOK RENT,BOOK SALE,BOOK TYPE,NUMBER OF PAGES,RENT PRICE,SELL PRICE\n" +
                 "Author,Condition,1,Language,Book,true,true,Type,100,0,0\n";
-        allBooks.add(new Book(1L, "Book", "Author", 100, "Type", "Language", "Condition", true, true, 0, 0));
+        allBooks.add(new Book(1L, "Book", "Author", 100, "Type", "Language", "Description", "Condition", true, true, 0, 0,new User()));
 
         when(bookService.getAllBooks()).thenReturn(allBooks);
 

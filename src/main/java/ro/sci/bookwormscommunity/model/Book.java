@@ -71,23 +71,15 @@ public class Book {
         this.image = Files.readAllBytes(path);
     }
 
-    public Book(long id, String bookName, String authorName, int numberOfPages, String type, String language, String condition, boolean bookRent, boolean bookSale, int rentPrice, int sellPrice) {
+    public Book(String bookName, String authorName, String type) {
         this();
-        this.id = id;
         this.bookName = bookName;
         this.authorName = authorName;
-        this.numberOfPages = numberOfPages;
         this.type = type;
-        this.language = language;
-        this.condition = condition;
-        this.bookRent = bookRent;
-        this.bookSale = bookSale;
-        this.rentPrice = rentPrice;
-        this.sellPrice = sellPrice;
     }
 
     public Book(long id, String bookName, String authorName, int numberOfPages, String type, String language, String description, String condition, boolean bookRent, boolean bookSale, int sellPrice, int rentPrice, User user) throws IOException {
-        Path path = Paths.get("src/main/resources/static/images/book.png");
+        this(id);
         this.bookName = bookName;
         this.authorName = authorName;
         this.numberOfPages = numberOfPages;
@@ -99,7 +91,6 @@ public class Book {
         this.bookSale = bookSale;
         this.sellPrice = sellPrice;
         this.rentPrice = rentPrice;
-        this.image = Files.readAllBytes(path);
         this.user = user;
         this.id = id;
     }

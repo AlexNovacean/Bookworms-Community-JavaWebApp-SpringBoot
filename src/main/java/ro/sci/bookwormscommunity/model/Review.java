@@ -62,6 +62,11 @@ public class Review {
         this.userPhoto = Files.readAllBytes(path);
     }
 
+    public Review(int rating) {
+        this();
+        this.rating = rating;
+    }
+
     public Review(long id, String comment, boolean edited, String editedBy) throws IOException {
         this(id);
         this.comment = comment;

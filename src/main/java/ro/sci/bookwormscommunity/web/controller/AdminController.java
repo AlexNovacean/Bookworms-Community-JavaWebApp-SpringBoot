@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,15 +62,12 @@ public class AdminController {
     @GetMapping("/user/ban/{id}")
     public String banUser(@PathVariable("id") long id) {
         User user = userService.findById(id);
-
-        userService.banUser(id);
-
-        try {
+        if (user.isEnabled()) {
             mailService.sendAccountDisabledMail(user);
-        } catch (MailException e) {
-            logger.error("Error Sending the Ban Mail: {e}", e);
+        } else {
+            mailService.sendAccountEnabledMail(user);
         }
-
+        userService.banUser(id);
         return "redirect:/user/" + id + "?banned";
     }
 

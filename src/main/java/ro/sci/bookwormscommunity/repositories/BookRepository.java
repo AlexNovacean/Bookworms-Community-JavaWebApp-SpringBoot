@@ -34,7 +34,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findTop10RatedBooks();
 
     @Transactional
-    @Query(nativeQuery = true, value = "SELECT * FROM book ORDER BY add_date LIMIT 10")
+    @Query(nativeQuery = true, value = "SELECT * FROM book ORDER BY add_date DESC LIMIT 10")
     List<Book> findLatest10AddedBooks();
 
     @Transactional

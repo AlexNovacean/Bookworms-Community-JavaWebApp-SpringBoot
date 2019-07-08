@@ -145,11 +145,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void banUser(long id) {
         User user = userRepository.getOne(id);
-        if(user.isEnabled()){
-        user.setEnabled(false);}
-        else {
-            user.setEnabled(true);
-        }
+        user.setEnabled(!user.isEnabled());
         userRepository.save(user);
     }
 

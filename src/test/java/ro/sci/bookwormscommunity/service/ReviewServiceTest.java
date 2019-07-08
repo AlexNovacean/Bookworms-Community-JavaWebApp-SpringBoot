@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -110,20 +111,20 @@ public class ReviewServiceTest {
 
     @Test
     public void deleteReviewById() throws Exception {
-        List<Review> reviews = new ArrayList<>(Arrays.asList(new Review(1), new Review(2), new Review(3)));
+        List<Review> bookReview = new ArrayList<>(Arrays.asList(new Review(1L), new Review(2L), new Review(3L)));
 
         doAnswer((InvocationOnMock invocation) -> {
             Object[] arguments = invocation.getArguments();
 
             long reviewId = (Long) arguments[0];
-            reviews.removeIf(r -> r.getId() == reviewId);
+            bookReview.removeIf(review -> review.getId().equals(reviewId));
 
             return null;
         }).when(reviewRepository).deleteById(anyLong());
 
         reviewService.deleteReviewById(1);
 
-        assertEquals(2, reviews.size());
-        assertFalse(reviews.stream().anyMatch(r -> r.getId() == 1));
+        assertEquals(2, bookReview.size());
+        assertFalse(bookReview.stream().anyMatch(r -> r.getId() == 1));
     }
 }

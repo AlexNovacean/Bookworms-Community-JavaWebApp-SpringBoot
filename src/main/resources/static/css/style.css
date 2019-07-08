@@ -59,13 +59,11 @@ li a:link, a:visited {
 
 .contentR {
     max-width: 450px;
-    margin: auto;
     color: red;
 }
 
 .contentB {
     max-width: 450px;
-    margin: auto;
     color: blue;
 }
 

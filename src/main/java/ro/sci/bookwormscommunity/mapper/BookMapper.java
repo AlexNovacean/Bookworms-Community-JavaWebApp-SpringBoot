@@ -53,7 +53,8 @@ public final class BookMapper {
      * @return {@link Book} instance
      * @throws IOException if {@link BookDto#returnPhoto()} fails to return the file
      */
-    public static Book mapBookDtoToBook(BookDto bookDto) throws IOException {
+    public static Book
+    mapBookDtoToBook(BookDto bookDto) throws IOException {
         Book book = new Book();
         book.setBookName(bookDto.getBookName());
         book.setAuthorName(bookDto.getAuthorName());

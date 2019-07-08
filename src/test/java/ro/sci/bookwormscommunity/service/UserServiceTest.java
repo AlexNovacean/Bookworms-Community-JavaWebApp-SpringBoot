@@ -109,21 +109,15 @@ public class UserServiceTest {
 
     @Test
     public void banUser() throws Exception {
-        User user = new User(1L, "John", "Cameron", "john@email.com", "password", "johnny", "Boston");
-        List<User> userList = new ArrayList<>();
-        userList.add(user);
+        User user = new User();
+        user.setEnabled(true);
         when(userRepository.getOne(anyLong())).thenReturn(user);
-        doAnswer((InvocationOnMock invocation) -> {
-            Object[] arguments = invocation.getArguments();
-
-            User userForSave = (User) arguments[0];
-            userList.set(0, userForSave);
-            return null;
-        }).when(userRepository).save(any(User.class));
+        when(userRepository.save(any(User.class))).thenReturn(user);
 
         userService.banUser(1L);
 
-        assertFalse(userList.get(0).isEnabled());
+        assertFalse(user.isEnabled());
+        verify(userRepository, times(1)).getOne(anyLong());
         verify(userRepository, times(1)).save(any(User.class));
     }
 

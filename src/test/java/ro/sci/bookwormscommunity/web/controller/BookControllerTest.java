@@ -91,7 +91,7 @@ public class BookControllerTest {
     @Test
     @WithMockUser
     public void bookDetailsForm() throws Exception {
-        List<Review> reviews = new ArrayList<>(Arrays.asList(new Review(1), new Review(2), new Review(3)));
+        List<Review> reviews = new ArrayList<>(Arrays.asList(new Review(1L), new Review(2L), new Review(3L)));
         Book book = new Book(1L);
         book.setUser(new User(1, "test@mail.com"));
 

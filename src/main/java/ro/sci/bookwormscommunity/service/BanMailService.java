@@ -12,5 +12,7 @@ import ro.sci.bookwormscommunity.model.User;
  * @author Sorin
  */
 public interface BanMailService {
-    void sendAccountDisabledMail(User user) throws MailException;
+    void sendAccountDisabledMail(User user);
+
+    void sendAccountEnabledMail(User user);
 }

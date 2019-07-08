@@ -30,12 +30,23 @@ public class BanMailServiceImpl implements BanMailService {
      * @throws MailException if the e-mail fails to be delivered.
      */
     @Override
-    public void sendAccountDisabledMail(User user) throws MailException {
+    public void sendAccountDisabledMail(User user){
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setFrom("bookworms.community.airs@gmail.com");
         mailMessage.setSubject("Account Disabled! - Bookworms Community");
         mailMessage.setText("Hello " + user.getNickname() + ",\n\n Your account has been disabled due to inappropriate behaviour and/or violation of Bookworms Community Rules.\n\nHave a nice day, \nBookworms Community Team.");
+
+        javaMailSender.send(mailMessage);
+    }
+
+    @Override
+    public void sendAccountEnabledMail(User user){
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setFrom("bookworms.community.airs@gmail.com");
+        mailMessage.setSubject("Account Enabled! - Bookworms Community");
+        mailMessage.setText("Hello " + user.getNickname() + ",\n\nYour account has been enabled.\nCome on and join the community once more.\n\nHave a nice day,\nBookworms Community Team.");
 
         javaMailSender.send(mailMessage);
     }

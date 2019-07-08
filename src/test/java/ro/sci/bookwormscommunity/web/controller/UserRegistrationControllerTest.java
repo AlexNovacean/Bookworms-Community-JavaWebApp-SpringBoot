@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import ro.sci.bookwormscommunity.config.WebSecurityConfig;
@@ -16,14 +15,11 @@ import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -49,7 +45,7 @@ public class UserRegistrationControllerTest {
 
     @Test
     public void registerUserAccount_withExistingUserEmail_shouldReturnFieldError() throws Exception {
-        User user = new User(1L,"test@mail.com");
+        User user = new User(1L, "test@mail.com");
         MockMultipartFile emptyFile = new MockMultipartFile("image", new byte[0]);
         when(userService.findByEmail(anyString())).thenReturn(user);
 
@@ -75,8 +71,8 @@ public class UserRegistrationControllerTest {
     }
 
     @Test
-    public void registerUserAccount_withInvalidAttributes_shouldReturnFieldError() throws Exception{
-        MockMultipartFile fileOver1MB = new MockMultipartFile("image", new byte[2*1024*1024]);
+    public void registerUserAccount_withInvalidAttributes_shouldReturnFieldError() throws Exception {
+        MockMultipartFile fileOver1MB = new MockMultipartFile("image", new byte[2 * 1024 * 1024]);
 
         when(userService.findByEmail(anyString())).thenReturn(null);
 
@@ -107,7 +103,7 @@ public class UserRegistrationControllerTest {
     }
 
     @Test
-    public void registerUserAccount_withValidAttributes_shouldRegisterAccount() throws Exception{
+    public void registerUserAccount_withValidAttributes_shouldRegisterAccount() throws Exception {
         User user = new User();
         MockMultipartFile emptyFile = new MockMultipartFile("image", new byte[0]);
 
@@ -140,14 +136,14 @@ public class UserRegistrationControllerTest {
                 .andExpect(redirectedUrl("/login?success"))
                 .andExpect(view().name("redirect:/login?success"));
 
-        assertEquals("first name",user.getFirstName());
-        assertEquals("last name",user.getLastName());
-        assertEquals("nickname",user.getNickname());
-        assertEquals("location",user.getLocation());
-        assertEquals("password",user.getPassword());
-        assertEquals("test@mail.com",user.getEmail());
+        assertEquals("first name", user.getFirstName());
+        assertEquals("last name", user.getLastName());
+        assertEquals("nickname", user.getNickname());
+        assertEquals("location", user.getLocation());
+        assertEquals("password", user.getPassword());
+        assertEquals("test@mail.com", user.getEmail());
         verify(userService, times(1)).findByEmail(anyString());
-        verify(userService,times(1)).save(any(UserRegistrationDto.class));
+        verify(userService, times(1)).save(any(UserRegistrationDto.class));
         verifyNoMoreInteractions(userService);
     }
 }

@@ -9,9 +9,13 @@ import ro.sci.bookwormscommunity.validators.ValidPhoto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 
 /**
@@ -62,6 +66,25 @@ public class BookDto {
     private Integer sellPrice;
 
     private Integer rentPrice;
+
+    public BookDto() {
+    }
+
+    public BookDto(String bookName, String authorName, int numberOfPages, String type, String language, String description, boolean bookRent, boolean bookSale, int rentPrice, int sellPrice, User user) throws IOException {
+        Path path = Paths.get("src/main/resources/static/images/book.png");
+        this.photo = new MockMultipartFile("cover", new ByteArrayInputStream(Files.readAllBytes(path)));
+        this.user = user;
+        this.bookName = bookName;
+        this.authorName = authorName;
+        this.numberOfPages = numberOfPages;
+        this.type = type;
+        this.language = language;
+        this.description = description;
+        this.bookRent = bookRent;
+        this.bookSale = bookSale;
+        this.rentPrice = rentPrice;
+        this.sellPrice = sellPrice;
+    }
 
     public Long getId() {
         return id;
