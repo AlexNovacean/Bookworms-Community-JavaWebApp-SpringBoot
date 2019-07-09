@@ -2,7 +2,7 @@ package ro.sci.bookwormscommunity.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,7 +30,7 @@ public class Review {
     private String userNickname;
 
     @Column(length = 1000)
-    @NotEmpty(message = "Please provide a comment for your review.")
+    @Size(min = 10, max = 1000, message = "Please provided a valid comment with your review.")
     private String comment;
 
     @Min(value = 1, message = "Please provide a rating with your review.")

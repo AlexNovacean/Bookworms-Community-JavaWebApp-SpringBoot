@@ -115,14 +115,15 @@ public class BookController {
      * @param result     {@link BindingResult} instance that stores the validation errors.
      * @param principal  {@link Principal} object which stores the currently logged in user.
      * @param searchWord container for the user search input.
+     * @param model      {@link Model} used to add attributes that requires to be returned to the View.
      * @return the name of the view for adding a book in case a validation error occurs, the name of the redirect view otherwise
      */
     @PostMapping("/addBook")
-    public String addBook(@ModelAttribute("book") @Valid BookDto bookDto, BindingResult result, Principal principal, @ModelAttribute("searchWord") Word searchWord,Model model) {
+    public String addBook(@ModelAttribute("book") @Valid BookDto bookDto, BindingResult result, Principal principal, @ModelAttribute("searchWord") Word searchWord, Model model) {
         User user = userService.findByEmail(principal.getName());
         bookDto.setUser(user);
         if (result.hasErrors()) {
-            model.addAttribute("conditions",BookCondition.values());
+            model.addAttribute("conditions", BookCondition.values());
             return "addBook";
         }
         try {
@@ -174,6 +175,7 @@ public class BookController {
      * @param result     {@link BindingResult} instance that stores the validation errors of the {@link BookDto} object's field.
      * @param principal  {@link Principal} object which stores the currently logged in user.
      * @param searchWord container for the user search input.
+     * @param model      {@link Model} used to add attributes that requires to be returned to the View.
      * @return the name of the view used to update a book in case of validation errors, the name of the redirected view otherwise.
      */
     @PostMapping("/updateBook/{id}")

@@ -45,7 +45,6 @@ public class MessageServiceImpl implements MessageService {
      * @param conversationId conversation identifier
      * @param messageDto     Data Transfer Object containing the message content.
      * @param fromUser       the user send the message.
-     * @return a list of all the {@link Message} objects which correspond with provided conversation Id.
      */
     @Override
     public void saveMessage(long conversationId, MessageDto messageDto, User fromUser) {
