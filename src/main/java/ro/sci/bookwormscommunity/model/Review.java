@@ -1,9 +1,12 @@
 package ro.sci.bookwormscommunity.model;
 
+import org.apache.commons.io.IOUtils;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,9 +60,10 @@ public class Review {
 
     public Review(long id) throws IOException {
         this();
-        Path path = Paths.get("src/main/resources/static/images/book.png");
+        InputStream in = Review.class.getResourceAsStream("/static/images/default-picture.png");
         this.id = id;
-        this.userPhoto = Files.readAllBytes(path);
+        this.userPhoto = IOUtils.toByteArray(in);
+        in.close();
     }
 
     public Review(int rating) {

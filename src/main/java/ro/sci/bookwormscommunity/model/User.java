@@ -1,9 +1,11 @@
 package ro.sci.bookwormscommunity.model;
 
 import com.opencsv.bean.CsvBindByName;
+import org.apache.commons.io.IOUtils;
 
 import javax.persistence.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,10 +73,11 @@ public class User {
     //Constructor used to perform unit tests
     public User(long id, String email) throws IOException {
         this();
-        Path path = Paths.get("src/main/resources/static/images/default-picture.png");
+        InputStream in = User.class.getResourceAsStream("/static/images/default-picture.png");
         this.id = id;
         this.email = email;
-        this.photo = Files.readAllBytes(path);
+        this.photo = IOUtils.toByteArray(in);
+        in.close();
     }
 
     //Constructor used to perform unit tests

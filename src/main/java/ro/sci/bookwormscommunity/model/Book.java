@@ -1,9 +1,11 @@
 package ro.sci.bookwormscommunity.model;
 
 import com.opencsv.bean.CsvBindByName;
+import org.apache.commons.io.IOUtils;
 
 import javax.persistence.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -66,9 +68,10 @@ public class Book {
 
     public Book(long id) throws IOException {
         this();
-        Path path = Paths.get("src/main/resources/static/images/book.png");
+        InputStream in = Book.class.getResourceAsStream("/static/images/book.png");
         this.id = id;
-        this.image = Files.readAllBytes(path);
+        this.image = IOUtils.toByteArray(in);
+        in.close();
     }
 
     public Book(String bookName, String authorName, String type) {

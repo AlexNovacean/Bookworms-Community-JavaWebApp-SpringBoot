@@ -8,9 +8,8 @@ import ro.sci.bookwormscommunity.validators.ValidPhoto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 
 /**
@@ -86,8 +85,9 @@ public class UserRegistrationDto {
      * @throws IOException if an error occurs while retrieving the default image file.
      */
     public MultipartFile returnImage() throws IOException {
+        InputStream in = UserRegistrationDto.class.getResourceAsStream("/static/images/default-picture.png");
         if (image.isEmpty()) {
-            return new MockMultipartFile("default-picture.png", new FileInputStream(new File("src/main/resources/static/images/default-picture.png")));
+            return new MockMultipartFile("default-picture.png", in);
         }
         return image;
     }

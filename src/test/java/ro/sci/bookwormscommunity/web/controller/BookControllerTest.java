@@ -24,6 +24,7 @@ import ro.sci.bookwormscommunity.service.UserService;
 import ro.sci.bookwormscommunity.web.dto.BookDto;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -317,8 +318,8 @@ public class BookControllerTest {
     @WithMockUser
     public void addBookWithValidAttributes_shouldSaveBook() throws Exception {
         User user = new User(1, "test@mail.com");
-        Path path = Paths.get("src/main/resources/static/images/book.png");
-        MockMultipartFile file = new MockMultipartFile("photo", "book.png", "image/png", new ByteArrayInputStream(Files.readAllBytes(path)));
+        InputStream in = BookControllerTest.class.getResourceAsStream("/static/images/book.png");
+        MockMultipartFile file = new MockMultipartFile("photo", "book.png", "image/png", in);
         List<BookDto> savedBooks = new ArrayList<>();
 
         when(userService.findByEmail(anyString())).thenReturn(user);
@@ -361,6 +362,8 @@ public class BookControllerTest {
         assertEquals("0", savedBooks.get(0).getRentPrice().toString());
         assertEquals("0", savedBooks.get(0).getSellPrice().toString());
         assertEquals(file, savedBooks.get(0).getPhoto());
+
+        in.close();
     }
 
     @Test
