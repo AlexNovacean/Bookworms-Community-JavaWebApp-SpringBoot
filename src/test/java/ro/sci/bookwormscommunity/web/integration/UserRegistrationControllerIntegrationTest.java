@@ -1,5 +1,6 @@
 package ro.sci.bookwormscommunity.web.integration;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.UserRepository;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -135,7 +137,7 @@ public class UserRegistrationControllerIntegrationTest {
     }
 
     private User createTestUser() throws IOException {
-        Path path = Paths.get("src/main/resources/static/images/default-picture.png");
+        InputStream in = UserRegistrationControllerIntegrationTest.class.getResourceAsStream("/static/images/default-picture.png");
         User user = new User();
         user.setFirstName("test user");
         user.setLastName("test user");
@@ -145,7 +147,8 @@ public class UserRegistrationControllerIntegrationTest {
         user.setPassword(encoder.encode("password"));
         user.setRoles(Collections.singletonList(new Role("ROLE_USER")));
         user.setEnabled(true);
-        user.setPhoto(Files.readAllBytes(path));
+        user.setPhoto(IOUtils.toByteArray(in));
+        in.close();
         return user;
     }
 

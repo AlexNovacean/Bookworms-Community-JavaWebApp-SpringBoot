@@ -9,10 +9,7 @@ import ro.sci.bookwormscommunity.validators.ValidPhoto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,8 +68,8 @@ public class BookDto {
     }
 
     public BookDto(String bookName, String authorName, int numberOfPages, String type, String language, String description, boolean bookRent, boolean bookSale, int rentPrice, int sellPrice, User user) throws IOException {
-        Path path = Paths.get("src/main/resources/static/images/book.png");
-        this.photo = new MockMultipartFile("cover", new ByteArrayInputStream(Files.readAllBytes(path)));
+        InputStream in = BookDto.class.getResourceAsStream("/static/images/book.png");
+        this.photo = new MockMultipartFile("cover", in);
         this.user = user;
         this.bookName = bookName;
         this.authorName = authorName;
@@ -84,6 +81,7 @@ public class BookDto {
         this.bookSale = bookSale;
         this.rentPrice = rentPrice;
         this.sellPrice = sellPrice;
+        in.close();
     }
 
     public Long getId() {
@@ -206,7 +204,8 @@ public class BookDto {
      */
     public MultipartFile returnPhoto() throws IOException {
         if (photo.isEmpty()) {
-            return new MockMultipartFile("book.png", new FileInputStream(new File("src/main/resources/static/images/book.png")));
+            InputStream in = BookDto.class.getResourceAsStream("/static/images/book.png");
+            return new MockMultipartFile("book.png", in);
         }
         return photo;
     }

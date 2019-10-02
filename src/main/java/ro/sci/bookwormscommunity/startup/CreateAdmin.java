@@ -1,5 +1,6 @@
 package ro.sci.bookwormscommunity.startup;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,7 @@ import ro.sci.bookwormscommunity.model.User;
 import ro.sci.bookwormscommunity.repositories.UserRepository;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.util.Arrays;
 
 /**
@@ -38,7 +37,7 @@ public class CreateAdmin implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent applicationReadyEvent) {
-        Path path = Paths.get("src/main/resources/static/images/admin-profile.jpg");
+        InputStream in = CreateAdmin.class.getResourceAsStream("/static/images/admin-profile.jpg");
         User user = userRepository.findByEmail("admin");
 
         try {
@@ -46,9 +45,10 @@ public class CreateAdmin implements ApplicationListener<ApplicationReadyEvent> {
                 user = new User("Admin", "Administrator", "admin", "Admin", "Application");
                 user.setPassword(passwordEncoder.encode("admin"));
                 user.setRoles(Arrays.asList(new Role("ROLE_ADMIN")));
-                user.setPhoto(Files.readAllBytes(path));
+                user.setPhoto(IOUtils.toByteArray(in));
                 user.setEnabled(true);
                 userRepository.save(user);
+                in.close();
             }
         } catch (IOException e) {
             logger.error("Error when retrieving the admin default picture: ", e);

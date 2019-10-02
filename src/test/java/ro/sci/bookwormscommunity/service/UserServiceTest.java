@@ -20,6 +20,7 @@ import ro.sci.bookwormscommunity.web.dto.UserDto;
 import ro.sci.bookwormscommunity.web.dto.UserRegistrationDto;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -66,8 +67,8 @@ public class UserServiceTest {
         }).when(userRepository).save(any(User.class));
 
         UserRegistrationDto userDto = new UserRegistrationDto("John", "Cameron", "Johnny", "Location", "password", "test@mail.com");
-        Path path = Paths.get("src/main/resources/static/images/default-picture.png");
-        MultipartFile file = new MockMultipartFile("poza", new ByteArrayInputStream(Files.readAllBytes(path)));
+        InputStream in = UserServiceTest.class.getResourceAsStream("/static/images/default-picture.png");
+        MultipartFile file = new MockMultipartFile("poza", in);
         userDto.setImage(file);
         userService.save(userDto);
 
@@ -75,6 +76,7 @@ public class UserServiceTest {
         assertEquals(1, userList.size());
         assertEquals("John", userList.get(0).getFirstName());
         verify(userRepository, times(1)).save(any());
+        in.close();
     }
 
     @Test
@@ -82,8 +84,8 @@ public class UserServiceTest {
 
         User user = new User(1L, "John", "Cameron", "john@email.com", "password", "johnny", "Boston");
         UserDto userDto = new UserDto("John", "Cameron", "Johnny", "password", "test@mail.com", "location");
-        Path path = Paths.get("src/main/resources/static/images/default-picture.png");
-        MultipartFile file = new MockMultipartFile("poza", new ByteArrayInputStream(Files.readAllBytes(path)));
+        InputStream in = UserServiceTest.class.getResourceAsStream("/static/images/default-picture.png");
+        MultipartFile file = new MockMultipartFile("poza", in);
         userDto.setPhoto(file);
         List<User> userList = new ArrayList<>();
         userList.add(user);
@@ -105,6 +107,7 @@ public class UserServiceTest {
         assertEquals(user, userList.get(0));
         verify(userRepository, times(1)).save(any(User.class));
         verify(userRepository, times(1)).getOne(anyLong());
+        in.close();
     }
 
     @Test
