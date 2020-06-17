@@ -17,6 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Target({
         TYPE,

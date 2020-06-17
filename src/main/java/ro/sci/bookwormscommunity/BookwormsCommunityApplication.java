@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @SpringBootApplication
 public class BookwormsCommunityApplication {

@@ -7,6 +7,7 @@ package ro.sci.bookwormscommunity.model;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  * @see ro.sci.bookwormscommunity.service.BookServiceImpl#searchForBookName(String)
  * @see ro.sci.bookwormscommunity.service.BookServiceImpl#searchForAuthors(String)
  * @see ro.sci.bookwormscommunity.service.BookServiceImpl#searchForBookType(String)

@@ -14,6 +14,7 @@ import java.util.List;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public interface BookService {
     List<Book> getAllBooks();

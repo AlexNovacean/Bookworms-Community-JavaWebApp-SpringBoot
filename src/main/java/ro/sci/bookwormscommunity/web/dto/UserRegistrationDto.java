@@ -19,6 +19,7 @@ import java.io.InputStream;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @FieldMatch.List({
         @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match"),

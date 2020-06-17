@@ -23,6 +23,7 @@ import java.util.Arrays;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Component
 public class CreateAdmin implements ApplicationListener<ApplicationReadyEvent> {

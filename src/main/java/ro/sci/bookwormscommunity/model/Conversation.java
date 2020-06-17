@@ -10,6 +10,7 @@ import java.util.List;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Entity
 public class Conversation {

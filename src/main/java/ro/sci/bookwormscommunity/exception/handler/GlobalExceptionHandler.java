@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Global exception handler to return specific views based on the Exception thrown.
+ *
+ * @author Raul
+ */
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

@@ -7,6 +7,7 @@ package ro.sci.bookwormscommunity.model;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public enum BookCondition {
     AS_NEW("As new"), //the book is in the state that it should have been in when it was left by the publisher

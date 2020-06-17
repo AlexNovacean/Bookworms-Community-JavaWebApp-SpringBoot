@@ -20,6 +20,7 @@ import java.util.List;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  * @see BookService
  */
 @Service

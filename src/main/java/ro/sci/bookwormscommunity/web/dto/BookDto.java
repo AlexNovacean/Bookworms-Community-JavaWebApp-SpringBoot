@@ -22,6 +22,7 @@ import java.util.Base64;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public class BookDto {
 

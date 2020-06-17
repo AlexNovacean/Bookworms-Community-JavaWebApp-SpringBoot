@@ -14,6 +14,7 @@ import java.io.IOException;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public final class UserMapper {
 

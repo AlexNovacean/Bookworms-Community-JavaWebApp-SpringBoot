@@ -17,6 +17,7 @@ import java.util.List;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  * @see ConstraintValidator
  */
 public class ValidPhotoValidator implements ConstraintValidator<ValidPhoto, MultipartFile> {

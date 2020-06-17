@@ -7,6 +7,7 @@ package ro.sci.bookwormscommunity.web.dto;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public class MessageDto {
 

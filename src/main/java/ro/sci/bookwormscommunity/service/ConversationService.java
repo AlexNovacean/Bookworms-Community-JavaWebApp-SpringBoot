@@ -11,6 +11,7 @@ import java.util.List;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public interface ConversationService {
     Conversation startConversation(long toUserId, long fromUserId, String bookName);

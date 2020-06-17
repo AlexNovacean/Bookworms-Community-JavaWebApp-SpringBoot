@@ -20,6 +20,7 @@ import javax.validation.Valid;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Controller
 @RequestMapping("/registration")

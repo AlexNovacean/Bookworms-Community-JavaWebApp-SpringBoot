@@ -12,6 +12,7 @@ import ro.sci.bookwormscommunity.model.Role;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  * @see JpaRepository
  */
 public interface RoleRepository extends JpaRepository<Role, Long> {

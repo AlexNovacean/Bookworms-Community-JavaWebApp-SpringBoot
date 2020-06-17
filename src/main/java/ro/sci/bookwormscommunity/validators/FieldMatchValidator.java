@@ -14,6 +14,7 @@ import javax.validation.ConstraintValidatorContext;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  * @see ConstraintValidator
  */
 public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Object> {

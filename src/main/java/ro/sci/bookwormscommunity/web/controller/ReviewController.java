@@ -12,6 +12,11 @@ import ro.sci.bookwormscommunity.service.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+/**
+ * Controller that handles the request for book reviews
+ *
+ * @author Raul
+ */
 
 @Controller
 public class ReviewController {

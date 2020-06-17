@@ -12,6 +12,7 @@ import ro.sci.bookwormscommunity.repositories.RoleRepository;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  * @see RoleService
  */
 @Service

@@ -12,6 +12,7 @@ import javax.persistence.Id;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Entity
 public class Role {

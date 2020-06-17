@@ -22,6 +22,7 @@ import java.util.Date;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Entity
 public class Review {

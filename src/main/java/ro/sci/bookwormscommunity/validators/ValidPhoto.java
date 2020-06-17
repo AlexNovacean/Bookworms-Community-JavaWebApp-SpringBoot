@@ -12,6 +12,7 @@ import java.lang.annotation.*;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

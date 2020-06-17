@@ -9,6 +9,7 @@ import ro.sci.bookwormscommunity.model.Role;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public interface RoleService {
     Role createRoleIfNotFound(String roleName);

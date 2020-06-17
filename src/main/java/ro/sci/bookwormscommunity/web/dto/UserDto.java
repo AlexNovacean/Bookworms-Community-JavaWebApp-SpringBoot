@@ -17,6 +17,7 @@ import java.util.Base64;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 public class UserDto {

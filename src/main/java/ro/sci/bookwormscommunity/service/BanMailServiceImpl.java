@@ -14,6 +14,7 @@ import ro.sci.bookwormscommunity.model.User;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  * @see BanMailService
  * @see JavaMailSender
  */

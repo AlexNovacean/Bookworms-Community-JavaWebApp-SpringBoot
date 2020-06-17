@@ -20,6 +20,7 @@ import ro.sci.bookwormscommunity.service.UserService;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Configuration
 @EnableWebSecurity

@@ -12,6 +12,7 @@ import java.util.List;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public interface ReviewService {
     void saveReview(Review review);

@@ -10,6 +10,7 @@ import ro.sci.bookwormscommunity.model.User;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 public interface BanMailService {
     void sendAccountDisabledMail(User user);

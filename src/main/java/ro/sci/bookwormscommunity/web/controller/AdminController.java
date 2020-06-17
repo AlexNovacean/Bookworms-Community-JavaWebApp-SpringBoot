@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Ionut
  * @author Radu
  * @author Sorin
+ * @author Raul
  */
 @Controller
 public class AdminController {
